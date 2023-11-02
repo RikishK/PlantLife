@@ -43,5 +43,27 @@ public class Plant_Branch : Plant_Block
         }
     }
 
-    
+    protected override List<PlantData.UpgradeData> getUpgrades()
+    {
+        List<PlantData.UpgradeData> upgrades = new List<PlantData.UpgradeData>();
+        switch (branchState){
+            case PlantData.BranchState.Small_Nub:
+                PlantData.UpgradeData upgrade1 = new PlantData.UpgradeData("Begin Growing Leaves", 20, PlantData.Resource.Glucose);
+                upgrades.Add(upgrade1);
+                break;
+            case PlantData.BranchState.Growing_Leaf_Attatchments_A:
+                PlantData.UpgradeData upgrade2 = new PlantData.UpgradeData("Grow Leaves", 20, PlantData.Resource.Glucose);
+                upgrades.Add(upgrade2);
+                break;
+            case PlantData.BranchState.Growing_Leaf_Attatchments_B:
+                PlantData.UpgradeData upgrade3 = new PlantData.UpgradeData("Finish Growing Leaves", 20, PlantData.Resource.Glucose);
+                upgrades.Add(upgrade3);
+                break;
+            case PlantData.BranchState.Grown_Nub:
+                break;
+        }
+        return upgrades;
+    }
+
+
 }

@@ -45,6 +45,7 @@ public class Plant_Root_Branch : Plant_Block
         foreach(PlantData.RootBranchCollider rootBranchCollider in rootBranchColliders){
             if(rootBranchCollider.rootBranchState == rootBranchState){
                 rootBranchCollider2D.size = rootBranchCollider.plantCollider.size;
+                rootBranchCollider2D.offset = rootBranchCollider.plantCollider.offset;
             }
         }
     }

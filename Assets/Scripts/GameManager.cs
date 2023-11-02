@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private int Glucose = 0;
+    private int Glucose = 100;
     [SerializeField] private TextMeshProUGUI GlucoseText;
+    [SerializeField] private GameObject UpgradeMenu;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +24,10 @@ public class GameManager : MonoBehaviour
     public void GainGlucose(int gain){
         Glucose += gain;
         GlucoseText.text = "Glucose: " + Glucose.ToString();
+    }
+
+    public void ShowUpgrades(List<PlantData.UpgradeData> upgradeDatas){
+        UpgradeMenu.SetActive(true);
+        UpgradeMenu.GetComponent<UpgradeMenu>().ShowUpgrades(upgradeDatas);
     }
 }

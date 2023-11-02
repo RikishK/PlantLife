@@ -42,6 +42,7 @@ public class PlantData
     [System.Serializable]
     public class PlantCollider{
         public Vector2 size;
+        public Vector2 offset;
     }
 
     [System.Serializable]
@@ -54,5 +55,27 @@ public class PlantData
     public class RootBranchCollider{
         public RootBranchState rootBranchState;
         public PlantCollider plantCollider;
+    }
+
+    [System.Serializable]
+    public class LeafCollider{
+        public LeafState leafState;
+        public PlantCollider plantCollider;
+    }
+
+    public enum Resource{
+        Glucose
+    }
+
+    public class UpgradeData {
+        public string name;
+        public int cost;
+        public Resource resource;
+
+        public UpgradeData(string name, int cost, Resource resource){
+            this.name = name;
+            this.cost = cost;
+            this.resource = resource;
+        }
     }
 }
