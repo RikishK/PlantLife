@@ -164,7 +164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   block_name: Plant Block
-  blockType: 1
+  blockType: 2
   SmallNubBranch: {fileID: 2123650332, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   GrowingBranchA: {fileID: 960548691, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   GrowingBranchB: {fileID: -1610983392, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}

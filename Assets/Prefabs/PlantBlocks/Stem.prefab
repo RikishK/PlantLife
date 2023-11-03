@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: -0.0016610324, y: -3.5062008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2277318836375408230}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -98,7 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e821da472da8a6545a5d3d222113dfac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blockType: 0
+  gameManager: {fileID: 0}
+  block_name: Plant Block
+  parent: {fileID: 0}
+  children: []
+  blockType: 1
   GreenStem: {fileID: 2069512383, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   MidStem: {fileID: -1114791718, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   BrownStem: {fileID: -323862105, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
@@ -108,16 +113,21 @@ MonoBehaviour:
   - stemState: 0
     plantCollider:
       size: {x: 0.18, y: 1}
+      offset: {x: 0, y: 0}
   - stemState: 1
     plantCollider:
       size: {x: 0.46, y: 1}
+      offset: {x: 0, y: 0}
   - stemState: 2
     plantCollider:
       size: {x: 1, y: 1}
+      offset: {x: 0, y: 0}
   - stemState: 3
     plantCollider:
       size: {x: 1, y: 1}
+      offset: {x: 0, y: 0}
   stemCollider2D: {fileID: 7075755728616686481}
+  extensionPoint: {fileID: 2277318836375408230}
 --- !u!61 &7075755728616686481
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -144,3 +154,34 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.18, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &5148579691299365631
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2277318836375408230}
+  m_Layer: 0
+  m_Name: extensionPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2277318836375408230
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5148579691299365631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.497, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2013884070616095354}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

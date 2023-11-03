@@ -26,7 +26,7 @@ public class UpgradeMenu : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Upgrade(){
-        gameManager.Upgrade();
+    public void Upgrade(int index){
+        gameManager.Upgrade(index);
     }
 }

@@ -37,9 +37,9 @@ public class GameManager : MonoBehaviour
         UpgradeMenu.GetComponent<UpgradeMenu>().ShowUpgrades(upgradeDatas, block_name);
     }
 
-    public void Upgrade(){
-        if(current_selection.CanUpgrade()){
-            current_selection.Upgrade();
+    public void Upgrade(int index){
+        if(current_selection.CanUpgrade(index)){
+            current_selection.Upgrade(index);
             UpgradeMenu.GetComponent<UpgradeMenu>().ShowUpgrades(current_selection.getUpgrades(), current_selection.block_name);
         }
         else Debug.Log("Cant Upgrade");

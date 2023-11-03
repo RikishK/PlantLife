@@ -12,6 +12,8 @@ public class Plant_Stem : Plant_Block
     [SerializeField] private PlantData.StemCollider[] stemColliders;
     [SerializeField] private BoxCollider2D stemCollider2D;
 
+    [SerializeField] private Transform extensionPoint;
+
     private void Start() {
         block_name = "Stem";
     }
@@ -57,5 +59,10 @@ public class Plant_Stem : Plant_Block
                 stemCollider2D.size = stemCollider.plantCollider.size;
             }
         }
+    }
+
+    public override void AttatchPlantBlock(Plant_Block other)
+    {
+        other.transform.position = extensionPoint.transform.position;
     }
 }

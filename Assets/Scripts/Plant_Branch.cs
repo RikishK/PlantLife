@@ -94,7 +94,7 @@ public class Plant_Branch : Plant_Block
         return new List<PlantData.UpgradeData>();
     }
 
-    protected override int upgradeCost()
+    protected override int upgradeCost(int index)
     {
         switch (branchState){
             case PlantData.BranchState.Small_Nub:

@@ -111,7 +111,7 @@ public class Plant_Leaf : Plant_Block
         return new List<PlantData.UpgradeData>();
     }
 
-    protected override int upgradeCost()
+    protected override int upgradeCost(int index)
     {
         switch (leafState){
             case PlantData.LeafState.Small:

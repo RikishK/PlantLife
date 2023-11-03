@@ -7,8 +7,8 @@ public class Plant_Block : MonoBehaviour
 {
     public GameManager gameManager;
     public string block_name = "Plant Block";
-    protected Plant_Block parent;
-    protected List<Plant_Block> children;
+    public Plant_Block parent;
+    public List<Plant_Block> children;
     protected List<PlantData.UpgradeData> upgrades;
     [SerializeField] protected PlantData.BlockType blockType;
 
@@ -63,30 +63,38 @@ public class Plant_Block : MonoBehaviour
         Debug.Log("UnHighlighting");
     }
 
-    public bool CanUpgrade(){
-        return upgradeConditions() && canAfford();
+    public bool CanUpgrade(int index){
+        return upgradeConditions(index) && canAfford(index);
     }
 
-    public void Upgrade(){
+    public void Upgrade(int index){
         Debug.Log("Upgrading " + block_name);
-        gameManager.GainGlucose(-upgradeCost());
+        gameManager.GainGlucose(-upgradeCost(index));
+        performUpgrade(index);
+    }
+
+    protected virtual void performUpgrade(int index){
         growBlock();
     }
 
-    protected virtual bool upgradeConditions(){
+    protected virtual bool upgradeConditions(int index){
         return true;
     }
 
-    protected bool canAfford(){
-        return upgradeCost() <= gameManager.CurrentGlucose();
+    protected bool canAfford(int index){
+        return upgradeCost(index) <= gameManager.CurrentGlucose();
     }
 
-    protected virtual int upgradeCost(){
-        return 0;
+    protected virtual int upgradeCost(int index){
+        return upgrades[index].cost;
     }
 
     public virtual List<PlantData.UpgradeData> getUpgrades(){
         return null;
+    }
+
+    public virtual void AttatchPlantBlock(Plant_Block other){
+        
     }
     
 }

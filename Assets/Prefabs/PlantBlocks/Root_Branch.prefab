@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  blockType: 4
+  block_name: Plant Block
+  blockType: 5
   SmallRoot: {fileID: 2026837104, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   MediumRoot: {fileID: -5349861, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   LargeRoot: {fileID: -234750756, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}

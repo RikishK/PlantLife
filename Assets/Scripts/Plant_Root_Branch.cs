@@ -78,7 +78,7 @@ public class Plant_Root_Branch : Plant_Block
         return new List<PlantData.UpgradeData>();
     }
 
-    protected override int upgradeCost()
+    protected override int upgradeCost(int index)
     {
         switch (rootBranchState){
             case PlantData.RootBranchState.Small:

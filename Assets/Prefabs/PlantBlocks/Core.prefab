@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1593669816537598911}
   - component: {fileID: 3814360378081994869}
-  - component: {fileID: 799948915390232838}
   - component: {fileID: 3387380473982872583}
+  - component: {fileID: 1039406609075149151}
   m_Layer: 0
   m_Name: Core
   m_TagString: Untagged
@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 1.4796256, y: -4.493978, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7448478488232959745}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -86,18 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &799948915390232838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4817210403800339334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e246371a5602c847bc00686b11eb957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &3387380473982872583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -124,3 +113,56 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.61, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1039406609075149151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4817210403800339334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e246371a5602c847bc00686b11eb957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  block_name: Core
+  parent: {fileID: 0}
+  children: []
+  blockType: 0
+  overground_root: {fileID: 0}
+  underground_root: {fileID: 0}
+  coreRenderer: {fileID: 3814360378081994869}
+  stemPrefab: {fileID: 3979583751404146008, guid: 1288265a9c77e154ca11cdb5f90fc536, type: 3}
+  overground_sp: {fileID: 7448478488232959745}
+--- !u!1 &5729308307440478518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7448478488232959745}
+  m_Layer: 0
+  m_Name: Overground_Spawn_Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7448478488232959745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5729308307440478518}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.498, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1593669816537598911}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
