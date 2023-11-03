@@ -7,6 +7,8 @@ public class Plant_Branch : Plant_Block
     private PlantData.BranchState branchState = PlantData.BranchState.Small_Nub;
     [SerializeField] private Sprite SmallNubBranch, GrowingBranchA, GrowingBranchB, GrownNubBranch;
     [SerializeField] private SpriteRenderer branchRenderer;
+    [SerializeField] private Transform leaf_spawn_point_A, leaf_spawn_point_B;
+    [SerializeField] private GameObject LeafPrefab;
 
     private void Start() {
         block_name = "Branch";
@@ -33,6 +35,7 @@ public class Plant_Branch : Plant_Block
                 break;
             case PlantData.BranchState.Growing_Leaf_Attatchments_B:
                 branchState = PlantData.BranchState.Grown_Nub;
+                SpawnLeaves();
                 break;
             case PlantData.BranchState.Grown_Nub:
                 break;
@@ -40,6 +43,25 @@ public class Plant_Branch : Plant_Block
         RenderBranch();
     }
 
+    private void SpawnLeaves(){
+        Vector3 baseRotation = gameObject.transform.eulerAngles;
+        Debug.Log(baseRotation);
+        GameObject L_A = GameObject.Instantiate(LeafPrefab, leaf_spawn_point_A);
+        L_A.transform.position = leaf_spawn_point_A.position;
+        Vector3 rotationA = baseRotation;
+        rotationA.z += 45;
+        L_A.transform.eulerAngles = rotationA;
+        GameObject L_B = GameObject.Instantiate(LeafPrefab, leaf_spawn_point_B);
+        L_B.transform.position = leaf_spawn_point_B.position;
+        Vector3 rotationB = baseRotation;
+        rotationB.z += -45;
+        L_B.transform.eulerAngles = rotationB;
+        children = new List<Plant_Block>
+        {
+            L_A.GetComponent<Plant_Block>(),
+            L_B.GetComponent<Plant_Block>()
+        };
+    }
     private void RenderBranch(){
         switch (branchState){
             case PlantData.BranchState.Small_Nub:
@@ -85,6 +107,16 @@ public class Plant_Branch : Plant_Block
                 break;
         }
         return 0;
+    }
+
+    protected override void Highlight()
+    {
+        branchRenderer.color = hoverTint;
+    }
+
+    protected override void UnHighlight()
+    {
+        branchRenderer.color = originalColor;
     }
 
 }

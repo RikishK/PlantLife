@@ -90,4 +90,14 @@ public class Plant_Root_Branch : Plant_Block
         }
         return 0;
     }
+
+    protected override void Highlight()
+    {
+        rootBranchRenderer.color = hoverTint;
+    }
+
+    protected override void UnHighlight()
+    {
+        rootBranchRenderer.color = originalColor;
+    }
 }

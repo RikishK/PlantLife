@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Plant_Block : MonoBehaviour
@@ -10,6 +11,9 @@ public class Plant_Block : MonoBehaviour
     protected List<Plant_Block> children;
     protected List<PlantData.UpgradeData> upgrades;
     [SerializeField] protected PlantData.BlockType blockType;
+
+    protected Color hoverTint = Color.red, originalColor = Color.white;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -36,13 +40,27 @@ public class Plant_Block : MonoBehaviour
 
     private void OnMouseOver()
     {
+        Highlight();
         if (Input.GetMouseButtonDown(1)) 
         {
+            UnHighlight();
             gameManager = FindObjectOfType<GameManager>();
             Debug.Log(gameManager);
             gameManager.current_selection = this;
             gameManager.ShowUpgrades(getUpgrades(), block_name);
         }
+    }
+
+    private void OnMouseExit() {
+        UnHighlight();
+    }
+
+    protected virtual void Highlight(){
+        Debug.Log("Highlighting");
+    }
+
+    protected virtual void UnHighlight(){
+        Debug.Log("UnHighlighting");
     }
 
     public bool CanUpgrade(){
