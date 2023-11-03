@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class UpgradeSlot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText, costText;
+
     
     public void Setup(PlantData.UpgradeData upgradeData){
         nameText.text = upgradeData.name;

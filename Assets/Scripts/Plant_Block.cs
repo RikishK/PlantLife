@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Plant_Block : MonoBehaviour
 {
-    protected GameManager gameManager;
+    public GameManager gameManager;
+    public string block_name = "Plant Block";
     protected Plant_Block parent;
     protected List<Plant_Block> children;
+    protected List<PlantData.UpgradeData> upgrades;
     [SerializeField] protected PlantData.BlockType blockType;
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        
     }
 
     // Update is called once per frame
@@ -22,10 +24,6 @@ public class Plant_Block : MonoBehaviour
 
     public PlantData.BlockType GetBlockType(){
         return blockType;
-    }
-
-    public void Grow(){
-        growBlock();
     }
 
     protected virtual void growBlock(){
@@ -40,11 +38,36 @@ public class Plant_Block : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1)) 
         {
-            gameManager.ShowUpgrades(getUpgrades());
+            gameManager = FindObjectOfType<GameManager>();
+            Debug.Log(gameManager);
+            gameManager.current_selection = this;
+            gameManager.ShowUpgrades(getUpgrades(), block_name);
         }
     }
 
-    protected virtual List<PlantData.UpgradeData> getUpgrades(){
+    public bool CanUpgrade(){
+        return upgradeConditions() && canAfford();
+    }
+
+    public void Upgrade(){
+        Debug.Log("Upgrading " + block_name);
+        gameManager.GainGlucose(-upgradeCost());
+        growBlock();
+    }
+
+    protected virtual bool upgradeConditions(){
+        return true;
+    }
+
+    protected bool canAfford(){
+        return upgradeCost() <= gameManager.CurrentGlucose();
+    }
+
+    protected virtual int upgradeCost(){
+        return 0;
+    }
+
+    public virtual List<PlantData.UpgradeData> getUpgrades(){
         return null;
     }
     

@@ -11,6 +11,10 @@ public class Plant_Stem : Plant_Block
     [SerializeField] private SpriteRenderer stemRenderer;
     [SerializeField] private PlantData.StemCollider[] stemColliders;
     [SerializeField] private BoxCollider2D stemCollider2D;
+
+    private void Start() {
+        block_name = "Stem";
+    }
     protected override void growBlock()
     {
         switch(stemState){

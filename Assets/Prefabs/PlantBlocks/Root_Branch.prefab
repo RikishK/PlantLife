@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -234750756, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
+  m_Sprite: {fileID: 2026837104, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3a3a4ea6b677041ad6b552715016a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   blockType: 4
   SmallRoot: {fileID: 2026837104, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   MediumRoot: {fileID: -5349861, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
@@ -116,7 +117,7 @@ MonoBehaviour:
     plantCollider:
       size: {x: 0.46, y: 0.88}
       offset: {x: 0, y: -0.06}
-  rootBranchCollider2D: {fileID: 0}
+  rootBranchCollider2D: {fileID: 6328533544530285131}
 --- !u!61 &6328533544530285131
 BoxCollider2D:
   m_ObjectHideFlags: 0

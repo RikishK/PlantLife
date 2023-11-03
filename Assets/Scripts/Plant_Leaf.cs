@@ -15,6 +15,7 @@ public class Plant_Leaf : Plant_Block
 
     private void Start() {
         lastGlucoseProducedTime = Time.time;
+        block_name = "Leaf";
     }
     // Update is called once per frame
     void Update()

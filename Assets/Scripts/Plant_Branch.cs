@@ -8,6 +8,20 @@ public class Plant_Branch : Plant_Block
     [SerializeField] private Sprite SmallNubBranch, GrowingBranchA, GrowingBranchB, GrownNubBranch;
     [SerializeField] private SpriteRenderer branchRenderer;
 
+    private void Start() {
+        block_name = "Branch";
+        upgrades = new List<PlantData.UpgradeData>();
+        PlantData.UpgradeData upgrade1 = new PlantData.UpgradeData("Begin Growing Leaves", 20, PlantData.Resource.Glucose);
+        upgrades.Add(upgrade1);
+
+        PlantData.UpgradeData upgrade2 = new PlantData.UpgradeData("Grow Leaves", 20, PlantData.Resource.Glucose);
+        upgrades.Add(upgrade2);
+        
+        PlantData.UpgradeData upgrade3 = new PlantData.UpgradeData("Finish Growing Leaves", 20, PlantData.Resource.Glucose);
+        upgrades.Add(upgrade3);
+               
+    }
+
     protected override void growBlock()
     {
         switch(branchState){
@@ -43,27 +57,34 @@ public class Plant_Branch : Plant_Block
         }
     }
 
-    protected override List<PlantData.UpgradeData> getUpgrades()
+    public override List<PlantData.UpgradeData> getUpgrades()
     {
-        List<PlantData.UpgradeData> upgrades = new List<PlantData.UpgradeData>();
         switch (branchState){
             case PlantData.BranchState.Small_Nub:
-                PlantData.UpgradeData upgrade1 = new PlantData.UpgradeData("Begin Growing Leaves", 20, PlantData.Resource.Glucose);
-                upgrades.Add(upgrade1);
-                break;
+                return upgrades.GetRange(0, 1);
             case PlantData.BranchState.Growing_Leaf_Attatchments_A:
-                PlantData.UpgradeData upgrade2 = new PlantData.UpgradeData("Grow Leaves", 20, PlantData.Resource.Glucose);
-                upgrades.Add(upgrade2);
-                break;
+                return upgrades.GetRange(1, 1);
             case PlantData.BranchState.Growing_Leaf_Attatchments_B:
-                PlantData.UpgradeData upgrade3 = new PlantData.UpgradeData("Finish Growing Leaves", 20, PlantData.Resource.Glucose);
-                upgrades.Add(upgrade3);
-                break;
+                return upgrades.GetRange(2, 1);
             case PlantData.BranchState.Grown_Nub:
                 break;
         }
-        return upgrades;
+        return new List<PlantData.UpgradeData>();
     }
 
+    protected override int upgradeCost()
+    {
+        switch (branchState){
+            case PlantData.BranchState.Small_Nub:
+                return upgrades[0].cost;
+            case PlantData.BranchState.Growing_Leaf_Attatchments_A:
+                return upgrades[1].cost;
+            case PlantData.BranchState.Growing_Leaf_Attatchments_B:
+                return upgrades[2].cost;
+            case PlantData.BranchState.Grown_Nub:
+                break;
+        }
+        return 0;
+    }
 
 }

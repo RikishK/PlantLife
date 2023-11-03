@@ -393,6 +393,8 @@ MonoBehaviour:
   - {fileID: 6649195529366819344}
   - {fileID: 695281013825679717}
   - {fileID: 3141821065626462563}
+  nameText: {fileID: 7699933770807736642}
+  gameManager: {fileID: 0}
 --- !u!1 &7226534532812417504
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,6 +612,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7147371133201382910}
     m_Modifications:
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2741440968594846513}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UpgradeMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3001609894892597618, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -765,6 +795,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7147371133201382910}
     m_Modifications:
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2741440968594846513}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UpgradeMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3001609894892597618, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -920,6 +978,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7147371133201382910}
     m_Modifications:
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2741440968594846513}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UpgradeMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675586788371715838, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3001609894892597618, guid: 87a92a650e880f84daa525ecc8705ef9, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
