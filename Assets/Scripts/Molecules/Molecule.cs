@@ -16,10 +16,14 @@ public class Molecule : MonoBehaviour
     void Start()
     {
         // Store the initial position of the object
-        initialPosition = transform.position;
+        Setup();
 
         // Generate a random offset for the floaty motion to make it look less uniform
         randomOffset = Random.Range(0f, 360f);
+    }
+
+    public void Setup(){
+        initialPosition = transform.position;
     }
 
     void Update()

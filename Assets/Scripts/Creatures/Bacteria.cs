@@ -142,7 +142,44 @@ public class Bacteria : MonoBehaviour
     {
         if (prefabToInstantiate != null)
         {
-            Instantiate(prefabToInstantiate, transform.position, Quaternion.identity);
+            GameObject newObject = Instantiate(prefabToInstantiate, transform.position, Quaternion.identity);
+
+            // Disable the Molecule script when instantiating the object
+            Molecule moleculeScript = newObject.GetComponent<Molecule>();
+            if (moleculeScript != null)
+            {
+                
+                moleculeScript.enabled = false;
+            }
+
+            // Calculate the direction vector for downward movement
+            Vector2 downwardDirection = Vector2.down;
+
+            // Apply a speed for the downward movement (you can adjust this value)
+            float downwardSpeed = 2.0f;
+
+            // A set distance to stop the object (you can adjust this value)
+            float stopDistance = 1.0f;
+
+            StartCoroutine(MoveDownwardAndStop(newObject, downwardDirection, downwardSpeed, stopDistance, moleculeScript));
+        }
+    }
+
+    private IEnumerator MoveDownwardAndStop(GameObject obj, Vector2 direction, float speed, float stopDistance, Molecule moleculeScript)
+    {
+        while (obj != null && Vector2.Distance(obj.transform.position, transform.position) < stopDistance)
+        {
+            
+            obj.transform.Translate(direction * speed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Re-enable the Molecule script when the object has reached the stopping distance
+        if (moleculeScript != null)
+        {
+            
+            moleculeScript.Setup();
+            moleculeScript.enabled = true;
         }
     }
 }
