@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private int Glucose = 100;
+    private int Glucose = 10000;
     [SerializeField] private TextMeshProUGUI GlucoseText;
     [SerializeField] private GameObject UpgradeMenu;
+
+    public bool canInteract = true;
 
     public Plant_Block current_selection;
     // Start is called before the first frame update

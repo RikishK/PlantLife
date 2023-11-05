@@ -17,13 +17,17 @@ public class Plant_Block : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public virtual void Init(){
+        gameManager = FindAnyObjectByType<GameManager>();
     }
 
     public PlantData.BlockType GetBlockType(){
@@ -40,6 +44,7 @@ public class Plant_Block : MonoBehaviour
 
     private void OnMouseOver()
     {
+        if(!gameManager.canInteract) return;
         Highlight();
         if (Input.GetMouseButtonDown(1)) 
         {

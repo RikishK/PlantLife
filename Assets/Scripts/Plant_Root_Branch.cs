@@ -10,6 +10,8 @@ public class Plant_Root_Branch : Plant_Block
 
     [SerializeField] private PlantData.RootBranchCollider[] rootBranchColliders;
     [SerializeField] private BoxCollider2D rootBranchCollider2D;
+    [SerializeField] private GameObject RootStemPrefab;
+    private bool isPlacing = false;
 
     private void Start() {
         block_name = "Root Branch";
@@ -24,6 +26,37 @@ public class Plant_Root_Branch : Plant_Block
         upgrades.Add(upgrade3);
                 
     }
+
+    public override void Init()
+    {
+        base.Init();
+        isPlacing = true;
+        rootBranchRenderer.color = Color.green;
+        gameManager.canInteract = false;
+    }
+
+    private void Update() {
+        if(!isPlacing) return;
+
+        // Get the position of the mouse in world space
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Calculate the direction from the object to the mouse
+        Vector3 direction = mousePosition - transform.position;
+
+        // Calculate the angle in radians
+        float angle = Mathf.Atan2(direction.y, direction.x);
+
+        // Convert the angle to degrees and rotate the object
+        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg - 90f);
+
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)){
+            isPlacing = false;
+            rootBranchRenderer.color = originalColor;
+            gameManager.canInteract = true;
+        }
+    }
+
     protected override void growBlock()
     {
         switch (rootBranchState){
@@ -34,14 +67,39 @@ public class Plant_Root_Branch : Plant_Block
                 rootBranchState = PlantData.RootBranchState.Large;
                 break;
             case PlantData.RootBranchState.Large:
+                SpawnNewRoot();
                 break;
         }
         RenderRootBranch();
         UpdateRootBranchCollider();
     }
 
+    private void SpawnNewRoot(){
+        // Make root stem
+        GameObject root_stem_object = Instantiate(RootStemPrefab);
+        // Set root stem transform parent
+        root_stem_object.transform.parent = transform.parent;
+        // Set root stem pos and rotation to my pos and rotation
+        root_stem_object.transform.position = transform.position;
+        root_stem_object.transform.eulerAngles = transform.eulerAngles;
+        // Set the root_stem parent block to my parent, set root_stem as parents child
+        Plant_Block root_stem = root_stem_object.GetComponentInChildren<Plant_Block>();
+        root_stem.Init();
+        root_stem.parent = parent;
+        parent.children.Remove(this);
+        parent.children.Add(root_stem);
+        // Change my parent to the root_stem and my transform parent to root_stem
+        parent = root_stem;
+        // Attatch to new root_stem
+        root_stem.AttatchPlantBlock(this);
+        root_stem.children.Add(this);
+        rootBranchState = PlantData.RootBranchState.Small;
+        isPlacing = true;
+        rootBranchRenderer.color = Color.green;
+        gameManager.canInteract = false;
+    }
+
     private void RenderRootBranch(){
-        Debug.Log(rootBranchRenderer);
         switch (rootBranchState){
             case PlantData.RootBranchState.Small:
                 rootBranchRenderer.sprite = SmallRoot;
@@ -74,7 +132,7 @@ public class Plant_Root_Branch : Plant_Block
             case PlantData.RootBranchState.Large:
                 return upgrades.GetRange(2, 1);
         }
-        Debug.Log("Default Upgrades");
+        
         return new List<PlantData.UpgradeData>();
     }
 

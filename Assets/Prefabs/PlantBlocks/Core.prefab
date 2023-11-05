@@ -133,7 +133,7 @@ MonoBehaviour:
   overground_root: {fileID: 0}
   underground_root: {fileID: 0}
   coreRenderer: {fileID: 3814360378081994869}
-  stemPrefab: {fileID: 3979583751404146008, guid: 1288265a9c77e154ca11cdb5f90fc536, type: 3}
+  stemPrefab: {fileID: 21428320679031848, guid: 8242c8b6dae0b6a4fbb787db6b5fd43f, type: 3}
   overground_sp: {fileID: 7448478488232959745}
 --- !u!1 &5729308307440478518
 GameObject:

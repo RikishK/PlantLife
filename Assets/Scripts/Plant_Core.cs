@@ -15,7 +15,7 @@ public class Plant_Core : Plant_Block
     void Start()
     {
         upgrades = new List<PlantData.UpgradeData>{
-            new PlantData.UpgradeData("Grow Stem", 10, PlantData.Resource.Glucose),
+            new PlantData.UpgradeData("Grow Stem", 100, PlantData.Resource.Glucose),
             new PlantData.UpgradeData("Thicken Base", 500, PlantData.Resource.Glucose),
             new PlantData.UpgradeData("Thicken Base", 1000, PlantData.Resource.Glucose)
         };
@@ -76,6 +76,7 @@ public class Plant_Core : Plant_Block
         new_overground_root.transform.position = overground_sp.position;
         Plant_Block new_root = new_overground_root.GetComponentInChildren<Plant_Block>();
         new_root.children = new List<Plant_Block>();
+        new_root.Init();
         Plant_Block overground_root_block = overground_root.GetComponentInChildren<Plant_Block>();
         new_root.children.Add(overground_root_block);
         new_root.AttatchPlantBlock(overground_root_block);

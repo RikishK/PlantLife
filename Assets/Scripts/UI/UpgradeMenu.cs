@@ -28,5 +28,6 @@ public class UpgradeMenu : MonoBehaviour
 
     public void Upgrade(int index){
         gameManager.Upgrade(index);
+        Close();
     }
 }

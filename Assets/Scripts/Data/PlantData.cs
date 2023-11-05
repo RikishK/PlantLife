@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlantData
 {
     public enum BlockType {
-        Core, Stem, Branch, Leaf, Root, Root_Branch
+        Core, Stem, Branch, Leaf, Root_Stem, Root_Branch
     }
 
     public enum CoreState{
@@ -32,9 +32,10 @@ public class PlantData
         Large
     }
 
-    public enum RootState {
+    public enum RootStemState {
         Regular,
-        Thick
+        Thick,
+        Full
     }
 
     public enum LeafState {
@@ -67,8 +68,14 @@ public class PlantData
         public PlantCollider plantCollider;
     }
 
+    [System.Serializable]
+    public class RootStemCollider{
+        public RootStemState rootStemState;
+        public PlantCollider plantCollider;
+    }
+
     public enum Resource{
-        Glucose
+        Glucose, N2, Ammonium, Nitrite, Nitrate
     }
 
     public class UpgradeData {

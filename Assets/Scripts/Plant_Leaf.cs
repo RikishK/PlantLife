@@ -14,6 +14,7 @@ public class Plant_Leaf : Plant_Block
     [SerializeField] private PlantData.LeafCollider[] leafColliders;
     [SerializeField] private BoxCollider2D leafCollider2D;
     [SerializeField] private GameObject glucosePopupText;
+    [SerializeField] private Transform textSpot;
 
     private void Start() {
         lastGlucoseProducedTime = Time.time;
@@ -52,7 +53,7 @@ public class Plant_Leaf : Plant_Block
 
     private IEnumerator gainText(int gain, int size){
         GameObject popup = Instantiate(glucosePopupText);
-        popup.transform.position = gameObject.transform.position;
+        popup.transform.position = textSpot.position;
         popup.GetComponent<TextMeshPro>().text = "+" + gain.ToString();
         popup.GetComponent<TextMeshPro>().fontSize = size;
         yield return new WaitForSeconds(1.5f);
