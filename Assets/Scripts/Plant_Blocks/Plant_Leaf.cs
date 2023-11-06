@@ -21,8 +21,8 @@ public class Plant_Leaf : Plant_Block
         block_name = "Leaf";
         gameManager = FindObjectOfType<GameManager>();
         upgrades = new List<PlantData.UpgradeData>{
-            new PlantData.UpgradeData("Gorw", 50, PlantData.Resource.Glucose),
-            new PlantData.UpgradeData("Gorw", 100, PlantData.Resource.Glucose)
+            new PlantData.UpgradeData("Gorw", 50, PlantData.Resource.Nitrate),
+            new PlantData.UpgradeData("Gorw", 100, PlantData.Resource.Nitrate)
         };
     }
     // Update is called once per frame
@@ -38,15 +38,15 @@ public class Plant_Leaf : Plant_Block
         switch (leafState){
             case PlantData.LeafState.Small:
                 StartCoroutine(gainText(3, 5));
-                gameManager.GainGlucose(3);
+                gameManager.GainResource(PlantData.Resource.Glucose, 3);
                 break;
             case PlantData.LeafState.Medium:
                 StartCoroutine(gainText(10, 8));
-                gameManager.GainGlucose(10);
+                gameManager.GainResource(PlantData.Resource.Glucose, 10);
                 break;
             case PlantData.LeafState.Large:
                 StartCoroutine(gainText(25, 13));
-                gameManager.GainGlucose(25);
+                gameManager.GainResource(PlantData.Resource.Glucose, 25);
                 break;
         }
     }

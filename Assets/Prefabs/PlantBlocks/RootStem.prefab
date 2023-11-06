@@ -83,11 +83,12 @@ MonoBehaviour:
   parent: {fileID: 0}
   children: []
   blockType: 4
-  RegularRootStem: {fileID: 1466796362, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
-  ThickRootStem: {fileID: -1352493470, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
+  RegularRootStem: {fileID: -299934401, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
+  ThickRootStem: {fileID: -255882284, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
   rootStemRenderer: {fileID: 7520513385639398671}
   extensionPoint: {fileID: 4195943744305722837}
   rootBranchObject: {fileID: 5351169495250783887, guid: a123de80d809c484b9960717f890aa91, type: 3}
+  bacteriaHub: {fileID: 4552625402477670433, guid: 0b0d49d3b21624b43bc67e825b4a622e, type: 3}
 --- !u!61 &8976387424397578537
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1466796362, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
+  m_Sprite: {fileID: -299934401, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

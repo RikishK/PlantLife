@@ -26,9 +26,19 @@ public class Bacteria : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StateMachineRoutine());
+        Setup();
     }
 
+    public void Setup(){
+        currentState = State.Searching;
+        StartCoroutine(StateMachineRoutine());
+        StartCoroutine(DeathTimer());
+    }
+
+    private IEnumerator DeathTimer(){
+        yield return new WaitForSeconds(50f);
+        Destroy(gameObject);
+    }
     private IEnumerator StateMachineRoutine()
     {
         while (true)

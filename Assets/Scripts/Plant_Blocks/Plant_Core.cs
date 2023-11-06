@@ -15,7 +15,7 @@ public class Plant_Core : Plant_Block
     void Start()
     {
         upgrades = new List<PlantData.UpgradeData>{
-            new PlantData.UpgradeData("Grow Stem", 100, PlantData.Resource.Glucose),
+            new PlantData.UpgradeData("Grow Stem", 100, PlantData.Resource.Nitrate),
             new PlantData.UpgradeData("Thicken Base", 500, PlantData.Resource.Glucose),
             new PlantData.UpgradeData("Thicken Base", 1000, PlantData.Resource.Glucose)
         };

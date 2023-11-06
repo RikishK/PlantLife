@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2026837104, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
+  m_Sprite: {fileID: 969582684, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -135,9 +135,9 @@ MonoBehaviour:
   parent: {fileID: 0}
   children: []
   blockType: 5
-  SmallRoot: {fileID: 2026837104, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
-  MediumRoot: {fileID: -5349861, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
-  LargeRoot: {fileID: -234750756, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
+  SmallRoot: {fileID: 969582684, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
+  MediumRoot: {fileID: 1598552580, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
+  LargeRoot: {fileID: -777065527, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
   rootBranchRenderer: {fileID: 787551363559844712}
   rootBranchColliders:
   - rootBranchState: 0

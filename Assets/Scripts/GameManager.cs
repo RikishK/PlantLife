@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private int Glucose = 10000;
+    private Dictionary<PlantData.Resource, int> resources;
     [SerializeField] private TextMeshProUGUI GlucoseText;
     [SerializeField] private GameObject UpgradeMenu;
 
@@ -16,7 +16,10 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        resources = new Dictionary<PlantData.Resource, int>(){
+            {PlantData.Resource.Glucose, 100},
+            {PlantData.Resource.Nitrate, 100}
+        };
     }
 
     // Update is called once per frame
@@ -25,13 +28,13 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void GainGlucose(int gain){
-        Glucose += gain;
-        GlucoseText.text = "Glucose: " + Glucose.ToString();
+    public void GainResource(PlantData.Resource resource, int gain){
+        resources[resource] += gain;
     }
 
-    public int CurrentGlucose(){
-        return Glucose;
+
+    public int CurrentResource(PlantData.Resource resource){
+        return resources[resource];
     }
 
     public void ShowUpgrades(List<PlantData.UpgradeData> upgradeDatas, string block_name){
