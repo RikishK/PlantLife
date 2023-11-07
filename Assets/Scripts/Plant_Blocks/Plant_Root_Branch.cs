@@ -136,19 +136,6 @@ public class Plant_Root_Branch : Plant_Block
         return new List<PlantData.UpgradeData>();
     }
 
-    protected override int upgradeCost(int index)
-    {
-        switch (rootBranchState){
-            case PlantData.RootBranchState.Small:
-                return upgrades[0].cost;
-            case PlantData.RootBranchState.Medium:
-                return upgrades[1].cost;
-            case PlantData.RootBranchState.Large:
-                return upgrades[2].cost;
-        }
-        return 0;
-    }
-
     protected override void Highlight()
     {
         rootBranchRenderer.color = hoverTint;

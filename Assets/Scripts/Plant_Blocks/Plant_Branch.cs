@@ -12,15 +12,11 @@ public class Plant_Branch : Plant_Block
 
     private void Start() {
         block_name = "Branch";
-        upgrades = new List<PlantData.UpgradeData>();
-        PlantData.UpgradeData upgrade1 = new PlantData.UpgradeData("Begin Growing Leaves", 20, PlantData.Resource.Glucose);
-        upgrades.Add(upgrade1);
-
-        PlantData.UpgradeData upgrade2 = new PlantData.UpgradeData("Grow Leaves", 20, PlantData.Resource.Glucose);
-        upgrades.Add(upgrade2);
-        
-        PlantData.UpgradeData upgrade3 = new PlantData.UpgradeData("Finish Growing Leaves", 20, PlantData.Resource.Glucose);
-        upgrades.Add(upgrade3);
+        upgrades = new List<PlantData.UpgradeData>(){
+            new PlantData.UpgradeData("Begin Growing Leaves", 20, PlantData.Resource.Nitrate),
+            new PlantData.UpgradeData("Grow Leaves", 20, PlantData.Resource.Nitrate),
+            new PlantData.UpgradeData("Finish Growing Leaves", 20, PlantData.Resource.Nitrate)
+        };
                
     }
 
@@ -92,21 +88,6 @@ public class Plant_Branch : Plant_Block
                 break;
         }
         return new List<PlantData.UpgradeData>();
-    }
-
-    protected override int upgradeCost(int index)
-    {
-        switch (branchState){
-            case PlantData.BranchState.Small_Nub:
-                return upgrades[0].cost;
-            case PlantData.BranchState.Growing_Leaf_Attatchments_A:
-                return upgrades[1].cost;
-            case PlantData.BranchState.Growing_Leaf_Attatchments_B:
-                return upgrades[2].cost;
-            case PlantData.BranchState.Grown_Nub:
-                break;
-        }
-        return 0;
     }
 
     protected override void Highlight()

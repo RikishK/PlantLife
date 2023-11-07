@@ -61,20 +61,23 @@ public class Plant_Block : MonoBehaviour
     }
 
     protected virtual void Highlight(){
-        Debug.Log("Highlighting");
+        getRenderer().color = hoverTint;
     }
 
     protected virtual void UnHighlight(){
-        Debug.Log("UnHighlighting");
+        getRenderer().color = originalColor;
+    }
+
+    protected virtual SpriteRenderer getRenderer(){
+        return null;
     }
 
     public bool CanUpgrade(int index){
-        return upgradeConditions(index) && canAfford(index);
+        return upgradeConditions(index);
     }
 
     public void Upgrade(int index){
         Debug.Log("Upgrading " + block_name);
-        gameManager.GainGlucose(-upgradeCost(index));
         performUpgrade(index);
     }
 
@@ -84,14 +87,6 @@ public class Plant_Block : MonoBehaviour
 
     protected virtual bool upgradeConditions(int index){
         return true;
-    }
-
-    protected bool canAfford(int index){
-        return upgradeCost(index) <= gameManager.CurrentGlucose();
-    }
-
-    protected virtual int upgradeCost(int index){
-        return upgrades[index].cost;
     }
 
     public virtual List<PlantData.UpgradeData> getUpgrades(){

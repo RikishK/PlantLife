@@ -135,11 +135,6 @@ public class Plant_Bacteria_Hub : Plant_Block
         }
     }
 
-    protected override int upgradeCost(int index)
-    {
-        return 0;
-    }
-
     public override List<PlantData.UpgradeData> getUpgrades()
     {
         return new List<PlantData.UpgradeData>();

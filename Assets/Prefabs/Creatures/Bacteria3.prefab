@@ -104,7 +104,8 @@ MonoBehaviour:
   moveSpeed: 1
   grabDistance: 0.3
   timerDuration: 3
-  prefabToInstantiate: {fileID: 4113098108881060180, guid: b7132c795d82a9842ad03b5b6e2e0967, type: 3}
+  producedMolecule: {fileID: 4113098108881060180, guid: b7132c795d82a9842ad03b5b6e2e0967, type: 3}
+  bacteriaPrefab: {fileID: 3814989144441360883}
 --- !u!70 &3488781058215973048
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

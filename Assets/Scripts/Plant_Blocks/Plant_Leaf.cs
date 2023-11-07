@@ -112,19 +112,6 @@ public class Plant_Leaf : Plant_Block
         return new List<PlantData.UpgradeData>();
     }
 
-    protected override int upgradeCost(int index)
-    {
-        switch (leafState){
-            case PlantData.LeafState.Small:
-                return upgrades[0].cost;
-            case PlantData.LeafState.Medium:
-                return upgrades[1].cost;
-            case PlantData.LeafState.Large:
-                break;
-        }
-        return 0;
-    }
-
     protected override void Highlight()
     {
         leafRenderer.color = hoverTint;

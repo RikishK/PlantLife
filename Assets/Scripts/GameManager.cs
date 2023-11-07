@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private Dictionary<PlantData.Resource, int> resources;
-    [SerializeField] private TextMeshProUGUI GlucoseText;
+    [SerializeField] private TextMeshProUGUI GlucoseText, NitrateText;
     [SerializeField] private GameObject UpgradeMenu;
 
     public bool canInteract = true;
@@ -17,9 +17,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         resources = new Dictionary<PlantData.Resource, int>(){
-            {PlantData.Resource.Glucose, 100},
+            {PlantData.Resource.Glucose, 300},
             {PlantData.Resource.Nitrate, 100}
         };
+        GlucoseText.text = $"Glucose: {resources[PlantData.Resource.Glucose]}";
+        NitrateText.text = $"Nitrate: {resources[PlantData.Resource.Nitrate]}";
     }
 
     // Update is called once per frame
@@ -30,6 +32,9 @@ public class GameManager : MonoBehaviour
 
     public void GainResource(PlantData.Resource resource, int gain){
         resources[resource] += gain;
+        GlucoseText.text = $"Glucose: {resources[PlantData.Resource.Glucose]}";
+        NitrateText.text = $"Nitrate: {resources[PlantData.Resource.Nitrate]}";
+
     }
 
 
@@ -42,11 +47,16 @@ public class GameManager : MonoBehaviour
         UpgradeMenu.GetComponent<UpgradeMenu>().ShowUpgrades(upgradeDatas, block_name);
     }
 
-    public void Upgrade(int index){
-        if(current_selection.CanUpgrade(index)){
+    public void Upgrade(PlantData.UpgradeData upgrade, int index){
+        if(canAfford(upgrade) && current_selection.CanUpgrade(index)){
             current_selection.Upgrade(index);
             UpgradeMenu.GetComponent<UpgradeMenu>().ShowUpgrades(current_selection.getUpgrades(), current_selection.block_name);
+            GainResource(upgrade.resource, -upgrade.cost);
         }
         else Debug.Log("Cant Upgrade");
+    }
+
+    private bool canAfford(PlantData.UpgradeData upgrade){
+        return resources[upgrade.resource] >= upgrade.cost;
     }
 }

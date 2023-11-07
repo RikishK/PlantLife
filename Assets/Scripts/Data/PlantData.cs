@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlantData
 {
     public enum BlockType {
-        Core, Stem, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub
+        Core, Stem, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub, Nitrate_Intake
     }
 
     public enum CoreState{

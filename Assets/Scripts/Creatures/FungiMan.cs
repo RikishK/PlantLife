@@ -33,6 +33,8 @@ public class FungiMan : MonoBehaviour
 
             if (Vector2.Distance(transform.position, interruptPosition) < 0.1f)
             {
+                FindObjectOfType<GameManager>().GainResource(PlantData.Resource.Nitrate, nitrateEaten * 5);
+                nitrateEaten = 0;
                 currentState = State.Searching;
             }
         }
@@ -101,7 +103,9 @@ public class FungiMan : MonoBehaviour
     // Function to interrupt the regular behavior
     public void Interrupt(Vector2 position)
     {
-        interruptPosition = position;
-        currentState = State.Interrupted;
+        if(nitrateEaten > 0){
+            interruptPosition = position;
+            currentState = State.Interrupted;
+        }
     }
 }

@@ -20,10 +20,16 @@ public class Molecule : MonoBehaviour
 
         // Generate a random offset for the floaty motion to make it look less uniform
         randomOffset = Random.Range(0f, 360f);
+        StartCoroutine(DeathTimer());
     }
 
     public void Setup(){
         initialPosition = transform.position;
+    }
+
+    private IEnumerator DeathTimer(){
+        yield return new WaitForSeconds(60f);
+        Destroy(gameObject);
     }
 
     void Update()

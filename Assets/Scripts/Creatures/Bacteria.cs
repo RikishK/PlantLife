@@ -10,10 +10,11 @@ public class Bacteria : MonoBehaviour
     public float moveSpeed = 5f; // The speed at which the GameObject moves
     public float grabDistance = 1f; // The distance at which it grabs the target
     public float timerDuration = 3.0f; // The duration of the timer
-    public GameObject prefabToInstantiate; // The prefab to instantiate
+    public GameObject producedMolecule, bacteriaPrefab; // The prefab to instantiate
 
     private Transform target;
     private State currentState = State.Searching;
+    private int eaten_count = 0;
 
     private enum State
     {
@@ -36,7 +37,7 @@ public class Bacteria : MonoBehaviour
     }
 
     private IEnumerator DeathTimer(){
-        yield return new WaitForSeconds(50f);
+        yield return new WaitForSeconds(70f);
         Destroy(gameObject);
     }
     private IEnumerator StateMachineRoutine()
@@ -56,6 +57,7 @@ public class Bacteria : MonoBehaviour
 
                 case State.Grabbing:
                     GrabTarget();
+                    eaten_count++;
                     break;
 
                 case State.Timer:
@@ -64,7 +66,11 @@ public class Bacteria : MonoBehaviour
                     break;
 
                 case State.Instantiating:
-                    InstantiateObject();
+                    InstantiateProducedMolecule();
+                    if(eaten_count >= 5){
+                        InstantiateBaby();
+                        eaten_count = 0;
+                    }
                     currentState = State.Searching;
                     break;
             }
@@ -143,16 +149,19 @@ public class Bacteria : MonoBehaviour
         if (target != null)
         {
             Destroy(target.gameObject);
+            currentState = State.Timer;
+        }
+        else{
+            currentState = State.Searching;
         }
 
-        currentState = State.Timer;
     }
 
-    private void InstantiateObject()
+    private void InstantiateProducedMolecule()
     {
-        if (prefabToInstantiate != null)
+        if (producedMolecule != null)
         {
-            GameObject newObject = Instantiate(prefabToInstantiate, transform.position, Quaternion.identity);
+            GameObject newObject = Instantiate(producedMolecule, transform.position, Quaternion.identity);
 
             // Disable the Molecule script when instantiating the object
             Molecule moleculeScript = newObject.GetComponent<Molecule>();
@@ -190,6 +199,50 @@ public class Bacteria : MonoBehaviour
             
             moleculeScript.Setup();
             moleculeScript.enabled = true;
+        }
+    }
+
+    private void InstantiateBaby()
+    {
+        if (producedMolecule != null)
+        {
+            GameObject newObject = Instantiate(bacteriaPrefab, transform.position, Quaternion.identity);
+
+            // Disable the Molecule script when instantiating the object
+            Bacteria bacteriaScript = newObject.GetComponent<Bacteria>();
+            if (bacteriaScript != null)
+            {
+                bacteriaScript.enabled = false;
+            }
+
+            // Calculate the direction vector for downward movement
+            Vector2 downwardDirection = Vector2.down;
+
+            // Apply a speed for the downward movement (you can adjust this value)
+            float downwardSpeed = 2.0f;
+
+            // A set distance to stop the object (you can adjust this value)
+            float stopDistance = 1.0f;
+
+            StartCoroutine(MoveDownwardAndStopBaby(newObject, downwardDirection, downwardSpeed, stopDistance, bacteriaScript));
+        }
+    }
+
+    private IEnumerator MoveDownwardAndStopBaby(GameObject obj, Vector2 direction, float speed, float stopDistance, Bacteria bacteriaScript)
+    {
+        while (obj != null && Vector2.Distance(obj.transform.position, transform.position) < stopDistance)
+        {
+            
+            obj.transform.Translate(direction * speed * Time.deltaTime);
+            yield return null;
+        }
+
+        // Re-enable the Molecule script when the object has reached the stopping distance
+        if (bacteriaScript != null)
+        {
+            
+            bacteriaScript.Setup();
+            bacteriaScript.enabled = true;
         }
     }
 }
