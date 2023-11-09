@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlantData
 {
     public enum BlockType {
-        Core, Stem, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub, Nitrate_Intake
+        Core, Stem, Stem_Shoot, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub, Nitrate_Intake
     }
 
     public enum CoreState{
@@ -24,6 +24,12 @@ public class PlantData
         Mid,
         Brown,
         Thick_Brown
+    }
+
+    public enum StemShootState {
+        Baby,
+        Mid,
+        Full
     }
 
     public enum RootBranchState {

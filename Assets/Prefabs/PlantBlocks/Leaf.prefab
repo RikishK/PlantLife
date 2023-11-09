@@ -51,7 +51,7 @@ MonoBehaviour:
   block_name: Plant Block
   parent: {fileID: 0}
   children: []
-  blockType: 3
+  blockType: 4
   SmallLeaf: {fileID: 1874683854, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   MediumLeaf: {fileID: 472517324, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   LargeLeaf: {fileID: 109303484, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 1874683854, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

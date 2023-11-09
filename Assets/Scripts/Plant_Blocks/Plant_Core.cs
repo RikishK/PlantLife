@@ -72,21 +72,62 @@ public class Plant_Core : Plant_Block
 
     private void GrowStem(){
         Debug.Log("Growing Stem");
-        GameObject new_overground_root = Instantiate(stemPrefab, gameObject.transform);
-        new_overground_root.transform.position = overground_sp.position;
-        Plant_Block new_root = new_overground_root.GetComponentInChildren<Plant_Block>();
-        new_root.children = new List<Plant_Block>();
-        new_root.Init();
+        GameObject new_stem_obj = Instantiate(stemPrefab, gameObject.transform);
+        new_stem_obj.transform.position = overground_sp.position;
+        overground_root.transform.parent = new_stem_obj.transform;
+        
+        Plant_Block new_stem_block = new_stem_obj.GetComponentInChildren<Plant_Block>();
+        new_stem_block.Init();
+        
+        Plant_Stem new_plant_stem_block = (Plant_Stem)new_stem_block;
+        switch(coreState){
+            case PlantData.CoreState.Level2:
+                new_plant_stem_block.SetStem(PlantData.StemState.Brown);
+                break;
+            case PlantData.CoreState.Level3:
+                new_plant_stem_block.SetStem(PlantData.StemState.Thick_Brown);
+                break;
+        }
+
         Plant_Block overground_root_block = overground_root.GetComponentInChildren<Plant_Block>();
-        new_root.children.Add(overground_root_block);
-        new_root.AttatchPlantBlock(overground_root_block);
-        overground_root_block.parent = new_root;
-        overground_root.transform.parent = new_root.transform;
-        overground_root = new_overground_root;
+        new_stem_block.children.Add(overground_root_block);
+        new_stem_block.AttatchPlantBlock(overground_root_block);
+        overground_root_block.parent = new_stem_block;
+        new_stem_block.parent = this;
+        overground_root = new_stem_obj;
+
+    }
+
+    protected override bool upgradeConditions(int index)
+    {
+        Debug.Log("Core: " + index);
+        if (index != 0) return true;
+        Plant_Stem base_stem = overground_root.GetComponent<Plant_Stem>();
+        switch (coreState){
+            case PlantData.CoreState.Level1:
+                return true;
+            case PlantData.CoreState.Level2:
+                return base_stem.StemState() == PlantData.StemState.Mid;
+            case PlantData.CoreState.Level3:
+                return base_stem.StemState() == PlantData.StemState.Brown || base_stem.StemState() == PlantData.StemState.Thick_Brown;
+        }
+        return false;
     }
 
     private void LevelUp(){
         Debug.Log("Core leveled up");
+        switch(coreState){
+            case PlantData.CoreState.Level1:
+                coreState = PlantData.CoreState.Level2;
+                break;
+            case PlantData.CoreState.Level2:
+                coreState = PlantData.CoreState.Level3;
+                break;
+        }
+    }
+
+    public PlantData.CoreState CoreState(){
+        return coreState;
     }
 
 }

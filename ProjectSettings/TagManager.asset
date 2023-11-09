@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Molecule
+  - FungiMan
+  - Bacteria
+  - OrganicMatter
   layers:
   - Default
   - TransparentFX

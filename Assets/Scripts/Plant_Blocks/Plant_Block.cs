@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
 
@@ -28,6 +29,12 @@ public class Plant_Block : MonoBehaviour
 
     public virtual void Init(){
         gameManager = FindAnyObjectByType<GameManager>();
+        children = new List<Plant_Block>();
+        InitUpgrades();
+    }
+
+    protected virtual void InitUpgrades(){
+        
     }
 
     public PlantData.BlockType GetBlockType(){
@@ -90,11 +97,15 @@ public class Plant_Block : MonoBehaviour
     }
 
     public virtual List<PlantData.UpgradeData> getUpgrades(){
-        return null;
+        return new List<PlantData.UpgradeData>();
     }
 
     public virtual void AttatchPlantBlock(Plant_Block other){
         
+    }
+
+    public PlantData.BlockType BlockType(){
+        return blockType;
     }
     
 }

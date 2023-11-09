@@ -35,18 +35,19 @@ public class Plant_Leaf : Plant_Block
     }
 
     private void ProduceGlucose(){
+        int height_bonus = (int)transform.position.y / 3;
         switch (leafState){
             case PlantData.LeafState.Small:
-                StartCoroutine(gainText(3, 5));
-                gameManager.GainResource(PlantData.Resource.Glucose, 3);
+                StartCoroutine(gainText(3  + height_bonus, 5));
+                gameManager.GainResource(PlantData.Resource.Glucose, 3 + height_bonus);
                 break;
             case PlantData.LeafState.Medium:
-                StartCoroutine(gainText(10, 8));
-                gameManager.GainResource(PlantData.Resource.Glucose, 10);
+                StartCoroutine(gainText(10  + height_bonus*3, 8));
+                gameManager.GainResource(PlantData.Resource.Glucose, 10 + height_bonus*2);
                 break;
             case PlantData.LeafState.Large:
-                StartCoroutine(gainText(25, 13));
-                gameManager.GainResource(PlantData.Resource.Glucose, 25);
+                StartCoroutine(gainText(25  + height_bonus*5, 13));
+                gameManager.GainResource(PlantData.Resource.Glucose, 25 + height_bonus*3);
                 break;
         }
     }

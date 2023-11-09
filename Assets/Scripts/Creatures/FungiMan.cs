@@ -103,6 +103,7 @@ public class FungiMan : MonoBehaviour
     // Function to interrupt the regular behavior
     public void Interrupt(Vector2 position)
     {
+        Debug.Log("interrupted");
         if(nitrateEaten > 0){
             interruptPosition = position;
             currentState = State.Interrupted;

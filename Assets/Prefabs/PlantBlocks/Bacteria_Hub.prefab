@@ -103,7 +103,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -1616627065, guid: 0861c26fc1d6efd458ebc40861907078, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   block_name: Bacteria Hub
   parent: {fileID: 0}
   children: []
-  blockType: 6
+  blockType: 7
   bacteriaObjA: {fileID: 7266669794023670114, guid: 1834aca72b48e574ba06d486f1a53749, type: 3}
   bacteriaObjB: {fileID: 4456625534640024248, guid: 93b4fda02a3425b4cad5f185670622ef, type: 3}
   bacteriaObjC: {fileID: 3814989144441360883, guid: f52e58f8880d7434c92162751afc25b3, type: 3}

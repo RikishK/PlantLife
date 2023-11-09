@@ -82,7 +82,7 @@ MonoBehaviour:
   block_name: Plant Block
   parent: {fileID: 0}
   children: []
-  blockType: 4
+  blockType: 5
   RegularRootStem: {fileID: -299934401, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
   ThickRootStem: {fileID: -255882284, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
   rootStemRenderer: {fileID: 7520513385639398671}
@@ -188,7 +188,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -299934401, guid: 6ecf8431a816c9c47ba7d0ee66e681a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

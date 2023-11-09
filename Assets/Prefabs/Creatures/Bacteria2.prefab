@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -508491099540206677}
   m_Layer: 0
   m_Name: Bacteria2
-  m_TagString: Untagged
+  m_TagString: Bacteria
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 26629295, guid: bb6088bfba7c358428176ad5d2c9e623, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Molecule
   targetResource: 2
-  searchRange: 5
-  moveSpeed: 1
+  searchRange: 7
+  moveSpeed: 5
   grabDistance: 0.3
   timerDuration: 3
   producedMolecule: {fileID: 1682201457985272602, guid: a24547115b1e3f046baba7fdf0099d43, type: 3}

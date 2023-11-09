@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         resources = new Dictionary<PlantData.Resource, int>(){
-            {PlantData.Resource.Glucose, 300},
-            {PlantData.Resource.Nitrate, 100}
+            {PlantData.Resource.Glucose, 10000},
+            {PlantData.Resource.Nitrate, 10000}
         };
         GlucoseText.text = $"Glucose: {resources[PlantData.Resource.Glucose]}";
         NitrateText.text = $"Nitrate: {resources[PlantData.Resource.Nitrate]}";

@@ -58,6 +58,7 @@ public class Bacteria : MonoBehaviour
                 case State.Grabbing:
                     GrabTarget();
                     eaten_count++;
+                    moveSpeed = 5f - 0.8f * eaten_count;
                     break;
 
                 case State.Timer:
@@ -70,6 +71,7 @@ public class Bacteria : MonoBehaviour
                     if(eaten_count >= 5){
                         InstantiateBaby();
                         eaten_count = 0;
+                        moveSpeed = 5f;
                     }
                     currentState = State.Searching;
                     break;
