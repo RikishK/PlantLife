@@ -83,12 +83,17 @@ public class Plant_Stem_Shoot : Plant_Block
 
     protected override void growBlock()
     {
+        Plant_Stem child_stem = (Plant_Stem)children[0];
         switch (stemShootState){
             case PlantData.StemShootState.Baby:
                 stemShootState = PlantData.StemShootState.Mid;
+                child_stem.SetStem(PlantData.StemState.Mid);
                 break;
             case PlantData.StemShootState.Mid:
                 stemShootState = PlantData.StemShootState.Full;
+                child_stem.SetStem(PlantData.StemState.BrownStem);
+                Plant_Stem grandchild_stem = (Plant_Stem)child_stem.children[0];
+                grandchild_stem.SetStem(PlantData.StemState.Mid);
                 break;
         }
         RenderShoot();
@@ -118,10 +123,10 @@ public class Plant_Stem_Shoot : Plant_Block
         newStemObj.transform.parent = extensionPoint;
 
         Plant_Block newStemBlock = newStemObj.GetComponent<Plant_Block>();
+        newStemBlock.Init();
         newStemBlock.AttatchPlantBlock(children[0]);
         children[0] = newStemBlock;
         newStemBlock.parent = this;
-        newStemBlock.Init();
 
 
         Plant_Stem newStem = (Plant_Stem)newStemBlock;
@@ -130,7 +135,7 @@ public class Plant_Stem_Shoot : Plant_Block
                 newStem.SetStem(PlantData.StemState.Mid);
                 break;
             case PlantData.StemShootState.Full:
-                newStem.SetStem(PlantData.StemState.Brown);
+                newStem.SetStem(PlantData.StemState.BrownLink);
                 break;
         }
     }
@@ -145,6 +150,30 @@ public class Plant_Stem_Shoot : Plant_Block
                 return upgrades.GetRange(4, 1);
         }
         return new List<PlantData.UpgradeData>();
+    }
+
+    protected override bool upgradeConditions(int index)
+    {
+        switch (stemShootState){
+            case PlantData.StemShootState.Baby:
+                if(index == 0) return true;
+                else if(index == 1) return children[0].BlockType() == PlantData.BlockType.Stem;
+                break;
+            case PlantData.StemShootState.Mid:
+                if(index == 0) return true;
+                else if(index == 1){
+                    if (children[0].BlockType() == PlantData.BlockType.Stem){
+                        Plant_Stem child_stem = (Plant_Stem)children[0];
+                        Debug.Log(child_stem.children[0]);
+                        return child_stem.StemState() == PlantData.StemState.Mid && child_stem.children[0].BlockType() == PlantData.BlockType.Stem;
+                    }
+                }
+                break;
+            case PlantData.StemShootState.Full:
+                if(index == 0) return true;
+                break;
+        }
+        return false;
     }
 
     private void RenderShoot(){

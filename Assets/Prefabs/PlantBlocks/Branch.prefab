@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 674338440801905725}
   m_Layer: 0
   m_Name: Branch
-  m_TagString: Untagged
+  m_TagString: PlantBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

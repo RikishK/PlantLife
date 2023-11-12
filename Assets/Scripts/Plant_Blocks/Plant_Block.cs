@@ -57,7 +57,6 @@ public class Plant_Block : MonoBehaviour
         {
             UnHighlight();
             gameManager = FindObjectOfType<GameManager>();
-            Debug.Log(gameManager);
             gameManager.current_selection = this;
             gameManager.ShowUpgrades(getUpgrades(), block_name);
         }
@@ -84,7 +83,6 @@ public class Plant_Block : MonoBehaviour
     }
 
     public void Upgrade(int index){
-        Debug.Log("Upgrading " + block_name);
         performUpgrade(index);
     }
 

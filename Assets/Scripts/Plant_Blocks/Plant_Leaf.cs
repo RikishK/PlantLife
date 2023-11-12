@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class Plant_Leaf : Plant_Block
@@ -15,6 +16,7 @@ public class Plant_Leaf : Plant_Block
     [SerializeField] private BoxCollider2D leafCollider2D;
     [SerializeField] private GameObject glucosePopupText;
     [SerializeField] private Transform textSpot;
+    private int nitrate_value  = 0;
 
     private void Start() {
         lastGlucoseProducedTime = Time.time;
@@ -38,14 +40,17 @@ public class Plant_Leaf : Plant_Block
         int height_bonus = (int)transform.position.y / 3;
         switch (leafState){
             case PlantData.LeafState.Small:
+                nitrate_value += 1;
                 StartCoroutine(gainText(3  + height_bonus, 5));
                 gameManager.GainResource(PlantData.Resource.Glucose, 3 + height_bonus);
                 break;
             case PlantData.LeafState.Medium:
+                nitrate_value += 3;
                 StartCoroutine(gainText(10  + height_bonus*3, 8));
                 gameManager.GainResource(PlantData.Resource.Glucose, 10 + height_bonus*2);
                 break;
             case PlantData.LeafState.Large:
+                nitrate_value += 10;
                 StartCoroutine(gainText(25  + height_bonus*5, 13));
                 gameManager.GainResource(PlantData.Resource.Glucose, 25 + height_bonus*3);
                 break;
@@ -121,5 +126,28 @@ public class Plant_Leaf : Plant_Block
     protected override void UnHighlight()
     {
         leafRenderer.color = originalColor;
+    }
+
+    public int EatLeaf(int max_intake){
+        int intake = Mathf.Min(max_intake, nitrate_value);
+        switch(leafState){
+            case PlantData.LeafState.Medium:
+                leafState = PlantData.LeafState.Small;
+                RenderLeaf();
+                UpdateLeafCollider();
+                nitrate_value -= intake;
+                return intake;
+            case PlantData.LeafState.Large:
+                leafState = PlantData.LeafState.Medium;
+                RenderLeaf();
+                UpdateLeafCollider();
+                nitrate_value -= intake;
+                return intake;
+        }
+        return 0;
+    }
+
+    public PlantData.LeafState LeafState(){
+        return leafState;
     }
 }

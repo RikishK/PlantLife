@@ -25,4 +25,13 @@ public class Organic_Matter : MonoBehaviour
     public int Harvest(){
         return nitrate_per_bite;
     }
+
+    public void Setup(int nitrate_per_bite){
+        this.nitrate_per_bite = nitrate_per_bite;
+    }
+
+    private void Update() {
+        float moveSpeed = transform.position.y > -1f ? 2.0f: 0.01f;
+        transform.Translate(Vector3.down * moveSpeed * Time.deltaTime);
+    }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Plant_Stem : Plant_Block
 { 
     private PlantData.StemState stemState = PlantData.StemState.Green;
-    [SerializeField] private Sprite GreenStem, MidStem, BrownStem, ThickBrownStem;
+    [SerializeField] private Sprite GreenStem, MidStem, BrownStem, BrownLinkStem, ThickBrownStem;
     [SerializeField] private SpriteRenderer stemRenderer;
     [SerializeField] private PlantData.StemCollider[] stemColliders;
     [SerializeField] private BoxCollider2D stemCollider2D;
@@ -16,15 +16,22 @@ public class Plant_Stem : Plant_Block
 
     [SerializeField] private GameObject stemShoot;
 
-    private bool hasShoot = false;
+    private int shootCount = 0;
 
     private void Start() {
         block_name = "Stem";
+    }
+
+    protected override void InitUpgrades()
+    {
+        base.InitUpgrades();
         upgrades = new List<PlantData.UpgradeData>(){
             new PlantData.UpgradeData("Thicken", 100, PlantData.Resource.Nitrate),
             new PlantData.UpgradeData("Thicken", 200, PlantData.Resource.Nitrate),
+            new PlantData.UpgradeData("Grow Shoot", 200, PlantData.Resource.Nitrate),
+            new PlantData.UpgradeData("Thicken", 300, PlantData.Resource.Nitrate),
             new PlantData.UpgradeData("Thicken", 400, PlantData.Resource.Nitrate),
-            new PlantData.UpgradeData("Grow Shoot", 600, PlantData.Resource.Nitrate),
+            new PlantData.UpgradeData("Grow Shoot", 200, PlantData.Resource.Nitrate),
         };
     }
     protected override void growBlock()
@@ -34,9 +41,12 @@ public class Plant_Stem : Plant_Block
                 stemState = PlantData.StemState.Mid;
                 break;
             case PlantData.StemState.Mid:
-                stemState = PlantData.StemState.Brown;
+                stemState = PlantData.StemState.BrownStem;
                 break;
-            case PlantData.StemState.Brown:
+            case PlantData.StemState.BrownStem:
+                stemState = PlantData.StemState.BrownLink;
+                break;
+            case PlantData.StemState.BrownLink:
                 stemState = PlantData.StemState.Thick_Brown;
                 break;
             case PlantData.StemState.Thick_Brown:
@@ -54,8 +64,11 @@ public class Plant_Stem : Plant_Block
             case PlantData.StemState.Mid:
                 stemRenderer.sprite = MidStem;
                 break;
-            case PlantData.StemState.Brown:
+            case PlantData.StemState.BrownStem:
                 stemRenderer.sprite = BrownStem;
+                break;
+            case PlantData.StemState.BrownLink:
+                stemRenderer.sprite = BrownLinkStem;
                 break;
             case PlantData.StemState.Thick_Brown:
                 stemRenderer.sprite = ThickBrownStem;
@@ -91,13 +104,17 @@ public class Plant_Stem : Plant_Block
                 growBlock();
                 if(parent.BlockType() == PlantData.BlockType.Stem){
                     Plant_Stem parent_stem = (Plant_Stem)parent;
-                    parent_stem.SetStem(PlantData.StemState.Brown);
+                    parent_stem.SetStem(PlantData.StemState.BrownStem);
                 }
                 break;
             case PlantData.StemState.Mid:
                 growBlock();
                 break;
-            case PlantData.StemState.Brown:
+            case PlantData.StemState.BrownStem:
+                if (index == 0) growShoot();
+                if (index == 1) growBlock();
+                break;
+            case PlantData.StemState.BrownLink:
                 growBlock();
                 break;
             case PlantData.StemState.Thick_Brown:
@@ -114,6 +131,7 @@ public class Plant_Stem : Plant_Block
         children.Add(stemShootBlock);
         stemShootBlock.parent = this;
         stemShootBlock.Init();
+        shootCount++;
     }
 
     public override List<PlantData.UpgradeData> getUpgrades()
@@ -121,10 +139,12 @@ public class Plant_Stem : Plant_Block
         switch (stemState){
             case PlantData.StemState.Green:
                 return upgrades.GetRange(0, 1);
-            case PlantData.StemState.Brown:
-                return upgrades.GetRange(2, 1);
+            case PlantData.StemState.BrownStem:
+                return upgrades.GetRange(2, 2);
+            case PlantData.StemState.BrownLink:
+                return upgrades.GetRange(4, 1);
             case PlantData.StemState.Thick_Brown:
-                return upgrades.GetRange(3, 1);
+                return upgrades.GetRange(5, 1);
         }
         return new List<PlantData.UpgradeData>();
     }
@@ -136,10 +156,14 @@ public class Plant_Stem : Plant_Block
                 return CheckParentCondition();
             case PlantData.StemState.Mid:
                 return false;
-            case PlantData.StemState.Brown:
+            case PlantData.StemState.BrownStem:
+                if (index == 0) return shootCount < 2;
+                if (index == 1) CheckParentCondition();
+                break;
+            case PlantData.StemState.BrownLink:
                 return CheckParentCondition();
             case PlantData.StemState.Thick_Brown:
-                return !hasShoot;
+                return shootCount < 2;
         }
         return false;
     }
@@ -150,8 +174,10 @@ public class Plant_Stem : Plant_Block
             switch (stemState){
                 case PlantData.StemState.Green:
                     return parentStemBlock.StemState() == PlantData.StemState.Mid; 
-                case PlantData.StemState.Brown:
-                    return parentStemBlock.StemState() == PlantData.StemState.Thick_Brown; 
+                case PlantData.StemState.BrownStem:
+                    return parentStemBlock.StemState() == PlantData.StemState.BrownLink; 
+                case PlantData.StemState.BrownLink:
+                    return parentStemBlock.StemState() == PlantData.StemState.Thick_Brown;
             }
         }
         else if(parent.BlockType() == PlantData.BlockType.Core){
@@ -159,7 +185,9 @@ public class Plant_Stem : Plant_Block
             switch (stemState){
                 case PlantData.StemState.Green:
                     return parentStemBlock.CoreState() == PlantData.CoreState.Level2 || parentStemBlock.CoreState() == PlantData.CoreState.Level3; 
-                case PlantData.StemState.Brown:
+                case PlantData.StemState.BrownStem:
+                    return parentStemBlock.CoreState() == PlantData.CoreState.Level2 || parentStemBlock.CoreState() == PlantData.CoreState.Level3;  
+                case PlantData.StemState.BrownLink:
                     return parentStemBlock.CoreState() == PlantData.CoreState.Level3; 
             }
         }

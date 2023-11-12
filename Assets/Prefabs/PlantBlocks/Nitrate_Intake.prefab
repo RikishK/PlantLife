@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1972444492056627953}
   m_Layer: 0
   m_Name: Nitrate_Intake
-  m_TagString: Untagged
+  m_TagString: PlantBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +53,6 @@ MonoBehaviour:
   children: []
   blockType: 8
   extensionPoint: {fileID: 6857573143464163104}
-  fungiManTag: FungiMan
   nitrateIntakeRenderer: {fileID: 6418615396963993436}
 --- !u!61 &1972444492056627953
 BoxCollider2D:

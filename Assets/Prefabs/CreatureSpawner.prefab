@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4789737387762476415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5477981144427262159}
+  - component: {fileID: 213791349957215957}
+  m_Layer: 0
+  m_Name: CreatureSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5477981144427262159
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789737387762476415}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &213791349957215957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789737387762476415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab01cad26fc192488aa38be5810ac1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnDatas:
+  - creatureObject: {fileID: 2574440101272463747, guid: 5a7ba5abfe1b966498f9df260a2ec8ab, type: 3}
+    spawnChance: 30
+    spawnConditions:
+    - spawnConditionName: Aphid Basic Condition
+      plantCondition:
+        plantBlockType: 4
+        constriction: 1
+        constrictionConstants: 03000000
+      worldCreaturesCondition:
+        creatureType: 0
+        constriction: 0
+        worldCreatureConditionConstants: 01000000
+      spawnBehaviour:
+        conditionType: 0
+        plantBasedSpawnAlgorithm:
+          algorithmExecutions: 02000000
+          algorithmConstants: 03000000
+          targetBlock: 4
+        spawnLocationType: 0
+        targetSpawnBlock: 4
+        spawnXLimits: 
+        spawnYLimits: 
+  gameManager: {fileID: 0}
+  plant_Core: {fileID: 0}

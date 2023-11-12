@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7075755728616686481}
   m_Layer: 0
   m_Name: Stem
-  m_TagString: Untagged
+  m_TagString: PlantBlock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,26 +55,31 @@ MonoBehaviour:
   blockType: 1
   GreenStem: {fileID: 2069512383, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   MidStem: {fileID: -1114791718, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
-  BrownStem: {fileID: -323862105, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
+  BrownStem: {fileID: 21300000, guid: c7549d851a80f3c4f873c535e3a4c5a7, type: 3}
+  BrownLinkStem: {fileID: -323862105, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   ThickBrownStem: {fileID: -1965784922, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   stemRenderer: {fileID: 5971199048525296598}
   stemColliders:
   - stemState: 0
     plantCollider:
       size: {x: 0.18, y: 1}
-      offset: {x: 0, y: 0}
+      offset: {x: 0, y: 0.5}
   - stemState: 1
     plantCollider:
       size: {x: 0.46, y: 1}
-      offset: {x: 0, y: 0}
+      offset: {x: 0, y: 0.5}
   - stemState: 2
     plantCollider:
-      size: {x: 1, y: 1}
-      offset: {x: 0, y: 0}
+      size: {x: 0.46, y: 1}
+      offset: {x: 0, y: 0.5}
   - stemState: 3
     plantCollider:
       size: {x: 1, y: 1}
-      offset: {x: 0, y: 0}
+      offset: {x: 0, y: 0.5}
+  - stemState: 4
+    plantCollider:
+      size: {x: 1, y: 1}
+      offset: {x: 0, y: 0.5}
   stemCollider2D: {fileID: 7075755728616686481}
   extensionPoint: {fileID: 2277318836375408230}
   stemShootExtensionPoint: {fileID: 4189986196461957644}

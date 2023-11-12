@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3488781058215973048}
   m_Layer: 0
   m_Name: Bacteria3
-  m_TagString: Bacteria
+  m_TagString: Creature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a674971e9f39d924ca1f6dacc886273c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  creatureType: 3
   targetTag: Molecule
   targetResource: 3
   searchRange: 7

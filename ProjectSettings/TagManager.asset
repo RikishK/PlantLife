@@ -8,6 +8,8 @@ TagManager:
   - FungiMan
   - Bacteria
   - OrganicMatter
+  - Creature
+  - PlantBlock
   layers:
   - Default
   - TransparentFX

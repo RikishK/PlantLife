@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Worm : MonoBehaviour
+public class Worm : Creature
 {
     public float satedTimer = 40.0f;
     public float hungryTimerOrganicMatter = 60.0f;
@@ -105,7 +105,7 @@ public class Worm : MonoBehaviour
                     if (starveTimer >= 20){
                         Destroy(gameObject);
                     }
-                    target = FindClosestObjectWithTag("Bacteria");
+                    target = FindClosestBacteria();
                     if (target == null){
                         currentState = State.HungryOrganicMatter;
                     }
@@ -125,6 +125,26 @@ public class Worm : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    private GameObject FindClosestBacteria(){
+        GameObject[] creatures = GameObject.FindGameObjectsWithTag("Creature");
+        List<GameObject> bacteriaList = new List<GameObject>();
+        foreach(GameObject creature in creatures){
+            Creature creatureScript = creature.GetComponent<Creature>();
+            if (creatureScript.creatureType == CreatureSpawnData.CreatureType.Bacteria) bacteriaList.Add(creature);
+        }
+
+        float closest_distance = float.MaxValue;
+        GameObject closest_bacteria = null;
+        foreach(GameObject bacteria in bacteriaList){
+            float distance = Vector3.Distance(transform.position, bacteria.transform.position);
+            if(distance <= closest_distance){
+                closest_distance = distance;
+                closest_bacteria = bacteria;
+            }
+        }
+        return closest_bacteria;
     }
     
      private Vector3 GetRandomDestination()

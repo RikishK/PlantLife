@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FungiMan : MonoBehaviour
+public class FungiMan : Creature
 {
     private enum State
     {

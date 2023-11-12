@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bacteria : MonoBehaviour
+public class Bacteria : Creature
 {
     public string targetTag = "Target"; // The tag of the object to search for
     public PlantData.Resource targetResource;

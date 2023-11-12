@@ -22,7 +22,8 @@ public class PlantData
     public enum StemState {
         Green,
         Mid,
-        Brown,
+        BrownStem,
+        BrownLink,
         Thick_Brown
     }
 
