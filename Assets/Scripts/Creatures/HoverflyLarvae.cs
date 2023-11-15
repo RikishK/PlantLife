@@ -43,13 +43,19 @@ public class HoverflyLarvae : Creature
         
     }
 
-    private void MoveRandom()
+    private void MoveRandom(float timeOverride = 0f)
     {
         // Generate a random direction (left or right)
         int randomDirection = Random.Range(0, 2) * 2 - 1; // -1 for left, 1 for right
         float moveDistance = distance * Random.Range(0f, 2f);
-        // Calculate the target position based on the random direction and distance
-        Vector2 targetPosition = new Vector2(transform.position.x + randomDirection * moveDistance, transform.position.y);
+        // Calculate the movement vector based on the random direction and distance
+        Vector2 movementVector = new Vector2(randomDirection * moveDistance, 0f);
+
+        // Transform the movement vector based on the object's current rotation
+        movementVector = transform.rotation * movementVector;
+
+        // Calculate the target position based on the rotated movement vector
+        Vector2 targetPosition = new Vector2(transform.position.x + movementVector.x, transform.position.y + movementVector.y);
 
         // Flip the sprite renderer if moving right
         if (randomDirection == 1)
@@ -63,20 +69,38 @@ public class HoverflyLarvae : Creature
         }
 
         // Move the object to the target position
-        StartCoroutine(MoveObject(targetPosition));
+        StartCoroutine(MoveObject(targetPosition, timeOverride));
     }
 
-    private IEnumerator MoveObject(Vector2 targetPosition)
+    private IEnumerator MoveObject(Vector2 targetPosition, float timeOverride = 0f)
     {
-        float elapsedTime = 0f;
+        float elapsedTime = timeOverride;
         Vector2 startingPosition = transform.position;
 
         while (elapsedTime < moveSpeed)
         {
-            transform.position = Vector2.Lerp(startingPosition, targetPosition, elapsedTime / moveSpeed);
-            elapsedTime += Time.deltaTime;
+            // Calculate the new position
+            Vector2 newPosition = Vector2.Lerp(startingPosition, targetPosition, elapsedTime / moveSpeed);
+
+            // Clamp the Y coordinate to prevent going below a certain limit
+            newPosition.y = Mathf.Max(newPosition.y, -0.95f);
+
+            // Update the object's position
+            transform.position = newPosition;
+
+            // Check for wall and handle rotation
             if (CheckForWall()) break;
+
+            elapsedTime += Time.deltaTime;
             yield return null;
+        }
+
+        if (elapsedTime < moveSpeed) MoveRandom(elapsedTime);
+
+        // If the object goes below the limit, reset its rotation to 0
+        if (transform.position.y <= -0.95f)
+        {
+            transform.rotation = Quaternion.identity;
         }
 
     }
@@ -84,25 +108,17 @@ public class HoverflyLarvae : Creature
     private bool CheckForWall()
     {
         // Check if there is a wall (Collider2D with "PlantBlock" tag) in front of the object
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left * (isFacingRight ? -1 : 1), 0.1f, plantBlockLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left * (isFacingRight ? -1 : 1)), 0.1f, plantBlockLayer);
         if (hit.collider != null)
         {
             Debug.Log("Hit Wall");
-            // Calculate the angle between the object's current up direction and the wall's normal
-            //float angle = Mathf.Atan2(hit.normal.y, hit.normal.x) * Mathf.Rad2Deg;
-            //float angle = Mathf.Atan2(hit.point.y - transform.position.y, hit.point.x - transform.position.x) * Mathf.Rad2Deg;
+            
             float angle = Mathf.Atan2(-hit.normal.x, hit.normal.y) * Mathf.Rad2Deg;
             Debug.Log(angle);
 
             // Rotate the object to match the wall's orientation    
             transform.rotation = Quaternion.Euler(0f, 0f, angle);
 
-            // Calculate the target position on the wall's surface based on the angle
-            // Vector2 targetPosition = new Vector2(hit.point.x + Mathf.Cos(angle * Mathf.Deg2Rad) * distance,
-            //                                     hit.point.y + Mathf.Sin(angle * Mathf.Deg2Rad) * distance);
-
-            // Move to the target position on the wall
-            //StartCoroutine(MoveObject(targetPosition));
             return true;
         }
         else
