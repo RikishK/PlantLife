@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4195943744305722837}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: extensionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2566513775157625515}
   - component: {fileID: 5364484944229954460}
   - component: {fileID: 8976387424397578537}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RootStem
   m_TagString: PlantBlock
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3246622194985664345}
   - component: {fileID: 7520513385639398671}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RootStemRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

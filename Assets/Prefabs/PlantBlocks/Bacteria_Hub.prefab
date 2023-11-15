@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1692573075658586638}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: spawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7234959032776322602}
   - component: {fileID: 2818728507802300161}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: hubRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4179476625939694330}
   - component: {fileID: 6796274858734289450}
   - component: {fileID: 1568958818817473065}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bacteria_Hub
   m_TagString: PlantBlock
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7559059548435567113}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: extensionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

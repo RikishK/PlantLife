@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3814360378081994869}
   - component: {fileID: 3387380473982872583}
   - component: {fileID: 1039406609075149151}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Core
   m_TagString: PlantBlock
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7448478488232959745}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Overground_Spawn_Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
