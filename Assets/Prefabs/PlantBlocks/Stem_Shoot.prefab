@@ -174,7 +174,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.18, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &23174059778723346
 MonoBehaviour:
@@ -197,6 +197,20 @@ MonoBehaviour:
   babyShoot: {fileID: -1114791718, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   midShoot: {fileID: -323862105, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   fullShoot: {fileID: -1965784922, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
+  stemShootColliders:
+  - stemShootState: 0
+    plantCollider:
+      size: {x: 0.18, y: 1}
+      offset: {x: 0, y: 0.5}
+  - stemShootState: 1
+    plantCollider:
+      size: {x: 0.46, y: 1}
+      offset: {x: 0, y: 0.5}
+  - stemShootState: 2
+    plantCollider:
+      size: {x: 1, y: 1}
+      offset: {x: 0, y: 0.5}
+  stemShootCollider2D: {fileID: 13366422466055064}
   branch: {fileID: 3637612974281435795, guid: cb4bbc198f86eb9409b2538915f665c1, type: 3}
   stem: {fileID: 21428320679031848, guid: 8242c8b6dae0b6a4fbb787db6b5fd43f, type: 3}
   extensionPoint: {fileID: 2171346612129481399}

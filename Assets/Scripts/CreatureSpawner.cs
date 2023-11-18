@@ -25,9 +25,26 @@ public class CreatureSpawner : MonoBehaviour
         while(true){
             foreach(CreatureSpawnData.SpawnData spawnData in spawnDatas){
                 foreach(CreatureSpawnData.SpawnCondition spawnCondition in spawnData.spawnConditions){
-                    bool plant_condition_met = CheckPlantCondition(spawnCondition.plantCondition);
-                    bool world_condition_met = CheckWorldCreatureCondition(spawnCondition.worldCreaturesCondition);
-                    if(plant_condition_met && world_condition_met){
+                    bool plant_conditions_met = true;
+                    // Loop through all plant_conditions and make sure they are met
+                    foreach (CreatureSpawnData.PlantCondition plantCondition in spawnCondition.plantConditions){
+                        if (!CheckPlantCondition(plantCondition)){
+                            plant_conditions_met = false;
+                            break;
+                        }
+                    }
+
+                    bool world_conditions_met = true;
+                    // Loop through all plant_conditions and make sure they are met
+                    foreach (CreatureSpawnData.WorldCreaturesCondition worldCreaturesCondition in spawnCondition.worldCreaturesConditions){
+                        if (!CheckWorldCreatureCondition(worldCreaturesCondition)){
+                            world_conditions_met = false;
+                            break;
+                        }
+                    }
+
+
+                    if(plant_conditions_met && world_conditions_met){
                         int chance = Random.Range(1, 101);
                         if (chance <= spawnData.spawnChance){
                             // Gather spawn behaviour data and determine how much to spawn
@@ -43,11 +60,13 @@ public class CreatureSpawner : MonoBehaviour
     }
 
     private bool CheckPlantCondition(CreatureSpawnData.PlantCondition plant_condition){
+        if (!plant_condition.use) return true;
         int target_block_count = CountPlantBlock(plant_condition.plantBlockType);
         return EvaluateCondition(plant_condition.constriction, target_block_count, plant_condition.constrictionConstants);
     }
 
     private bool CheckWorldCreatureCondition(CreatureSpawnData.WorldCreaturesCondition world_creature_condition){
+        if (!world_creature_condition.use) return true;
         int creature_count = CountCreature(world_creature_condition.creatureType);
         return EvaluateCondition(world_creature_condition.constriction, creature_count, world_creature_condition.worldCreatureConditionConstants);
     }
@@ -86,6 +105,10 @@ public class CreatureSpawner : MonoBehaviour
             spawn_count = SpawnCountPlantBased(spawnBehaviour.plantBasedSpawnAlgorithm);
             SpawnCreatures(spawn_count, spawnBehaviour, spawnCreature);
         }
+        else if(spawnBehaviour.conditionType == CreatureSpawnData.ConditionType.World_Creatures_Based){
+            spawn_count = SpawnCountWorldCreatureBased(spawnBehaviour.worldCreatureBasedSpawnAlgorithm);
+            SpawnCreatures(spawn_count, spawnBehaviour, spawnCreature);
+        }
 
     }
 
@@ -97,6 +120,14 @@ public class CreatureSpawner : MonoBehaviour
                     Plant_Block random_block = valid_blocks[Random.Range(0, valid_blocks.Count)];
                     GameObject creature = Instantiate(spawnCreature);
                     creature.transform.position = random_block.transform.position;
+                }
+                break;
+            case CreatureSpawnData.SpawnLocationType.randomInArea:
+                for(int i=0; i<count; i++){
+                    GameObject creature = Instantiate(spawnCreature);
+                    float random_x = Random.Range(spawnBehaviour.spawnXLimits[0], spawnBehaviour.spawnXLimits[1]);
+                    float random_y = Random.Range(spawnBehaviour.spawnYLimits[0], spawnBehaviour.spawnYLimits[1]);
+                    creature.transform.position = new Vector3(random_x, random_y, 0f);
                 }
                 break;
         }
@@ -118,6 +149,36 @@ public class CreatureSpawner : MonoBehaviour
                     break;
                 case CreatureSpawnData.AlgorithmExecution.Multiply:
                     algorithmEvaluation = algorithmEvaluation * plantBasedSpawnAlgorithm.algorithmConstants[i];
+                    break;
+            }
+        }
+        return algorithmEvaluation;
+    }
+
+    private int SpawnCountWorldCreatureBased(CreatureSpawnData.WorldCreatureBasedSpawnAlgorithm worldCreatureBasedSpawnAlgorithm){
+        GameObject[] creature_objects = GameObject.FindGameObjectsWithTag("Creature");
+        int creature_count = 0;
+        foreach(GameObject creature_object in creature_objects){
+            Creature creatureScript = creature_object.GetComponent<Creature>();
+            if (creatureScript != null && creatureScript.creatureType == worldCreatureBasedSpawnAlgorithm.creatureType){
+                creature_count++;
+            }
+        }
+
+        int algorithmEvaluation = creature_count;
+        for(int i=0; i<worldCreatureBasedSpawnAlgorithm.algorithmExecutions.Length; i++){
+            switch(worldCreatureBasedSpawnAlgorithm.algorithmExecutions[i]){
+                case CreatureSpawnData.AlgorithmExecution.Plus:
+                    algorithmEvaluation += worldCreatureBasedSpawnAlgorithm.algorithmConstants[i];
+                    break;
+                case CreatureSpawnData.AlgorithmExecution.Minus:
+                    algorithmEvaluation -= worldCreatureBasedSpawnAlgorithm.algorithmConstants[i];
+                    break;
+                case CreatureSpawnData.AlgorithmExecution.Divide:
+                    algorithmEvaluation = algorithmEvaluation / worldCreatureBasedSpawnAlgorithm.algorithmConstants[i];
+                    break;
+                case CreatureSpawnData.AlgorithmExecution.Multiply:
+                    algorithmEvaluation = algorithmEvaluation * worldCreatureBasedSpawnAlgorithm.algorithmConstants[i];
                     break;
             }
         }

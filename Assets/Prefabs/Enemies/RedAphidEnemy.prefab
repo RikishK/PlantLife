@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 1110413194058779445}
   - component: {fileID: 1994686261025886617}
   - component: {fileID: 326980697948788775}
-  - component: {fileID: 2404653909511342965}
-  m_Layer: 8
-  m_Name: Aphid
-  m_TagString: Creature
+  - component: {fileID: 930094565610885556}
+  m_Layer: 9
+  m_Name: RedAphidEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -73,11 +73,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1772082415
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: -742503204, guid: 1c76e07dc43452743ad4c8b252eafb8b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.3254717, b: 0.3254717, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -133,7 +133,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3, y: 0.26}
   m_EdgeRadius: 0
---- !u!114 &2404653909511342965
+--- !u!114 &930094565610885556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,9 +142,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2574440101272463747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4447eabf5f9765146843b00e993250e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 58df785fc521d3147a80c528a6156336, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatureType: 0
-  deadAphid: {fileID: 8197603156342361598, guid: 8d98eab29508c57429b587b39abe3387, type: 3}
-  AphidObj: {fileID: 2574440101272463747}
+  enemyType: 0
+  moveSpeed: 3
+  attackRange: 1
+  attackSpeed: 0.5
+  attackDamageWait: 1
+  attackDamage: 2
+  health: 20
+  DamageIndicatorPrefab: {fileID: 5496796993041010739, guid: 3d6fdf8c7cb0c6642a5ed22d4b174429, type: 3}

@@ -14,8 +14,8 @@ public class CreatureSpawnData
     [System.Serializable]
     public class SpawnCondition{
         public string spawnConditionName;
-        public PlantCondition plantCondition;
-        public WorldCreaturesCondition worldCreaturesCondition;
+        public PlantCondition[] plantConditions;
+        public WorldCreaturesCondition[] worldCreaturesConditions;
 
         public SpawnBehaviour spawnBehaviour;
     }
@@ -27,7 +27,7 @@ public class CreatureSpawnData
 
     [System.Serializable]
     public class Condition {
-
+        public bool use = false;
     }
 
     [System.Serializable]
@@ -58,9 +58,10 @@ public class CreatureSpawnData
     public class SpawnBehaviour {
         public ConditionType conditionType;
         public PlantBasedSpawnAlgorithm plantBasedSpawnAlgorithm;
+        public WorldCreatureBasedSpawnAlgorithm worldCreatureBasedSpawnAlgorithm;
         public SpawnLocationType spawnLocationType;
         public PlantData.BlockType targetSpawnBlock;
-        public int[] spawnXLimits, spawnYLimits;
+        public float[] spawnXLimits, spawnYLimits;
     }
 
     [System.Serializable]
@@ -72,6 +73,11 @@ public class CreatureSpawnData
     [System.Serializable]
     public class PlantBasedSpawnAlgorithm : SpawnAlgorithm  {
         public PlantData.BlockType targetBlock;
+    }
+
+    [System.Serializable]
+    public class WorldCreatureBasedSpawnAlgorithm : SpawnAlgorithm {
+        public CreatureType creatureType;
     }
 
     public enum AlgorithmExecution {

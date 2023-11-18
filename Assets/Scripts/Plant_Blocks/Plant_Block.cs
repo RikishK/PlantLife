@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class Plant_Block : MonoBehaviour
     public Plant_Block parent;
     public List<Plant_Block> children;
     protected List<PlantData.UpgradeData> upgrades;
+    [SerializeField] protected int health = 100;
     [SerializeField] protected PlantData.BlockType blockType;
 
     protected Color hoverTint = Color.red, originalColor = Color.white;
@@ -25,6 +27,16 @@ public class Plant_Block : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void TakeDamage(int damage){
+        Debug.Log("Plant Block: " + block_name + " is taking damage: " + damage);
+        health -= damage;
+        if (health <= 0) DestroyBlock();
+    }
+
+    protected virtual void DestroyBlock(){
+        Debug.Log("Block Destroyed: " + block_name);
     }
 
     public virtual void Init(){
@@ -61,6 +73,7 @@ public class Plant_Block : MonoBehaviour
             gameManager.ShowUpgrades(getUpgrades(), block_name);
         }
     }
+
 
     private void OnMouseExit() {
         UnHighlight();

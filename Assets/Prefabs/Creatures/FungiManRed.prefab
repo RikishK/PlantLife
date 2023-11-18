@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8737921105608183017}
   - component: {fileID: 5970117941674379931}
   - component: {fileID: 6488106733280673686}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FungiManRed
   m_TagString: Creature
   m_Icon: {fileID: 0}

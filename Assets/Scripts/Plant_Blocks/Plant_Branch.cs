@@ -7,15 +7,16 @@ public class Plant_Branch : Plant_Block
     private PlantData.BranchState branchState = PlantData.BranchState.Small_Nub;
     [SerializeField] private Sprite SmallNubBranch, GrowingBranchA, GrowingBranchB, GrownNubBranch;
     [SerializeField] private SpriteRenderer branchRenderer;
-    [SerializeField] private Transform leaf_spawn_point_A, leaf_spawn_point_B;
-    [SerializeField] private GameObject LeafPrefab;
+    [SerializeField] private Transform leaf_spawn_point_A, leaf_spawn_point_B, flower_bud_spawn_point;
+    [SerializeField] private GameObject LeafPrefab, FlowerBudPrefab;
 
     private void Start() {
         block_name = "Branch";
         upgrades = new List<PlantData.UpgradeData>(){
             new PlantData.UpgradeData("Begin Growing Leaves", 20, PlantData.Resource.Nitrate),
             new PlantData.UpgradeData("Grow Leaves", 20, PlantData.Resource.Nitrate),
-            new PlantData.UpgradeData("Finish Growing Leaves", 20, PlantData.Resource.Nitrate)
+            new PlantData.UpgradeData("Finish Growing Leaves", 20, PlantData.Resource.Nitrate),
+            new PlantData.UpgradeData("Grow Flower", 20, PlantData.Resource.Nitrate)
         };
                
     }
@@ -34,6 +35,7 @@ public class Plant_Branch : Plant_Block
                 SpawnLeaves();
                 break;
             case PlantData.BranchState.Grown_Nub:
+                SpawnFlowerBud();
                 break;
         }
         RenderBranch();
@@ -41,7 +43,6 @@ public class Plant_Branch : Plant_Block
 
     private void SpawnLeaves(){
         Vector3 baseRotation = gameObject.transform.eulerAngles;
-        Debug.Log(baseRotation);
         GameObject L_A = GameObject.Instantiate(LeafPrefab, leaf_spawn_point_A);
         L_A.transform.position = leaf_spawn_point_A.position;
         Vector3 rotationA = baseRotation;
@@ -57,6 +58,20 @@ public class Plant_Branch : Plant_Block
             L_A.GetComponent<Plant_Block>(),
             L_B.GetComponent<Plant_Block>()
         };
+    }
+
+    private void SpawnFlowerBud(){
+        GameObject flowerBudObj = Instantiate(FlowerBudPrefab);
+        flowerBudObj.transform.position = flower_bud_spawn_point.position;
+        flowerBudObj.transform.eulerAngles = transform.eulerAngles;
+        flowerBudObj.transform.parent = flower_bud_spawn_point;
+        Plant_Block flowerBudScript = flowerBudObj.GetComponent<Plant_Block>();
+        children.Add(flowerBudScript);
+        flowerBudScript.parent = this;
+        flowerBudScript.Init();
+
+        leaf_spawn_point_A.rotation = Quaternion.Euler(0f, 0f, transform.eulerAngles.z + 45f);
+        leaf_spawn_point_B.rotation = Quaternion.Euler(0f, 0f, transform.eulerAngles.z - 45f);
     }
     private void RenderBranch(){
         switch (branchState){
@@ -85,7 +100,7 @@ public class Plant_Branch : Plant_Block
             case PlantData.BranchState.Growing_Leaf_Attatchments_B:
                 return upgrades.GetRange(2, 1);
             case PlantData.BranchState.Grown_Nub:
-                break;
+                return upgrades.GetRange(3, 1);
         }
         return new List<PlantData.UpgradeData>();
     }
