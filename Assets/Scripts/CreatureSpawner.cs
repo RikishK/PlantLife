@@ -95,7 +95,6 @@ public class CreatureSpawner : MonoBehaviour
     private int CountPlantBlock(PlantData.BlockType blockType){
         // traverse plant and count block
         int block_count = plant_Core.CountBlock(blockType);
-        Debug.Log(blockType + " : " + block_count);
         return block_count;
     }
 

@@ -8,38 +8,95 @@ public class HoverflyLarvae : Creature
     public bool manualOverride = false;
     public int manualOverrideDirection = 0;
 
-    public float moveSpeed = 2f;
-    public float distance = 2f;
+    public float moveSpeed = 2f, distance = 2f, attackRange = 2f, attackSpeed = 1f, targetDetectionRange = 5f;
+    public int attackDamage = 10;
+    private int aphidsEaten = 0;
+    private float startTime, bonusTime = 0f;
     public LayerMask plantBlockLayer, floorLayer;
-    private bool isFacingRight = true;
+    private bool isFacingRight = true, isTargetingEnemy = false;
     private HoverflyLarvaeState hoverflyLarvaeState = HoverflyLarvaeState.Idle;
     private Collider2D previousFloorHitCollider;
+    private GameObject targetObj;
     [SerializeField] private Transform detectionPoint, stickPoint, wallCornerPoint;
     private enum HoverflyLarvaeState {
-        Idle, FindingTarget, Eating, Evolving
+        Idle, Attacking, Evolving
     }
     // Start is called before the first frame update
     void Start()
     {
+        startTime = Time.time;
         StartCoroutine(HoverflyLarvaeRoutine());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        float current_time = Time.time;
+        if(180 - (current_time - (startTime + bonusTime)) <= 0){
+            Die();
+        }
+    }
+
+    private void Die(){
+        //TODO: Summon dead hoverfly larvae 
+        Destroy(gameObject);
     }
 
     private IEnumerator HoverflyLarvaeRoutine(){
         while(true){
             switch (hoverflyLarvaeState){
                 case HoverflyLarvaeState.Idle:
-                    MoveRandom();
-                    yield return new WaitForSeconds(10f);
+                    if(targetObj == null){
+                        MoveRandom();
+                        targetObj = SearchForTarget();
+                        yield return new WaitForSeconds(5f);
+                    }
+                    else{
+                        if(!isTargetingEnemy){
+                            float current_time = Time.time;
+                            if(180 - (current_time - (startTime + bonusTime)) > 90){
+                                targetObj = null;
+                                break;
+                            }
+                        }
+                        float target_distance = Vector3.Distance(transform.position, targetObj.transform.position);
+                        if (target_distance <= attackRange){
+                            hoverflyLarvaeState = HoverflyLarvaeState.Attacking;
+                        }
+                        else{
+                            int direction = transform.position.x - targetObj.transform.position.x > 0 ? -1 : 1;
+                            MoveSpecific(direction);
+                            yield return new WaitForSeconds(3f);
+                            targetObj = SearchForTarget();
+                        }
+                    }
                     break;
-                case HoverflyLarvaeState.FindingTarget:
-                    break;
-                case HoverflyLarvaeState.Eating:
+                case HoverflyLarvaeState.Attacking:
+                    if(targetObj){
+                        if(isTargetingEnemy){
+                            Enemy enemyScript = targetObj.GetComponent<Enemy>();
+                            enemyScript.TakeDamage(attackDamage);
+                            float seconds_to_wait = 1f / attackSpeed;
+                            yield return new WaitForSeconds(seconds_to_wait);
+                            if (targetObj == null){
+                                bonusTime += 3f;
+                                targetObj = SearchForTarget();
+                                if(targetObj == null) hoverflyLarvaeState = HoverflyLarvaeState.Idle; 
+                            }
+                        }
+                        else{
+                            Aphid aphidScript = targetObj.GetComponent<Aphid>();
+                            aphidScript.Die();
+                            Debug.Log("Larvae ate ahpid creature");
+                            aphidsEaten++;
+                            bonusTime += 30f;
+                            if (aphidsEaten == 3) hoverflyLarvaeState = HoverflyLarvaeState.Evolving;
+                            else hoverflyLarvaeState = HoverflyLarvaeState.Idle;
+                        }
+                    }
+                    else{
+                        hoverflyLarvaeState = HoverflyLarvaeState.Idle;
+                    }
                     break;
                 case HoverflyLarvaeState.Evolving:
                     break;
@@ -80,9 +137,37 @@ public class HoverflyLarvae : Creature
         StartCoroutine(MoveObject(targetPosition));
     }
 
+    private void MoveSpecific(int direction)
+    {
+        if (manualOverride) direction = manualOverrideDirection;
+        float moveDistance = distance * Random.Range(0f, 2.0f);
+
+        // Calculate the movement vector based on the random direction and distance
+        Vector2 movementVector = new Vector2(direction * moveDistance, 0f);
+
+        // Transform the movement vector based on the object's current rotation
+        movementVector = transform.rotation * movementVector;
+
+        // Calculate the target position based on the rotated movement vector
+        Vector2 targetPosition = new Vector2(transform.position.x + movementVector.x, transform.position.y + movementVector.y);
+
+        // Flip the sprite renderer if moving right
+        if (direction == 1)
+        {
+            isFacingRight = true;
+            OrientSpriteHorizontal();
+        }
+        else{
+            isFacingRight = false;
+            OrientSpriteHorizontal();
+        }
+
+        // Move the object to the target position
+        StartCoroutine(MoveObject(targetPosition));
+    }
+
     private IEnumerator MoveObject(Vector2 targetPosition)
     {
-        Debug.Log("Target: " + targetPosition);
         float elapsedTime = 0f;
         Vector2 startingPosition = new Vector2(transform.position.x, transform.position.y);
 
@@ -106,21 +191,13 @@ public class HoverflyLarvae : Creature
             }
             if (floorHitCollider == null) {
                 if (previousFloorHitCollider != null) {
-                    Debug.Log("Snapping around corner");
 
                     // Get the closest point on the collider's edge to the current object position
                     Vector2 closestPoint = previousFloorHitCollider.ClosestPoint(wallCornerPoint.position);
 
                     // Calculate the rotation angle based on the direction from stickPoint to the hit collider
                     Vector2 directionToWallCornerPoint = previousFloorHitCollider.transform.InverseTransformDirection(closestPoint - (Vector2)previousFloorHitCollider.bounds.center);
-                    // float rotationAngle = Mathf.Atan2(directionToWallCornerPoint.y, directionToWallCornerPoint.x) * Mathf.Rad2Deg;
-                    // float snappedAngle = Mathf.Round(rotationAngle / 90) * 90;
-                    // // Adjust the rotation angle based on the collider's orientation
-                    // float colliderRotation = previousFloorHitCollider.transform.eulerAngles.z;
-
-                    // // Set the object's rotation to be parallel to the side of the collider
-                    // transform.rotation = Quaternion.Euler(0f, 0f, snappedAngle - colliderRotation - 90f);
-                    Debug.Log("Corner Snap Direction: " + directionToWallCornerPoint);
+                    
                     if (directionToWallCornerPoint.y > 0.2){
                         transform.rotation = Quaternion.Euler(0f, 0f, previousFloorHitCollider.transform.eulerAngles.z);
                     }
@@ -188,14 +265,6 @@ public class HoverflyLarvae : Creature
             //Vector2 directionToStickPoint = hit.collider.transform.InverseTransformDirection(stickPoint.position - hit.collider.bounds.center);
             Vector2 directionToStickPoint = hit.collider.transform.InverseTransformDirection(closestPoint - (Vector2)hit.collider.bounds.center);
             
-            // float rotationAngle = Mathf.Atan2(directionToStickPoint.y, directionToStickPoint.x) * Mathf.Rad2Deg;
-            // float snappedAngle = Mathf.Round(rotationAngle / 90) * 90;
-            // // Adjust the rotation angle based on the collider's orientation
-            // float colliderRotation = hit.collider.transform.eulerAngles.z;
-
-            // // Set the object's rotation to be parallel to the side of the collider
-            // transform.rotation = Quaternion.Euler(0f, 0f, snappedAngle - colliderRotation - 90f);
-            // Debug.Log("DirectionToStickPoint: " + directionToStickPoint + "Rotation angle: " + rotationAngle + " snappedAngle: " + snappedAngle + " colliderRotation: " + colliderRotation);
 
             if (directionToStickPoint.x > 0){
                 transform.rotation = Quaternion.Euler(0f, 0f, hit.collider.transform.eulerAngles.z - 90f);
@@ -225,6 +294,50 @@ public class HoverflyLarvae : Creature
     private void OrientSpriteHorizontal()
     {
         transform.localScale = new Vector3(isFacingRight ? -1 : 1, 1, 1);
+    }
+
+    private GameObject SearchForTarget(){
+        GameObject[] creatureObjects = GameObject.FindGameObjectsWithTag("Creature");
+        GameObject[] enemyObjects = GameObject.FindGameObjectsWithTag("Enemy");
+
+        float enemyDistance = float.MaxValue;
+        GameObject closestEnemy = null;
+
+        foreach(GameObject enemyObject in enemyObjects){
+            Enemy enemyScript = enemyObject.GetComponent<Enemy>();
+            if (enemyScript.EnemyType() == EnemyData.EnemyType.AphidEnemy){
+                float distance = Vector3.Distance(transform.position, enemyObject.transform.position);
+                if (distance < enemyDistance && distance < targetDetectionRange){
+                    enemyDistance = distance;
+                    closestEnemy = enemyObject;
+                }
+            }
+        }
+        if(closestEnemy){
+            isTargetingEnemy = true;
+            return closestEnemy;
+        }
+
+        float creatureDistance = float.MaxValue;
+        GameObject closestCreature = null;
+
+        foreach(GameObject creatureObject in creatureObjects){
+            Creature creatureScript = creatureObject.GetComponent<Creature>();
+            if (creatureScript.creatureType == CreatureSpawnData.CreatureType.Aphid){
+                float distance = Vector3.Distance(transform.position, creatureObject.transform.position);
+                if(distance < creatureDistance && distance < targetDetectionRange){
+                    creatureDistance = distance;
+                    closestCreature = creatureObject;
+                }
+            }
+        }
+
+        if(closestCreature){
+            isTargetingEnemy = false;
+            return closestCreature;
+        }
+
+        return null;
     }
 
 }

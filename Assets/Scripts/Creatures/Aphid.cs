@@ -32,7 +32,7 @@ public class Aphid : Creature
         }
     }
 
-    private void Die(){
+    public void Die(){
         GameObject deadAphidObj = Instantiate(deadAphid);
         deadAphidObj.transform.position = transform.position; 
         deadAphidObj.GetComponent<Organic_Matter>().Setup(nitrate_value/2);
@@ -147,7 +147,6 @@ public class Aphid : Creature
                 offspring.transform.position = new Vector3(transform.position.x + 1f, transform.position.y - 0.5f, 0);
             }
             moveSpeed = 2.0f - 0.5f * leaves_eaten;
-            Debug.Log("Aphid nitrate value: " + nitrate_value + " , Leaves Eaten: " + leaves_eaten);
             aphidState = AphidState.Idle;
         }
         else{

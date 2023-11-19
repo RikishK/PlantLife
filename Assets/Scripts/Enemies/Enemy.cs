@@ -25,6 +25,10 @@ public class Enemy : MonoBehaviour
         
     }
 
+    public EnemyData.EnemyType EnemyType(){
+        return enemyType;
+    }
+
     protected virtual IEnumerator EnemyRoutine(){
         while(true){
             switch  (enemyState){
