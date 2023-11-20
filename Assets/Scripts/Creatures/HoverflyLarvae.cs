@@ -277,8 +277,6 @@ public class HoverflyLarvae : Creature
                 transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
 
-            Debug.Log("Wall: " + hit.collider);
-            Debug.Log("ClosestPoint: " + closestPoint);
             // Snap the object to the closest point and align its rotation with the collider's normal
             transform.position = closestPoint;
 
@@ -286,7 +284,6 @@ public class HoverflyLarvae : Creature
         }
         else
         {
-            // Debug.Log("No Wall");
             return false;
         }
     }
