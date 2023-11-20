@@ -129,6 +129,7 @@ MonoBehaviour:
   block_name: Core
   parent: {fileID: 0}
   children: []
+  health: 1000
   blockType: 0
   overground_root: {fileID: 0}
   underground_root: {fileID: 0}

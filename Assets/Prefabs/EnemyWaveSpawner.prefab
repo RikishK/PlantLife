@@ -45,17 +45,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - prepTime: 20
+  - prepTime: 5
     enemySpawnDatas:
     - enemyType: 0
       count: 3
       spawnGap: 5
+      enemySpawnLocationType: 0
   - prepTime: 30
     enemySpawnDatas:
     - enemyType: 0
       count: 5
       spawnGap: 5
+      enemySpawnLocationType: 0
     - enemyType: 0
       count: 3
       spawnGap: 1
+      enemySpawnLocationType: 0
   aphidEnemyPrefab: {fileID: 2574440101272463747, guid: a66d6da0dddd05741bbae476d91ae25f, type: 3}

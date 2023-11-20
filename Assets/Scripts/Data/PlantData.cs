@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlantData
 {
     public enum BlockType {
-        Core, Stem, Stem_Shoot, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub, Nitrate_Intake, FlowerBud
+        Core, Stem, Stem_Shoot, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub, Nitrate_Intake, FlowerBud, Flower
     }
 
     public enum CoreState{
@@ -53,6 +53,10 @@ public class PlantData
 
     public enum FlowerBudState {
         stage1, stage2, bloomReady
+    }
+
+    public enum FlowerType {
+        Orange
     }
 
     [System.Serializable]
