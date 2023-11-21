@@ -43,10 +43,15 @@ public class Plant_Block : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         children = new List<Plant_Block>();
         InitUpgrades();
+        InitExtras();
     }
 
     protected virtual void InitUpgrades(){
         
+    }
+
+    protected virtual void InitExtras(){
+
     }
 
     public PlantData.BlockType GetBlockType(){
@@ -81,10 +86,20 @@ public class Plant_Block : MonoBehaviour
 
     protected virtual void Highlight(){
         getRenderer().color = hoverTint;
+        HighlightExtras();
     }
 
     protected virtual void UnHighlight(){
         getRenderer().color = originalColor;
+        UnHighlightExtras();
+    }
+
+    protected virtual void HighlightExtras(){
+
+    }
+    
+    protected virtual void UnHighlightExtras(){
+
     }
 
     protected virtual SpriteRenderer getRenderer(){

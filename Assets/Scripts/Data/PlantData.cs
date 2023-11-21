@@ -56,7 +56,7 @@ public class PlantData
     }
 
     public enum FlowerType {
-        Orange
+        Orange, Blue
     }
 
     [System.Serializable]

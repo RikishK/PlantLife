@@ -64,3 +64,6 @@ TagManager:
   - name: Attack
     uniqueID: 3451949183
     locked: 0
+  - name: Indicator
+    uniqueID: 4198663025
+    locked: 0

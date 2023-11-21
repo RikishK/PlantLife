@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected EnemyData.EnemyType enemyType;
     [SerializeField] protected float moveSpeed, attackRange, attackSpeed, attackDamageWait;
     [SerializeField] protected int attackDamage, health;
-    [SerializeField] private GameObject DamageIndicatorPrefab;
+    [SerializeField] private GameObject DamageIndicatorPrefab, experienceOrbPrefab;
     private EnemyState enemyState = EnemyState.SelectingTarget;
     private GameObject targetObj;
     // Start is called before the first frame update
