@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrangeFlower : Flower
 {
@@ -11,6 +12,7 @@ public class OrangeFlower : Flower
     [SerializeField] private Transform shootPoint, center;
     [SerializeField] private RangeIndicator rangeIndicator;
     [SerializeField] private SpriteRenderer orangeFlowerRenderer;
+    [SerializeField] private Slider ammunitionSlider;
 
     private GameObject enemyTargetObj;
     private FlowerState flowerState = FlowerState.Idle;
@@ -25,8 +27,9 @@ public class OrangeFlower : Flower
         Idle, Attacking
     }
 
-    protected override IEnumerator FlowerRoutine()
+    protected override IEnumerator OrangeFlowerRoutine()
     {
+        UpdateAmmunitionSlider();
         while(true){
             switch (flowerState){
                 case FlowerState.Idle:
@@ -36,6 +39,10 @@ public class OrangeFlower : Flower
                     }
                     break;
                 case FlowerState.Attacking:
+                    if(Glucose_Count <= 0){
+                        flowerState = FlowerState.Idle;
+                        break;
+                    }
                     if (enemyTargetObj == null) {
                         flowerState = FlowerState.Idle;
                         break;
@@ -104,15 +111,22 @@ public class OrangeFlower : Flower
     private void Attack(){
         switch (flowerType){
             case PlantData.FlowerType.Orange:
-                SpawnProjectile();
+                Glucose_Count--;
+                UpdateAmmunitionSlider();
+                StartCoroutine(SpawnProjectile());
                 break;
         }
     }
 
-    private void SpawnProjectile(){
+    private void UpdateAmmunitionSlider(){
+        ammunitionSlider.maxValue = Max_Glucose_Count;
+        ammunitionSlider.value = Glucose_Count;
+    }
+
+    private IEnumerator SpawnProjectile(){
         flowerAnimator.SetTrigger("Attack");
+        yield return new WaitForSeconds(0.9f);
         GameObject projectile = Instantiate(projectilePrefab);
-        Debug.Log(projectile);
         projectile.transform.position = shootPoint.position;
 
         // TODO: Shoot the projectile forward a little bit before starting it
@@ -130,7 +144,12 @@ public class OrangeFlower : Flower
         rangeIndicator.gameObject.SetActive(false);
     }
 
-
+    protected override void InitActives()
+    {
+        actives = new List<PlantData.ActiveData>(){
+            new PlantData.ActiveData("Reload", 50, PlantData.Resource.Glucose),
+        };
+    }
     protected override void InitExtras()
     {
         rangeIndicator.Init(Color.magenta, attackRange);
@@ -139,5 +158,16 @@ public class OrangeFlower : Flower
     protected override SpriteRenderer getRenderer()
     {
         return orangeFlowerRenderer;
+    }
+
+    public override bool CanUseActive(int index)
+    {
+        return Glucose_Count <= 10;
+    }
+
+    public override void UseActive(int index)
+    {
+        Glucose_Count = Max_Glucose_Count;
+        UpdateAmmunitionSlider();
     }
 }

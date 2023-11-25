@@ -168,10 +168,11 @@ MonoBehaviour:
   pollination_range: 6
   experienceLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   experienceCollectionRangeIndicator: {fileID: 1202919751335568046}
   pollinationRangeIndicator: {fileID: 2073035538307845989}
-  experiencePollonPrefab: {fileID: 0}
+  experiencePollonPrefab: {fileID: 8132904210043225936, guid: 6a7cc4d68cc9b144e9c2aef5168ba161, type: 3}
+  pollonPrefab: {fileID: 8132904210043225936, guid: 8907e66920e36db419f6b8fd356667a8, type: 3}
   blueFlowerRenderer: {fileID: 6647433850680113634}
   PollonSpawnPoint: {fileID: 1860436355504355517}
 --- !u!61 &755757396545244183

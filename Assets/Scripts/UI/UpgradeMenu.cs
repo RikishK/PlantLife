@@ -30,7 +30,6 @@ public class UpgradeMenu : MonoBehaviour
     }
 
     public void Upgrade(int index){
-        gameManager.Upgrade(currentUpgrades[index], index);
-        Close();
+        if(gameManager.Upgrade(currentUpgrades[index], index)) Close();
     }
 }

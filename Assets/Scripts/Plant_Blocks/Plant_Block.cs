@@ -12,6 +12,8 @@ public class Plant_Block : MonoBehaviour
     public Plant_Block parent;
     public List<Plant_Block> children;
     protected List<PlantData.UpgradeData> upgrades;
+
+    protected List<PlantData.ActiveData> actives;
     [SerializeField] protected int health = 100;
     [SerializeField] protected PlantData.BlockType blockType;
 
@@ -43,11 +45,16 @@ public class Plant_Block : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
         children = new List<Plant_Block>();
         InitUpgrades();
+        InitActives();
         InitExtras();
     }
 
     protected virtual void InitUpgrades(){
         
+    }
+
+    protected virtual void InitActives(){
+        actives = new List<PlantData.ActiveData>();
     }
 
     protected virtual void InitExtras(){
@@ -73,9 +80,13 @@ public class Plant_Block : MonoBehaviour
         if (Input.GetMouseButtonDown(1)) 
         {
             UnHighlight();
-            gameManager = FindObjectOfType<GameManager>();
             gameManager.current_selection = this;
             gameManager.ShowUpgrades(getUpgrades(), block_name);
+        }
+        else if (Input.GetMouseButtonDown(0)){
+            UnHighlight();
+            gameManager.current_selection = this;
+            gameManager.ShowActives(getActives(), block_name);
         }
     }
 
@@ -124,6 +135,18 @@ public class Plant_Block : MonoBehaviour
 
     public virtual List<PlantData.UpgradeData> getUpgrades(){
         return new List<PlantData.UpgradeData>();
+    }
+
+    public virtual List<PlantData.ActiveData> getActives(){
+        return actives;
+    }
+
+    public virtual bool CanUseActive(int index){
+        return true;
+    }
+
+    public virtual void UseActive(int index){
+        
     }
 
     public virtual void AttatchPlantBlock(Plant_Block other){

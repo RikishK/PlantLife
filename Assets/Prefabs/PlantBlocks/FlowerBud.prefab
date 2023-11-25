@@ -50,12 +50,15 @@ MonoBehaviour:
   block_name: Flower Bud
   parent: {fileID: 0}
   children: []
+  health: 100
   blockType: 9
   stage1: {fileID: 320654266, guid: b63e65a5fcb67334482b4e168b0a9bf6, type: 3}
   stage2: {fileID: -33980812, guid: b63e65a5fcb67334482b4e168b0a9bf6, type: 3}
-  bloomReady: {fileID: 1095252996, guid: b63e65a5fcb67334482b4e168b0a9bf6, type: 3}
+  bloomReadyOrange: {fileID: 1095252996, guid: b63e65a5fcb67334482b4e168b0a9bf6, type: 3}
+  bloomReadyBlue: {fileID: 205310300, guid: 80e377463215cea48ac8194240ea56b0, type: 3}
   flowerBudRenderer: {fileID: 8857530287172330405}
-  flowerOrange: {fileID: 0}
+  flowerOrange: {fileID: 125530753446338438, guid: 6bf45610fc3c341438f2de8c195baefc, type: 3}
+  flowerBlue: {fileID: 2279721306467890579, guid: bc582a8a39b896c4e89bd53e2070aec4, type: 3}
 --- !u!61 &2147244782592867767
 BoxCollider2D:
   m_ObjectHideFlags: 0

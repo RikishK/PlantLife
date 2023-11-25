@@ -1,23 +1,23 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UpgradeSlot : MonoBehaviour
+public class ActiveSlot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText, costText;
     [SerializeField] private Image costResourceIcon;
     [SerializeField] private Sprite GlucoseIcon, NitrateIcon;
-    private PlantData.UpgradeData upgradeData;
 
-    
-    public void Setup(PlantData.UpgradeData upgradeData){
-        nameText.text = upgradeData.name;
-        costText.text = upgradeData.cost.ToString();
-        SetIcon(upgradeData.resource);
-        this.upgradeData = upgradeData;
+    private PlantData.ActiveData activeData;
+
+    public void Setup(PlantData.ActiveData activeData){
+        //Debug.Log(upgradeData.resource + " : " + upgradeData.cost);
+        nameText.text = activeData.name;
+        costText.text = activeData.cost.ToString();
+        SetIcon(activeData.resource);
+        this.activeData = activeData;
     }
 
     private void SetIcon(PlantData.Resource resource){

@@ -152,4 +152,6 @@ MonoBehaviour:
   attackDamageWait: 1
   attackDamage: 2
   health: 20
+  experienceYield: 30
   DamageIndicatorPrefab: {fileID: 5496796993041010739, guid: 3d6fdf8c7cb0c6642a5ed22d4b174429, type: 3}
+  experienceOrbPrefab: {fileID: 3004644942391374827, guid: 24c89b402ffcc6c408e89ffa3584a027, type: 3}

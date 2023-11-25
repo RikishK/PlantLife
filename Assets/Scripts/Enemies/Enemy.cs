@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] protected EnemyData.EnemyType enemyType;
     [SerializeField] protected float moveSpeed, attackRange, attackSpeed, attackDamageWait;
-    [SerializeField] protected int attackDamage, health;
+    [SerializeField] protected int attackDamage, health, experienceYield;
     [SerializeField] private GameObject DamageIndicatorPrefab, experienceOrbPrefab;
     private EnemyState enemyState = EnemyState.SelectingTarget;
     private GameObject targetObj;
@@ -110,6 +110,10 @@ public class Enemy : MonoBehaviour
     }
 
     protected virtual void Die(){
+        GameObject experience_orb = Instantiate(experienceOrbPrefab);
+        experience_orb.transform.position = transform.position;
+        ExperienceOrb experienceOrbScript = experience_orb.GetComponent<ExperienceOrb>();
+        experienceOrbScript.Init(experienceYield);
         Destroy(gameObject);
     }
 }

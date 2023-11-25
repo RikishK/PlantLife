@@ -24,12 +24,12 @@ public class Flower : Plant_Block
     {
         base.Init();
 
-        Glucose_Count = 20;
-        StartCoroutine(FlowerRoutine());
+        Glucose_Count = 15;
+        StartCoroutine(OrangeFlowerRoutine());
     }
 
 
-    protected virtual IEnumerator FlowerRoutine(){
+    protected virtual IEnumerator OrangeFlowerRoutine(){
         yield return null;
     }
 

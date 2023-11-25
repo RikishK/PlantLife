@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ExperienceOrb : MonoBehaviour
@@ -7,7 +6,7 @@ public class ExperienceOrb : MonoBehaviour
     private int experience_amount;
     private Flower target_blue_flower;
     private ExperienceOrbState experienceOrbState;
-    // Start is called before the first frame update
+    private float startTime;
     void Start()
     {
         
@@ -16,7 +15,7 @@ public class ExperienceOrb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Time.time - startTime > 20) Destroy(gameObject);
     }
 
     private enum ExperienceOrbState {
@@ -26,14 +25,17 @@ public class ExperienceOrb : MonoBehaviour
     public void Init(int experience_amount){
         this.experience_amount = experience_amount;
         experienceOrbState = ExperienceOrbState.Floating;
+        startTime = Time.time;
+        StartCoroutine(ExperienceOrbRoutine());
     }
 
     private IEnumerator ExperienceOrbRoutine(){
         while(true){
             switch (experienceOrbState){
                 case ExperienceOrbState.Floating:
-                    Vector3 random_movement = new Vector3(transform.position.x + Random.Range(-0.1f, 0.1f),
-                        Mathf.Clamp(transform.position.y + Random.Range(-0.1f, 0.1f), -0.8f, float.MaxValue), 0f);
+                    float increment = 0.005f;
+                    Vector3 random_movement = new Vector3(transform.position.x + Random.Range(-increment, increment),
+                        Mathf.Clamp(transform.position.y + Random.Range(-increment, increment), -0.8f, float.MaxValue), 0f);
                     transform.position = random_movement;
                     break;
                 case ExperienceOrbState.MovingToTarget:
@@ -61,6 +63,7 @@ public class ExperienceOrb : MonoBehaviour
                             Die();
                         }
                     }
+                    else experienceOrbState = ExperienceOrbState.Floating;
                     break;
             }
             yield return null;
@@ -69,6 +72,12 @@ public class ExperienceOrb : MonoBehaviour
 
     private void Die(){
         Destroy(gameObject);
+    }
+
+    public void Target(Flower blue_flower){
+        Debug.Log("Targetting: " + blue_flower);
+        target_blue_flower = blue_flower;
+        experienceOrbState = ExperienceOrbState.MovingToTarget;
     }
 
 }

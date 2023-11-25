@@ -110,4 +110,16 @@ public class PlantData
             this.resource = resource;
         }
     }
+
+    public class ActiveData {
+        public string name;
+        public int cost;
+        public Resource resource;
+
+        public ActiveData(string name, int cost, Resource resource){
+            this.name = name;
+            this.cost = cost;
+            this.resource = resource;
+        }
+    }
 }
