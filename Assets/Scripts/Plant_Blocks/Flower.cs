@@ -33,5 +33,9 @@ public class Flower : Plant_Block
         yield return null;
     }
 
+    public PlantData.FlowerType FlowerType(){
+        return flowerType;
+    }
+
     
 }

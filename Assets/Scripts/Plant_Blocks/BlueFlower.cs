@@ -6,26 +6,60 @@ public class BlueFlower : Flower
 {
     private int collected_experience;
     [SerializeField] private float collection_range, pollination_range;
-    [SerializeField] private LayerMask experienceLayer;
+    [SerializeField] private LayerMask experienceLayer, plantBlockLayer;
 
     [SerializeField] private RangeIndicator experienceCollectionRangeIndicator, pollinationRangeIndicator;
 
-    [SerializeField] private GameObject experiencePollonPrefab, pollonPrefab;
+    [SerializeField] private GameObject experiencePollonPrefab, pollonPrefab, pollinationTargetIndicator;
 
     [SerializeField] private SpriteRenderer blueFlowerRenderer;
-    [SerializeField] private Transform PollonSpawnPoint;
+    [SerializeField] private Transform PollonSpawnPoint, center;
 
     private Flower pollination_target_flower;
+    private bool isSelectingPollinationTarget = false;
+
+    private void Update() {
+        if(!isSelectingPollinationTarget) return;
+
+        if (Input.GetMouseButtonDown(0)){
+            // Get the position of the mouse in world space
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            float distance = Vector2.Distance(center.position, mousePosition);
+            if(distance > pollination_range) return;
+            Vector3 check_pos = mousePosition;
+            check_pos.z = 0;
+            Collider2D[] plant_blocks = Physics2D.OverlapCircleAll(check_pos, 0.3f, plantBlockLayer);
+            foreach(Collider2D plant_block in plant_blocks){
+                Debug.Log("Checking: " + plant_block);
+                Plant_Block plant_block_script = plant_block.GetComponent<Plant_Block>();
+                if(plant_block_script.BlockType() == PlantData.BlockType.Flower){
+                    Debug.Log("quack");
+                    Flower flower = (Flower)plant_block_script;
+                    if (flower.FlowerType() != PlantData.FlowerType.Blue){
+                        Debug.Log("Found pollination target: " + flower);
+                        pollination_target_flower = flower;
+                        pollinationTargetIndicator.transform.position = pollination_target_flower.transform.position;
+                    }
+                }
+            }
+
+            gameManager.canInteract = true;
+            isSelectingPollinationTarget = false;
+        }
+    }
     protected override void HighlightExtras()
     {
         experienceCollectionRangeIndicator.gameObject.SetActive(true);
         pollinationRangeIndicator.gameObject.SetActive(true);
+        if(pollination_target_flower) pollinationTargetIndicator.SetActive(true);
     }
 
     protected override void UnHighlightExtras()
     {
         experienceCollectionRangeIndicator.gameObject.SetActive(false);
         pollinationRangeIndicator.gameObject.SetActive(false);
+        pollinationTargetIndicator.SetActive(false);
     }
 
     protected override void InitActives()
@@ -79,15 +113,14 @@ public class BlueFlower : Flower
     }
 
     private void SelectPollonTarget(){
-        
+        gameManager.canInteract = false;
+        isSelectingPollinationTarget = true;
     }
 
     private void CollectExp(){
-        Debug.Log("Absorbing");
-        Collider2D[] experience_orbs = Physics2D.OverlapCircleAll(transform.position, collection_range, experienceLayer);
+        Collider2D[] experience_orbs = Physics2D.OverlapCircleAll(center.position, collection_range, experienceLayer);
         Debug.Log(experience_orbs.Length);
         foreach(Collider2D experience_orb in experience_orbs){
-            Debug.Log("Collecting: " + experience_orb);
             ExperienceOrb experienceOrbScript  = experience_orb.GetComponent<ExperienceOrb>();
             experienceOrbScript.Target(this);
         }

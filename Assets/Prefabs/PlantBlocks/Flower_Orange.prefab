@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 125530753446338437}
   - component: {fileID: 544822121746924066}
   - component: {fileID: 3053969345875008226}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Flower_Orange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,6 @@ MonoBehaviour:
   center: {fileID: 7818752757364584941}
   rangeIndicator: {fileID: 2452948728639649345}
   orangeFlowerRenderer: {fileID: 4774157221425750711}
-  flowerUI: {fileID: 7674662217244263578}
   ammunitionSlider: {fileID: 392667010262446119}
 --- !u!61 &3053969345875008226
 BoxCollider2D:
@@ -107,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7818752757364584941}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +139,7 @@ GameObject:
   - component: {fileID: 4485870389444024003}
   - component: {fileID: 5526408696805597938}
   - component: {fileID: 5645180134898484587}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +215,7 @@ GameObject:
   - component: {fileID: 8272357964030819567}
   - component: {fileID: 4774157221425750711}
   - component: {fileID: 5905802443254925139}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FlowerOrangeRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7341581330272520401}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -351,7 +350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2656003850128143193}
   - component: {fileID: 392667010262446119}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7114338174385402866}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -480,7 +479,7 @@ GameObject:
   - component: {fileID: 7674662217244263578}
   - component: {fileID: 2048620304980624077}
   - component: {fileID: 6009307729868261224}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +579,7 @@ GameObject:
   - component: {fileID: 3824290611648968321}
   - component: {fileID: 7860185439069886108}
   - component: {fileID: 2712953553509704809}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -699,6 +698,10 @@ PrefabInstance:
     - target: {fileID: 8283881295075047915, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}
       propertyPath: m_Name
       value: RangeIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283881295075047915, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8283881295075047915, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}
       propertyPath: m_IsActive
