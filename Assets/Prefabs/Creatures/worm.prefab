@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 522876623972221968}
   - component: {fileID: 9211512942553595137}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: worm
   m_TagString: Creature
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   - component: {fileID: 1779530583496275423}
   - component: {fileID: 8509082231114077311}
   - component: {fileID: 5222433055251126220}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: worm_renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

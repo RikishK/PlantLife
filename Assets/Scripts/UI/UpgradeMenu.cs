@@ -26,11 +26,11 @@ public class UpgradeMenu : MonoBehaviour
     }
 
     public void Close(){
+        gameManager.canInteract = true;
         gameObject.SetActive(false);
     }
 
     public void Upgrade(int index){
-        gameManager.Upgrade(currentUpgrades[index], index);
-        Close();
+        if(gameManager.Upgrade(currentUpgrades[index], index)) Close();
     }
 }

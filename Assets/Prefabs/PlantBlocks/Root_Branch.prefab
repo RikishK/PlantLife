@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6443597441389526589}
   - component: {fileID: 787551363559844712}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root_Branch_renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6512215247546873648}
   - component: {fileID: 3949172345106288770}
   - component: {fileID: 6328533544530285131}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root_Branch
   m_TagString: PlantBlock
   m_Icon: {fileID: 0}

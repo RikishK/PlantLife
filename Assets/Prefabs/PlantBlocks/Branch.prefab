@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1606843534429571684}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeafSpawnPointB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2642333184313771018}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LeafSpawnPointA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,6 +62,37 @@ Transform:
   m_Father: {fileID: 3637612974281435821}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1542539248800744913
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6696555918565182231}
+  m_Layer: 6
+  m_Name: FlowerBudSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6696555918565182231
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542539248800744913}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.499, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3637612974281435821}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3637612974281435795
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +104,7 @@ GameObject:
   - component: {fileID: 3637612974281435821}
   - component: {fileID: 8347152053633531646}
   - component: {fileID: 674338440801905725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Branch
   m_TagString: PlantBlock
   m_Icon: {fileID: 0}
@@ -95,6 +126,7 @@ Transform:
   - {fileID: 2642333184313771018}
   - {fileID: 1606843534429571684}
   - {fileID: 3974542911708268221}
+  - {fileID: 6696555918565182231}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -122,7 +154,9 @@ MonoBehaviour:
   branchRenderer: {fileID: 4980428145292006162}
   leaf_spawn_point_A: {fileID: 2642333184313771018}
   leaf_spawn_point_B: {fileID: 1606843534429571684}
+  flower_bud_spawn_point: {fileID: 6696555918565182231}
   LeafPrefab: {fileID: 2429597773729600936, guid: 8de4781305654c345be5d5461b352fcc, type: 3}
+  FlowerBudPrefab: {fileID: 1589675672826743241, guid: 0a9d6c43fb066aa4287ee23ede470d13, type: 3}
 --- !u!61 &674338440801905725
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3974542911708268221}
   - component: {fileID: 4980428145292006162}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BranchRenderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

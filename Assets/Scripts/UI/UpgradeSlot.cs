@@ -8,13 +8,26 @@ using UnityEngine.UI;
 public class UpgradeSlot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText, costText;
+    [SerializeField] private Image costResourceIcon;
+    [SerializeField] private Sprite GlucoseIcon, NitrateIcon;
     private PlantData.UpgradeData upgradeData;
 
     
     public void Setup(PlantData.UpgradeData upgradeData){
-        //Debug.Log(upgradeData.resource + " : " + upgradeData.cost);
         nameText.text = upgradeData.name;
-        costText.text = upgradeData.resource.ToString() + ": " + upgradeData.cost.ToString();
+        costText.text = upgradeData.cost.ToString();
+        SetIcon(upgradeData.resource);
         this.upgradeData = upgradeData;
+    }
+
+    private void SetIcon(PlantData.Resource resource){
+        switch(resource){
+            case PlantData.Resource.Glucose:
+                costResourceIcon.sprite = GlucoseIcon;
+                break;
+            case PlantData.Resource.Nitrate:
+                costResourceIcon.sprite = NitrateIcon;
+                break;
+        }
     }
 }

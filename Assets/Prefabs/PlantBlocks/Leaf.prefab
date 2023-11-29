@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 279063409760211367}
   - component: {fileID: 3702724030484054025}
   - component: {fileID: 1839695759631333444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf
   m_TagString: PlantBlock
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7208008181104208591}
   - component: {fileID: 1403231916809330019}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Leaf Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8100751744340646230}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TextSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

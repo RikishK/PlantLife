@@ -6,7 +6,8 @@ public class Plant_Stem_Shoot : Plant_Block
 {
     [SerializeField] private SpriteRenderer stemShootRenderer;
     [SerializeField] private Sprite babyShoot, midShoot, fullShoot;
-
+    [SerializeField] private PlantData.StemShootCollider[] stemShootColliders;
+    [SerializeField] private BoxCollider2D stemShootCollider2D;
     [SerializeField] private GameObject branch, stem;
     [SerializeField] private Transform extensionPoint;
     private PlantData.StemShootState stemShootState;
@@ -97,6 +98,15 @@ public class Plant_Stem_Shoot : Plant_Block
                 break;
         }
         RenderShoot();
+        UpdateStemCollider();
+    }
+
+    private void UpdateStemCollider(){
+        foreach(PlantData.StemShootCollider stemShootCollider in stemShootColliders){
+            if(stemShootCollider.stemShootState == stemShootState){
+                stemShootCollider2D.size = stemShootCollider.plantCollider.size;
+            }
+        }
     }
 
     protected override void performUpgrade(int index)

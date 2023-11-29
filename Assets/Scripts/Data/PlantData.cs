@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlantData
 {
     public enum BlockType {
-        Core, Stem, Stem_Shoot, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub, Nitrate_Intake
+        Core, Stem, Stem_Shoot, Branch, Leaf, Root_Stem, Root_Branch, Bacteria_Hub, Nitrate_Intake, FlowerBud, Flower
     }
 
     public enum CoreState{
@@ -51,6 +51,14 @@ public class PlantData
         Large
     }
 
+    public enum FlowerBudState {
+        stage1, stage2, bloomReady
+    }
+
+    public enum FlowerType {
+        Orange, Blue
+    }
+
     [System.Serializable]
     public class PlantCollider{
         public Vector2 size;
@@ -60,6 +68,12 @@ public class PlantData
     [System.Serializable]
     public class StemCollider{
         public StemState stemState;
+        public PlantCollider plantCollider;
+    }
+
+    [System.Serializable]
+    public class StemShootCollider{
+        public StemShootState stemShootState;
         public PlantCollider plantCollider;
     }
 
@@ -91,6 +105,18 @@ public class PlantData
         public Resource resource;
 
         public UpgradeData(string name, int cost, Resource resource){
+            this.name = name;
+            this.cost = cost;
+            this.resource = resource;
+        }
+    }
+
+    public class ActiveData {
+        public string name;
+        public int cost;
+        public Resource resource;
+
+        public ActiveData(string name, int cost, Resource resource){
             this.name = name;
             this.cost = cost;
             this.resource = resource;

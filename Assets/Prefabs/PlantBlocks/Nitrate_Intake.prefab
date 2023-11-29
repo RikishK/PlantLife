@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3570009580556927735}
   - component: {fileID: 9143428603753389358}
   - component: {fileID: 1972444492056627953}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Nitrate_Intake
   m_TagString: PlantBlock
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   m_Component:
   - component: {fileID: 788051508898706287}
   - component: {fileID: 6418615396963993436}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Nitrate_Intake_Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6857573143464163104}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: extensionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

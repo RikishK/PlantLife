@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6288717931200041305}
   - component: {fileID: 1208179272300066189}
   - component: {fileID: -508491099540206677}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Bacteria2
   m_TagString: Creature
   m_Icon: {fileID: 0}
