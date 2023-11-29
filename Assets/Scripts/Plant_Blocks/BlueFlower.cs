@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class BlueFlower : Flower
@@ -14,6 +15,7 @@ public class BlueFlower : Flower
 
     [SerializeField] private SpriteRenderer blueFlowerRenderer;
     [SerializeField] private Transform PollonSpawnPoint, center;
+    [SerializeField] private TextMeshProUGUI collectedExpText;
 
     private Flower pollination_target_flower;
     private bool isSelectingPollinationTarget = false;
@@ -31,13 +33,10 @@ public class BlueFlower : Flower
             check_pos.z = 0;
             Collider2D[] plant_blocks = Physics2D.OverlapCircleAll(check_pos, 0.3f, plantBlockLayer);
             foreach(Collider2D plant_block in plant_blocks){
-                Debug.Log("Checking: " + plant_block);
                 Plant_Block plant_block_script = plant_block.GetComponent<Plant_Block>();
                 if(plant_block_script.BlockType() == PlantData.BlockType.Flower){
-                    Debug.Log("quack");
                     Flower flower = (Flower)plant_block_script;
                     if (flower.FlowerType() != PlantData.FlowerType.Blue){
-                        Debug.Log("Found pollination target: " + flower);
                         pollination_target_flower = flower;
                         pollinationTargetIndicator.transform.position = pollination_target_flower.transform.position;
                     }
@@ -52,6 +51,7 @@ public class BlueFlower : Flower
     {
         experienceCollectionRangeIndicator.gameObject.SetActive(true);
         pollinationRangeIndicator.gameObject.SetActive(true);
+        collectedExpText.gameObject.SetActive(true);
         if(pollination_target_flower) pollinationTargetIndicator.SetActive(true);
     }
 
@@ -59,6 +59,7 @@ public class BlueFlower : Flower
     {
         experienceCollectionRangeIndicator.gameObject.SetActive(false);
         pollinationRangeIndicator.gameObject.SetActive(false);
+        collectedExpText.gameObject.SetActive(false);
         pollinationTargetIndicator.SetActive(false);
     }
 
@@ -90,7 +91,7 @@ public class BlueFlower : Flower
 
     public override bool CanUseActive(int index)
     {
-        if (index == 3) return collected_experience >= 10;
+        if (index == 3) return collected_experience >= 10 && pollination_target_flower;
         return true;
     }
 
@@ -126,6 +127,15 @@ public class BlueFlower : Flower
         }
     }
 
+    public void CollectExperienceOrb(int exp){
+        collected_experience += exp;
+        UpdateCollectedExpText();
+    }
+
+    private void UpdateCollectedExpText(){
+        collectedExpText.text = collected_experience.ToString();
+    }
+
     private void ProducePollon(){
         GameObject pollonObj = Instantiate(pollonPrefab);
         pollonObj.transform.position = PollonSpawnPoint.position;
@@ -145,7 +155,7 @@ public class BlueFlower : Flower
         experiencePollon.transform.position = PollonSpawnPoint.position;
         ExperiencePollon experiencePollonScript = experiencePollon.GetComponent<ExperiencePollon>();
         experiencePollonScript.Init(exp_amount, pollination_target_flower);
-        
+        UpdateCollectedExpText();
     }
 
 }

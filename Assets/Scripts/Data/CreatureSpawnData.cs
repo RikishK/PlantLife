@@ -51,7 +51,7 @@ public class CreatureSpawnData
     }
 
     public enum CreatureType {
-        Aphid, Worm, Fungi, Bacteria, HoverflyLarvae
+        Aphid, Worm, Fungi, Bacteria, HoverflyLarvae, Hoverfly
     }
 
     [System.Serializable]

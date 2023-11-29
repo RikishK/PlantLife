@@ -13,7 +13,7 @@ public class ActivesMenu : MonoBehaviour
 
     public void ShowActives(List<PlantData.ActiveData> activesData, string block_name){
         nameText.text = block_name;
-        for(int i=0; i<3; i++){
+        for(int i=0; i<4; i++){
             if(i>=activesData.Count){
                 activesSlots[i].SetActive(false);
             }
@@ -26,6 +26,7 @@ public class ActivesMenu : MonoBehaviour
     }
 
     public void Close(){
+        gameManager.canInteract = true;
         gameObject.SetActive(false);
     }
 

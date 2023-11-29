@@ -26,6 +26,7 @@ public class UpgradeMenu : MonoBehaviour
     }
 
     public void Close(){
+        gameManager.canInteract = true;
         gameObject.SetActive(false);
     }
 

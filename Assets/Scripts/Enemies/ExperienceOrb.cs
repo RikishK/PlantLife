@@ -4,7 +4,7 @@ using UnityEngine;
 public class ExperienceOrb : MonoBehaviour
 {
     private int experience_amount;
-    private Flower target_blue_flower;
+    private BlueFlower target_blue_flower;
     private ExperienceOrbState experienceOrbState;
     private float startTime;
     void Start()
@@ -59,6 +59,7 @@ public class ExperienceOrb : MonoBehaviour
                         if (Vector2.Distance(transform.position, target_blue_flower.transform.position) < 0.3f)
                         {
                             // Give blue flower experience
+                            target_blue_flower.CollectExperienceOrb(experience_amount);
                             // Die
                             Die();
                         }
@@ -74,7 +75,7 @@ public class ExperienceOrb : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Target(Flower blue_flower){
+    public void Target(BlueFlower blue_flower){
         Debug.Log("Targetting: " + blue_flower);
         target_blue_flower = blue_flower;
         experienceOrbState = ExperienceOrbState.MovingToTarget;

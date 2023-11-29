@@ -12,7 +12,7 @@ public class OrangeFlower : Flower
     [SerializeField] private Transform shootPoint, center;
     [SerializeField] private RangeIndicator rangeIndicator;
     [SerializeField] private SpriteRenderer orangeFlowerRenderer;
-    [SerializeField] private Slider ammunitionSlider;
+    [SerializeField] private Slider ammunitionSlider, experienceSlider, healthSlider;
 
     private GameObject enemyTargetObj;
     private FlowerState flowerState = FlowerState.Idle;
@@ -27,7 +27,17 @@ public class OrangeFlower : Flower
         Idle, Attacking
     }
 
-    protected override IEnumerator OrangeFlowerRoutine()
+    public override void Init()
+    {
+        base.Init();
+
+        Glucose_Count = 15;
+        StartCoroutine(OrangeFlowerRoutine());
+        UpdateAmmunitionSlider();
+        UpdateExperienceSlider();
+        UpdateHealthSlider();
+    }
+    protected IEnumerator OrangeFlowerRoutine()
     {
         UpdateAmmunitionSlider();
         while(true){
@@ -123,6 +133,26 @@ public class OrangeFlower : Flower
         ammunitionSlider.value = Glucose_Count;
     }
 
+    private void UpdateExperienceSlider(){
+        experienceSlider.maxValue = maxBattleExperience;
+        experienceSlider.value = flower_battle_experience;
+    }
+
+    private void UpdateHealthSlider(){
+        healthSlider.maxValue = health;
+        healthSlider.value = current_health;
+    }
+
+    protected override void TakeDamageExtras()
+    {
+        UpdateHealthSlider();
+    }
+
+    protected override void GainExperienceExtras()
+    {
+        UpdateExperienceSlider();
+    }
+
     private IEnumerator SpawnProjectile(){
         flowerAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.9f);
@@ -137,11 +167,18 @@ public class OrangeFlower : Flower
     protected override void HighlightExtras()
     {
         rangeIndicator.gameObject.SetActive(true);
+        ammunitionSlider.gameObject.SetActive(true);
+        experienceSlider.gameObject.SetActive(true);
+        healthSlider.gameObject.SetActive(true);
+
     }
 
     protected override void UnHighlightExtras()
     {
         rangeIndicator.gameObject.SetActive(false);
+        ammunitionSlider.gameObject.SetActive(false);
+        experienceSlider.gameObject.SetActive(false);
+        healthSlider.gameObject.SetActive(false);
     }
 
     protected override void InitActives()

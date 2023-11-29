@@ -15,6 +15,7 @@ public class Plant_Block : MonoBehaviour
 
     protected List<PlantData.ActiveData> actives;
     [SerializeField] protected int health = 100;
+    protected int current_health;
     [SerializeField] protected PlantData.BlockType blockType;
 
     protected Color hoverTint = Color.red, originalColor = Color.white;
@@ -34,16 +35,22 @@ public class Plant_Block : MonoBehaviour
     public void TakeDamage(int damage){
         Debug.Log("Plant Block: " + block_name + " is taking damage: " + damage);
         health -= damage;
+        TakeDamageExtras();
         if (health <= 0) DestroyBlock();
     }
 
+    protected virtual void TakeDamageExtras(){
+
+    }
     protected virtual void DestroyBlock(){
         Debug.Log("Block Destroyed: " + block_name);
+        Destroy(gameObject);
     }
 
     public virtual void Init(){
         gameManager = FindAnyObjectByType<GameManager>();
         children = new List<Plant_Block>();
+        current_health = health;
         InitUpgrades();
         InitActives();
         InitExtras();
@@ -82,11 +89,13 @@ public class Plant_Block : MonoBehaviour
             UnHighlight();
             gameManager.current_selection = this;
             gameManager.ShowUpgrades(getUpgrades(), block_name);
+            return;
         }
         else if (Input.GetMouseButtonDown(0)){
             UnHighlight();
             gameManager.current_selection = this;
             gameManager.ShowActives(getActives(), block_name);
+            return;
         }
     }
 

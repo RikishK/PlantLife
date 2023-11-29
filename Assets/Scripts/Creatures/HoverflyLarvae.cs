@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 
 public class HoverflyLarvae : Creature
@@ -18,6 +19,7 @@ public class HoverflyLarvae : Creature
     private Collider2D previousFloorHitCollider;
     private GameObject targetObj;
     [SerializeField] private Transform detectionPoint, stickPoint, wallCornerPoint;
+    [SerializeField] private GameObject HoverflyPrefab;
     private enum HoverflyLarvaeState {
         Idle, Attacking, Evolving
     }
@@ -99,6 +101,7 @@ public class HoverflyLarvae : Creature
                     }
                     break;
                 case HoverflyLarvaeState.Evolving:
+                    Evolve();
                     break;
             }
             yield return null;
@@ -110,6 +113,8 @@ public class HoverflyLarvae : Creature
     {
         // Generate a random direction (left or right)
         int randomDirection = Random.Range(-1, 2); // -1 for left, 1 for right
+        if(transform.position.x > 7) randomDirection = -1;
+        if(transform.position.x < -7) randomDirection = 1;
         if (manualOverride) randomDirection = manualOverrideDirection;
         float moveDistance = distance * Random.Range(0f, 2.0f);
 
@@ -335,6 +340,12 @@ public class HoverflyLarvae : Creature
         }
 
         return null;
+    }
+
+    private void Evolve(){
+        GameObject hoverfly = Instantiate(HoverflyPrefab);
+        hoverfly.transform.position = transform.position;
+        Destroy(gameObject);
     }
 
 }

@@ -43,7 +43,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void ShowUpgrades(List<PlantData.UpgradeData> upgradeDatas, string block_name){
-        if (upgradeDatas == null) return;
+        canInteract = false;
+        if (upgradeDatas == null){
+            canInteract = true;
+            return;
+        }
         UpgradeMenu.SetActive(true);
         UpgradeMenu.GetComponent<UpgradeMenu>().ShowUpgrades(upgradeDatas, block_name);
     }
@@ -65,7 +69,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void ShowActives(List<PlantData.ActiveData> activesDatas, string block_name){
-        if(activesDatas == null) return;
+        canInteract = false;
+        if(activesDatas == null){
+            canInteract = true;
+            return;
+        }
         ActivesMenu.SetActive(true);
         ActivesMenu.GetComponent<ActivesMenu>().ShowActives(activesDatas, block_name);
     }

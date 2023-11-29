@@ -22,4 +22,12 @@ public class ExperiencePollon : Pollon
         this.experience_amount = experience_amount;
         this.destination_flower = destination_flower;
     }
+
+    public Flower DestinationFlower(){
+        return destination_flower;
+    }
+
+    public int ExperienceAmount(){
+        return experience_amount;
+    }
 }

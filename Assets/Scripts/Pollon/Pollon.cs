@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class Pollon : MonoBehaviour
 {
-    
+    public PollonType pollonType;
+    public enum PollonType{
+        Regular, Experience
+    }
 }
