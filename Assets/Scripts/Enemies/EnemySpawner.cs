@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public EnemyData.EnemyWave[] waves;
     [SerializeField] private GameObject aphidEnemyPrefab;
+    [SerializeField] private WaveSpawnerUI waveSpawnerUI;
     private int current_wave;
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,10 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator SpawnWaves(){
         // Delay for player wave prep time
         Debug.Log("Wave: " + current_wave + " starts in " + waves[current_wave].prepTime + " seconds");
+        waveSpawnerUI.gameObject.SetActive(true);
+        waveSpawnerUI.UpdateSpawnerUI(waves[current_wave].prepTime, waves[current_wave].enemySpawnDatas);
         yield return new WaitForSeconds(waves[current_wave].prepTime);
+        waveSpawnerUI.gameObject.SetActive(false);
         // TODO: visualize the prep time for the player
 
         // Spawn enemies
