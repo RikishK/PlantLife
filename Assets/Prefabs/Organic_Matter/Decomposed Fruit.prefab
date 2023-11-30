@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3097856262182809798}
   m_Layer: 0
   m_Name: Decomposed Fruit
-  m_TagString: Untagged
+  m_TagString: OrganicMatter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,7 +109,8 @@ MonoBehaviour:
   - {fileID: -1790867182, guid: 4420486b0e801d047a94071bcccb757f, type: 3}
   - {fileID: -321972812, guid: 4420486b0e801d047a94071bcccb757f, type: 3}
   current_stage: 0
-  nitrate_per_bite: 10
+  nitrate_per_bite: 5
+  hungerValue: 20
 --- !u!58 &3097856262182809798
 CircleCollider2D:
   m_ObjectHideFlags: 0

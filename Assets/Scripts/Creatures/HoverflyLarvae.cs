@@ -19,7 +19,7 @@ public class HoverflyLarvae : Creature
     private Collider2D previousFloorHitCollider;
     private GameObject targetObj;
     [SerializeField] private Transform detectionPoint, stickPoint, wallCornerPoint;
-    [SerializeField] private GameObject HoverflyPrefab;
+    [SerializeField] private GameObject HoverflyPrefab, DamageIndicatorPrefab;
     private enum HoverflyLarvaeState {
         Idle, Attacking, Evolving
     }
@@ -77,6 +77,7 @@ public class HoverflyLarvae : Creature
                     if(targetObj){
                         if(isTargetingEnemy){
                             Enemy enemyScript = targetObj.GetComponent<Enemy>();
+                            DamageIndicator();
                             enemyScript.TakeDamage(attackDamage);
                             float seconds_to_wait = 1f / attackSpeed;
                             yield return new WaitForSeconds(seconds_to_wait);
@@ -107,6 +108,14 @@ public class HoverflyLarvae : Creature
             yield return null;
         }
         
+    }
+
+    protected virtual void DamageIndicator(){
+        GameObject damageIndicator = Instantiate(DamageIndicatorPrefab);
+        Vector3 damageIndicatorPosition = new Vector3(targetObj.transform.position.x + Random.Range(-0.2f, 0.2f), targetObj.transform.position.y + Random.Range(-0.2f, 0.2f), 0);
+        damageIndicator.transform.position = damageIndicatorPosition;
+        float rotation_z = Random.Range(-30, 30);
+        damageIndicator.transform.rotation = Quaternion.Euler(0, 0, rotation_z);
     }
 
     private void MoveRandom()
@@ -306,8 +315,9 @@ public class HoverflyLarvae : Creature
         GameObject closestEnemy = null;
 
         foreach(GameObject enemyObject in enemyObjects){
+            Debug.Log("Larvae looking at enemy: " + enemyObject);
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
-            if (enemyScript.EnemyType() == EnemyData.EnemyType.AphidEnemy){
+            if (enemyScript.EnemyType() == EnemyData.EnemyType.RedAphidEnemy){
                 float distance = Vector3.Distance(transform.position, enemyObject.transform.position);
                 if (distance < enemyDistance && distance < targetDetectionRange){
                     enemyDistance = distance;
@@ -343,9 +353,25 @@ public class HoverflyLarvae : Creature
     }
 
     private void Evolve(){
+        if (hasHoverfly()){
+            Destroy(gameObject);
+            return;
+        }
+
         GameObject hoverfly = Instantiate(HoverflyPrefab);
         hoverfly.transform.position = transform.position;
         Destroy(gameObject);
+    }
+
+    private bool hasHoverfly(){
+        GameObject[] creature_objects = GameObject.FindGameObjectsWithTag("Creature");
+        foreach(GameObject creature_object in creature_objects){
+            Creature creatureScript = creature_object.GetComponent<Creature>();
+            if (creatureScript != null && creatureScript.creatureType == CreatureSpawnData.CreatureType.Hoverfly){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

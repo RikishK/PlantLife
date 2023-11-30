@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public EnemyData.EnemyWave[] waves;
-    [SerializeField] private GameObject aphidEnemyPrefab;
+    [SerializeField] private GameObject redAphidEnemyPrefab, orangeAphidEnemyPrefab, purpleAphidEnemyPrefab, pinkAphidEnemyPrefab;
     [SerializeField] private WaveSpawnerUI waveSpawnerUI;
     private int current_wave;
     // Start is called before the first frame update
@@ -22,12 +22,11 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnWaves(){
         // Delay for player wave prep time
-        Debug.Log("Wave: " + current_wave + " starts in " + waves[current_wave].prepTime + " seconds");
+        //Debug.Log("Wave: " + current_wave + " starts in " + waves[current_wave].prepTime + " seconds");
         waveSpawnerUI.gameObject.SetActive(true);
-        waveSpawnerUI.UpdateSpawnerUI(waves[current_wave].prepTime, waves[current_wave].enemySpawnDatas);
+        waveSpawnerUI.UpdateSpawnerUI(waves[current_wave].prepTime, waves[current_wave].enemySpawnDatas, current_wave+1);
         yield return new WaitForSeconds(waves[current_wave].prepTime);
         waveSpawnerUI.gameObject.SetActive(false);
-        // TODO: visualize the prep time for the player
 
         // Spawn enemies
         foreach(EnemyData.EnemySpawnData enemySpawnData in waves[current_wave].enemySpawnDatas){
@@ -38,7 +37,8 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Continue if more waves
-        if (current_wave + 1 < waves.Length) StartCoroutine(SpawnWaves());
+        current_wave++;
+        if (current_wave < waves.Length) StartCoroutine(SpawnWaves());
 
     }
 
@@ -51,15 +51,21 @@ public class EnemySpawner : MonoBehaviour
                 if (spawnLeft) spawn_x *= -1;
                 Vector3 spawn_location = new Vector3(spawn_x, -1, 0);
                 enemyObject.transform.position = spawn_location;
-                Debug.Log("Spawned Enemy at: " + spawn_location);
+                //Debug.Log("Spawned Enemy at: " + spawn_location);
                 break;
         }
     }
 
     private GameObject GetEnemyPrefab(EnemyData.EnemyType enemyType){
         switch (enemyType){
-            case EnemyData.EnemyType.AphidEnemy:
-                return aphidEnemyPrefab;
+            case EnemyData.EnemyType.RedAphidEnemy:
+                return redAphidEnemyPrefab;
+            case EnemyData.EnemyType.OrangeAphidEnemy:
+                return orangeAphidEnemyPrefab;
+            case EnemyData.EnemyType.PurpleAphidEnemy:
+                return purpleAphidEnemyPrefab;
+            case EnemyData.EnemyType.PinkAphidEnemy:
+                return pinkAphidEnemyPrefab;
         }
         return null;
     }

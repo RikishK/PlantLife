@@ -33,7 +33,7 @@ public class FungiMan : Creature
 
             if (Vector2.Distance(transform.position, interruptPosition) < 0.1f)
             {
-                FindObjectOfType<GameManager>().GainResource(PlantData.Resource.Nitrate, nitrateEaten * 5);
+                FindObjectOfType<GameManager>().GainResource(PlantData.Resource.Nitrate, nitrateEaten * 15);
                 nitrateEaten = 0;
                 currentState = State.Searching;
             }

@@ -13,7 +13,25 @@ public class Plant_Nitrate_Intake : Plant_Block
         
     }
 
-    private void OnMouseDown(){
+    protected override SpriteRenderer getRenderer()
+    {
+        return nitrateIntakeRenderer;
+    }
+
+    protected override void InitActives()
+    {
+        actives = new List<PlantData.ActiveData>(){
+            new PlantData.ActiveData("Call Fungi", 20, PlantData.Resource.Glucose),
+        };
+    }
+
+    public override bool CanUseActive(int index)
+    {
+        return true;
+    }
+
+    public override void UseActive(int index)
+    {
         // Find all GameObjects with the specified tag
         GameObject[] creatures = GameObject.FindGameObjectsWithTag("Creature");
         List<Creature> fungiList = new List<Creature>();
@@ -31,10 +49,5 @@ public class Plant_Nitrate_Intake : Plant_Block
                 fungiManScript.Interrupt(transform.position);
             }
         }
-    }
-
-    protected override SpriteRenderer getRenderer()
-    {
-        return nitrateIntakeRenderer;
     }
 }

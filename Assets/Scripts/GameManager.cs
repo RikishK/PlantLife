@@ -17,8 +17,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         resources = new Dictionary<PlantData.Resource, int>(){
-            {PlantData.Resource.Glucose, 10000},
-            {PlantData.Resource.Nitrate, 10000}
+            {PlantData.Resource.Glucose, 200},
+            {PlantData.Resource.Nitrate, 200}
         };
         GlucoseText.text = $"Glucose: {resources[PlantData.Resource.Glucose]}";
         NitrateText.text = $"Nitrate: {resources[PlantData.Resource.Nitrate]}";
@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
 
     public void GainResource(PlantData.Resource resource, int gain){
         resources[resource] += gain;
-        GlucoseText.text = $"Glucose: {resources[PlantData.Resource.Glucose]}";
-        NitrateText.text = $"Nitrate: {resources[PlantData.Resource.Nitrate]}";
+        GlucoseText.text = $"{resources[PlantData.Resource.Glucose]}";
+        NitrateText.text = $"{resources[PlantData.Resource.Nitrate]}";
 
     }
 
@@ -56,15 +56,27 @@ public class GameManager : MonoBehaviour
         if(canAfford(upgrade) && current_selection.CanUpgrade(index)){
             current_selection.Upgrade(index);
             UpgradeMenu.GetComponent<UpgradeMenu>().ShowUpgrades(current_selection.getUpgrades(), current_selection.block_name);
-            GainResource(upgrade.resource, -upgrade.cost);
+            
+            if(upgrade.resource == PlantData.Resource.Battle_Exp){
+                Flower flowerScript = (Flower)current_selection;
+                flowerScript.GainExperience(-upgrade.cost);
+            }
+            else{
+                GainResource(upgrade.resource, -upgrade.cost);
+            }
+
             return true;
         }
-        Debug.Log("Cant Upgrade");
+        //Debug.Log("Cant Upgrade");
 
         return false;
     }
 
     private bool canAfford(PlantData.UpgradeData upgrade){
+        if(upgrade.resource == PlantData.Resource.Battle_Exp){
+            Flower flowerScript = (Flower)current_selection;
+            return flowerScript.BattleExp() >= upgrade.cost;
+        }
         return resources[upgrade.resource] >= upgrade.cost;
     }
 
@@ -80,7 +92,7 @@ public class GameManager : MonoBehaviour
 
     public bool UseActive(PlantData.ActiveData activeData, int index){
         if(canAffordActive(activeData) && current_selection.CanUseActive(index)){
-            Debug.Log("Can use active");
+            //Debug.Log("Can use active");
             current_selection.UseActive(index);
             GainResource(activeData.resource, -activeData.cost);
             return true;

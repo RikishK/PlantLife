@@ -8,7 +8,7 @@ public class Bacteria : Creature
     public PlantData.Resource targetResource;
     public float searchRange = 10f; // The range to search for the target
     public float moveSpeed = 5f; // The speed at which the GameObject moves
-    public float grabDistance = 1f; // The distance at which it grabs the target
+    public float grabDistance = 0.1f; // The distance at which it grabs the target
     public float timerDuration = 3.0f; // The duration of the timer
     public GameObject producedMolecule, bacteriaPrefab; // The prefab to instantiate
 
@@ -58,7 +58,7 @@ public class Bacteria : Creature
                 case State.Grabbing:
                     GrabTarget();
                     eaten_count++;
-                    moveSpeed = 5f - 0.8f * eaten_count;
+                    moveSpeed = 3f - 0.3f * eaten_count;
                     break;
 
                 case State.Timer:
@@ -132,8 +132,10 @@ public class Bacteria : Creature
             // Update the GameObject's rotation to directly face the target.
             transform.rotation = Quaternion.Euler(0, 0, rotationInDegrees);
 
+            float randomMoveSpeed = moveSpeed + Random.Range(-0.5f, 0.5f);
+
             // Move the GameObject in the forward direction (2D space).
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            transform.Translate(Vector3.right * randomMoveSpeed * Time.deltaTime);
 
             if (Vector2.Distance(transform.position, target.position) < grabDistance)
             {

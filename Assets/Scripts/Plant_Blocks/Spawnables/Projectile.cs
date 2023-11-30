@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private GameObject target;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private int damage;
+    private GameObject target;
+    private float moveSpeed, explosiveRange;
+    private int damage, pierceCount;
+    private bool isExplosive;
+    [SerializeField] private LayerMask enemyLayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +21,13 @@ public class Projectile : MonoBehaviour
         
     }
 
-    public void Init(GameObject target){
+    public void Init(GameObject target, int damage, float moveSpeed, bool isExplosive, float explosiveRange, int pierceCount){
         this.target = target;
+        this.damage = damage;
+        this.moveSpeed = moveSpeed;
+        this.explosiveRange = explosiveRange;
+        this.pierceCount = pierceCount;
+        this.isExplosive = isExplosive;
         StartCoroutine(ProjectileRoutine());
     }
 
@@ -38,14 +45,58 @@ public class Projectile : MonoBehaviour
 
                 if (Vector2.Distance(transform.position, target.transform.position) < 0.3f)
                 {
-                    Enemy enemyScript = target.GetComponent<Enemy>();
-                    enemyScript.TakeDamage(damage);
-                    Destroy(gameObject);
+                    HandleDamage();
+                    HandleDeath();
                 }
             }
 
             yield return null;
         }
+    }
+
+    private void HandleDeath(){
+        if(pierceCount > 0){
+            Debug.Log("Piercing: " + pierceCount);
+            target = FindEnemyTarget();
+            pierceCount--;
+            Debug.Log(target);
+        }
+        else{
+            Destroy(gameObject);
+        }
+    }
+
+    private void HandleDamage(){
+        if(isExplosive){
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, explosiveRange, enemyLayer);
+            foreach(Collider2D enemy in enemies){
+                Enemy enemyScript = enemy.GetComponent<Enemy>();
+                enemyScript.TakeDamage(damage);
+            }
+        }
+        
+        if(target){
+            Enemy enemyScript = target.GetComponent<Enemy>();
+            enemyScript.TakeDamage(damage);
+        }
+    }
+
+    private GameObject FindEnemyTarget(){
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, 3f, enemyLayer);
+
+        float target_distance = float.MaxValue;
+        GameObject target = null;
+        
+        
+        foreach(Collider2D enemy in enemies){
+            Debug.Log("Might pierce to: " + enemy);
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            if (distance < target_distance && distance <= 3f){
+                target_distance = distance;
+                target = enemy.gameObject;
+            }
+        }
+        return target;
     }
 
 }

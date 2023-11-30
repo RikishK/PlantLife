@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Plant_Core : Plant_Block
 {
@@ -10,10 +11,24 @@ public class Plant_Core : Plant_Block
 
     [SerializeField] private GameObject stemPrefab;
     [SerializeField] private Transform overground_sp;
+    [SerializeField] private Slider healthSlider;
     
     private PlantData.CoreState coreState = PlantData.CoreState.Level1;
     // Start is called before the first frame update
     void Start()
+    {
+        InitUpgrades();
+        InitActives();
+        InitExtras();
+    }
+
+    protected override void InitExtras()
+    {
+        current_health = health;
+        UpdateHealthSlider();
+    }
+
+    protected override void InitUpgrades()
     {
         upgrades = new List<PlantData.UpgradeData>{
             new PlantData.UpgradeData("Grow Stem", 100, PlantData.Resource.Nitrate),
@@ -22,10 +37,22 @@ public class Plant_Core : Plant_Block
         };
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void InitActives()
     {
-        
+        actives = new List<PlantData.ActiveData>(){
+            new PlantData.ActiveData("Heal", 100, PlantData.Resource.Glucose),
+        };
+    }
+
+    public override bool CanUseActive(int index)
+    {
+        return current_health < health;
+    }
+
+    public override void UseActive(int index)
+    {
+        current_health = Mathf.Clamp(current_health + 50, 0, health);
+        UpdateHealthSlider();
     }
 
     protected override void Highlight(){
@@ -118,9 +145,13 @@ public class Plant_Core : Plant_Block
         switch(coreState){
             case PlantData.CoreState.Level1:
                 coreState = PlantData.CoreState.Level2;
+                health = 1000;
+                current_health = Mathf.Clamp(current_health + 200, 0, health);
                 break;
             case PlantData.CoreState.Level2:
                 coreState = PlantData.CoreState.Level3;
+                health = 2000;
+                current_health = Mathf.Clamp(current_health + 500, 0, health);
                 break;
         }
     }
@@ -180,5 +211,15 @@ public class Plant_Core : Plant_Block
                 return underground_root.GetComponent<Plant_Block>();
         }
         return null;
+    }
+
+    private void UpdateHealthSlider(){
+        healthSlider.maxValue = health;
+        healthSlider.value = current_health;
+    }
+
+    protected override void TakeDamageExtras()
+    {
+        UpdateHealthSlider();
     }
 }

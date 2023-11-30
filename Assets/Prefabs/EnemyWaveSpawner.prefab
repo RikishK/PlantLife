@@ -45,20 +45,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - prepTime: 5
+  - prepTime: 100
     enemySpawnDatas:
-    - enemyType: 0
-      count: 3
-      spawnGap: 5
-      enemySpawnLocationType: 0
-  - prepTime: 30
-    enemySpawnDatas:
-    - enemyType: 0
-      count: 5
-      spawnGap: 5
-      enemySpawnLocationType: 0
     - enemyType: 0
       count: 3
       spawnGap: 1
       enemySpawnLocationType: 0
-  aphidEnemyPrefab: {fileID: 2574440101272463747, guid: a66d6da0dddd05741bbae476d91ae25f, type: 3}
+  - prepTime: 110
+    enemySpawnDatas:
+    - enemyType: 0
+      count: 5
+      spawnGap: 1
+      enemySpawnLocationType: 0
+    - enemyType: 1
+      count: 1
+      spawnGap: 1
+      enemySpawnLocationType: 0
+  - prepTime: 120
+    enemySpawnDatas:
+    - enemyType: 0
+      count: 10
+      spawnGap: 1
+      enemySpawnLocationType: 0
+    - enemyType: 1
+      count: 3
+      spawnGap: 1
+      enemySpawnLocationType: 0
+  - prepTime: 130
+    enemySpawnDatas:
+    - enemyType: 0
+      count: 15
+      spawnGap: 1
+      enemySpawnLocationType: 0
+    - enemyType: 1
+      count: 6
+      spawnGap: 1
+      enemySpawnLocationType: 0
+  - prepTime: 140
+    enemySpawnDatas:
+    - enemyType: 0
+      count: 15
+      spawnGap: 0.5
+      enemySpawnLocationType: 0
+    - enemyType: 1
+      count: 6
+      spawnGap: 0.5
+      enemySpawnLocationType: 0
+  redAphidEnemyPrefab: {fileID: 2574440101272463747, guid: a66d6da0dddd05741bbae476d91ae25f, type: 3}
+  orangeAphidEnemyPrefab: {fileID: 2574440101272463747, guid: 957392a22a539ea428055b1f6b74f585, type: 3}
+  purpleAphidEnemyPrefab: {fileID: 0}
+  pinkAphidEnemyPrefab: {fileID: 0}
+  waveSpawnerUI: {fileID: 0}

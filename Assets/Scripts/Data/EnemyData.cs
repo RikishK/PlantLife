@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyData
 {
     public enum EnemyType {
-        AphidEnemy
+        RedAphidEnemy, OrangeAphidEnemy, PurpleAphidEnemy, PinkAphidEnemy
     }
 
     [System.Serializable]

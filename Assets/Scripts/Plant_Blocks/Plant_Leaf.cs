@@ -37,7 +37,7 @@ public class Plant_Leaf : Plant_Block
     }
 
     private void ProduceGlucose(){
-        int height_bonus = (int)transform.position.y / 3;
+        int height_bonus = (int)transform.position.y + 1;
         switch (leafState){
             case PlantData.LeafState.Small:
                 nitrate_value += 1;
