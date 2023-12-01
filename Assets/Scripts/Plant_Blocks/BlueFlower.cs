@@ -68,7 +68,6 @@ public class BlueFlower : Flower
         actives = new List<PlantData.ActiveData>(){
             new PlantData.ActiveData("Pollination Target", 20, PlantData.Resource.Glucose),
             new PlantData.ActiveData("Absorb Experience", 20, PlantData.Resource.Glucose),
-            new PlantData.ActiveData("Pollon", 20, PlantData.Resource.Glucose),
             new PlantData.ActiveData("Pollon Experience", 50, PlantData.Resource.Glucose),
         };
     }
@@ -76,7 +75,7 @@ public class BlueFlower : Flower
     public override List<PlantData.ActiveData> getActives()
     {
         if (collected_experience > 10) return actives;
-        return actives.GetRange(0, 3);
+        return actives.GetRange(0, 2);
     }
     protected override void InitExtras()
     {
@@ -91,7 +90,7 @@ public class BlueFlower : Flower
 
     public override bool CanUseActive(int index)
     {
-        if (index == 3) return collected_experience >= 10 && pollination_target_flower;
+        if (index == 2) return collected_experience >= 10 && pollination_target_flower;
         return true;
     }
 
@@ -105,9 +104,6 @@ public class BlueFlower : Flower
                 CollectExp();
                 break;
             case 2:
-                ProducePollon();
-                break;
-            case 3:
                 ProduceExperiencePollon();
                 break;
         }
@@ -120,7 +116,7 @@ public class BlueFlower : Flower
 
     private void CollectExp(){
         Collider2D[] experience_orbs = Physics2D.OverlapCircleAll(center.position, collection_range, experienceLayer);
-        Debug.Log(experience_orbs.Length);
+        //Debug.Log(experience_orbs.Length);
         foreach(Collider2D experience_orb in experience_orbs){
             ExperienceOrb experienceOrbScript  = experience_orb.GetComponent<ExperienceOrb>();
             experienceOrbScript.Target(this);

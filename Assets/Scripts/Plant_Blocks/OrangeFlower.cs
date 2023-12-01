@@ -204,6 +204,9 @@ public class OrangeFlower : Flower
     private IEnumerator SpawnProjectile(){
         flowerAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.9f);
+        if(enemyTargetObj == null){
+            enemyTargetObj = FindEnemyTarget();
+        }
         GameObject projectile = Instantiate(projectilePrefab);
         projectile.transform.position = shootPoint.position;
 

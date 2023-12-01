@@ -103,7 +103,7 @@ public class FungiMan : Creature
     // Function to interrupt the regular behavior
     public void Interrupt(Vector2 position)
     {
-        Debug.Log("interrupted");
+        //Debug.Log("interrupted");
         if(nitrateEaten > 0){
             interruptPosition = position;
             currentState = State.Interrupted;

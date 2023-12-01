@@ -109,10 +109,10 @@ public class Plant_Core : Plant_Block
         Plant_Stem new_plant_stem_block = (Plant_Stem)new_stem_block;
         switch(coreState){
             case PlantData.CoreState.Level2:
-                new_plant_stem_block.SetStem(PlantData.StemState.BrownStem);
+                new_plant_stem_block.SetStem(getGrowStemState());
                 break;
             case PlantData.CoreState.Level3:
-                new_plant_stem_block.SetStem(PlantData.StemState.Thick_Brown);
+                new_plant_stem_block.SetStem(getGrowStemState());
                 break;
         }
 
@@ -124,20 +124,62 @@ public class Plant_Core : Plant_Block
 
     }
 
+    private PlantData.StemState getGrowStemState(){
+        switch(coreState){
+            case PlantData.CoreState.Level2:
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch) return PlantData.StemState.Green;
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Stem){
+                    switch (overground_root.GetComponent<Plant_Stem>().StemState()){
+                        case PlantData.StemState.Green:
+                            return PlantData.StemState.Mid;
+                        case PlantData.StemState.Mid:
+                            return PlantData.StemState.BrownStem;
+                        case PlantData.StemState.BrownStem:
+                            return PlantData.StemState.BrownStem;
+
+                    }
+                }
+                break;
+            case PlantData.CoreState.Level3:
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch) return PlantData.StemState.Green;
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Stem){
+                    switch (overground_root.GetComponent<Plant_Stem>().StemState()){
+                        case PlantData.StemState.Green:
+                            return PlantData.StemState.Mid;
+                        case PlantData.StemState.Mid:
+                            return PlantData.StemState.BrownStem;
+                        case PlantData.StemState.BrownStem:
+                            return PlantData.StemState.BrownLink;
+                        case PlantData.StemState.BrownLink:
+                            return PlantData.StemState.Thick_Brown;
+                        case PlantData.StemState.Thick_Brown:
+                            return PlantData.StemState.Thick_Brown;
+
+                    }
+                }
+                break;
+        }
+        return PlantData.StemState.Green;
+    }
+
     protected override bool upgradeConditions(int index)
     {
-        if (index != 0) return true;
-        if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch) return true;
-        Plant_Stem base_stem = overground_root.GetComponent<Plant_Stem>();
-        switch (coreState){
-            case PlantData.CoreState.Level1:
-                return true;
-            case PlantData.CoreState.Level2:
-                return base_stem.StemState() == PlantData.StemState.Mid || base_stem.StemState() == PlantData.StemState.BrownStem;
-            case PlantData.CoreState.Level3:
-                return base_stem.StemState() == PlantData.StemState.BrownLink || base_stem.StemState() == PlantData.StemState.Thick_Brown;
-        }
-        return false;
+        // if (index != 0) return true;
+        // if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch){
+            
+        //     return true;
+        // }
+        // Plant_Stem base_stem = overground_root.GetComponent<Plant_Stem>();
+        // switch (coreState){
+        //     case PlantData.CoreState.Level1:
+        //         return true;
+        //     case PlantData.CoreState.Level2:
+        //         return base_stem.StemState() == PlantData.StemState.Mid || base_stem.StemState() == PlantData.StemState.BrownStem;
+        //     case PlantData.CoreState.Level3:
+        //         return base_stem.StemState() == PlantData.StemState.BrownLink || base_stem.StemState() == PlantData.StemState.Thick_Brown;
+        // }
+        // return false;
+        return true;
     }
 
     private void LevelUp(){

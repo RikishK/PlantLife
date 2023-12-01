@@ -33,7 +33,10 @@ public class Projectile : MonoBehaviour
 
     private IEnumerator ProjectileRoutine(){
         while(true){
-            if(target == null) Destroy(gameObject);
+            if(target == null){
+                target = FindEnemyTarget(7f);
+                if(target == null)  Destroy(gameObject);
+            }
 
             if (target != null)
             {
@@ -56,7 +59,7 @@ public class Projectile : MonoBehaviour
 
     private void HandleDeath(){
         if(pierceCount > 0){
-            Debug.Log("Piercing: " + pierceCount);
+            //Debug.Log("Piercing: " + pierceCount);
             target = FindEnemyTarget();
             pierceCount--;
             Debug.Log(target);
@@ -81,17 +84,17 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private GameObject FindEnemyTarget(){
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, 3f, enemyLayer);
+    private GameObject FindEnemyTarget(float range = 3f){
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, range, enemyLayer);
 
         float target_distance = float.MaxValue;
         GameObject target = null;
         
         
         foreach(Collider2D enemy in enemies){
-            Debug.Log("Might pierce to: " + enemy);
+            //Debug.Log("Might pierce to: " + enemy);
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
-            if (distance < target_distance && distance <= 3f){
+            if (distance < target_distance && distance <= range){
                 target_distance = distance;
                 target = enemy.gameObject;
             }

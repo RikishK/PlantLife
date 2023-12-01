@@ -76,7 +76,7 @@ public class Worm : Creature
                     // }
                     target = FindClosestObjectWithTag("OrganicMatter");
                     if (target == null){
-                        currentState = State.HungryBacteria;
+                        //currentState = State.HungryBacteria;
                     }
                 }
                 else
@@ -87,6 +87,7 @@ public class Worm : Creature
                     if (Vector2.Distance(transform.position, target.transform.position) < 0.1f)
                     {
                         //EatOrganicMatter(target);
+                        Debug.Log("Harvesting: " + target.GetComponent<Organic_Matter>().Harvest());
                         StartCoroutine(SpawnNitrate(target.GetComponent<Organic_Matter>().Harvest()));
                         hungryTimerOrganicMatter = target.GetComponent<Organic_Matter>().hungerValue;
                         target.GetComponent<Organic_Matter>().Consume();

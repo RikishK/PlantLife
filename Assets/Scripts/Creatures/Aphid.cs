@@ -35,7 +35,7 @@ public class Aphid : Creature
     public void Die(){
         GameObject deadAphidObj = Instantiate(deadAphid);
         deadAphidObj.transform.position = transform.position; 
-        deadAphidObj.GetComponent<Organic_Matter>().Setup(nitrate_value/2);
+        deadAphidObj.GetComponent<Organic_Matter>().Setup(nitrate_value/10);
         Destroy(gameObject);
     }
 
@@ -165,6 +165,7 @@ public class Aphid : Creature
                 creature_count++;
             }
         }
+        Debug.Log("Aphid population count: " + creature_count);
         return creature_count > 4;
     }
 }

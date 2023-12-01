@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
 {
     private Dictionary<PlantData.Resource, int> resources;
     [SerializeField] private TextMeshProUGUI GlucoseText, NitrateText;
-    [SerializeField] private GameObject UpgradeMenu, ActivesMenu;
+    [SerializeField] private GameObject UpgradeMenu, ActivesMenu, PauseMenu;
+    [SerializeField] BackgroundMusic backgroundMusic;
 
     public bool canInteract = true;
 
@@ -17,17 +18,20 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         resources = new Dictionary<PlantData.Resource, int>(){
-            {PlantData.Resource.Glucose, 200},
-            {PlantData.Resource.Nitrate, 200}
+            {PlantData.Resource.Glucose, 20000},
+            {PlantData.Resource.Nitrate, 20000}
         };
-        GlucoseText.text = $"Glucose: {resources[PlantData.Resource.Glucose]}";
-        NitrateText.text = $"Nitrate: {resources[PlantData.Resource.Nitrate]}";
+        GlucoseText.text = $"{resources[PlantData.Resource.Glucose]}";
+        NitrateText.text = $"{resources[PlantData.Resource.Nitrate]}";
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            backgroundMusic.Pause();
+            PauseMenu.GetComponent<PauseMenu>().Open();
+        }
     }
 
     public void GainResource(PlantData.Resource resource, int gain){
@@ -67,7 +71,9 @@ public class GameManager : MonoBehaviour
 
             return true;
         }
-        //Debug.Log("Cant Upgrade");
+        Debug.Log("Cant Upgrade");
+        Debug.Log("Can Afford: " + canAfford(upgrade));
+        Debug.Log("Can Upgrade: " + current_selection.CanUpgrade(index));
 
         return false;
     }

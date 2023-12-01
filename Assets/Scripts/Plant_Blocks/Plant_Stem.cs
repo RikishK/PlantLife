@@ -90,6 +90,7 @@ public class Plant_Stem : Plant_Block
         other.transform.eulerAngles = transform.eulerAngles;
         other.transform.parent = extensionPoint;
         children.Add(other);
+        other.parent = this;
     }
 
     protected override SpriteRenderer getRenderer()
@@ -112,7 +113,13 @@ public class Plant_Stem : Plant_Block
                 break;
             case PlantData.StemState.BrownStem:
                 if (index == 0) growShoot();
-                if (index == 1) growBlock();
+                if (index == 1){
+                    growBlock();
+                    if(parent.BlockType() == PlantData.BlockType.Stem){
+                        Plant_Stem parent_stem = (Plant_Stem)parent;
+                        parent_stem.SetStem(PlantData.StemState.Thick_Brown);
+                    }
+                }
                 break;
             case PlantData.StemState.BrownLink:
                 growBlock();
@@ -158,7 +165,7 @@ public class Plant_Stem : Plant_Block
                 return false;
             case PlantData.StemState.BrownStem:
                 if (index == 0) return shootCount < 2;
-                if (index == 1) CheckParentCondition();
+                if (index == 1) return CheckParentCondition();
                 break;
             case PlantData.StemState.BrownLink:
                 return CheckParentCondition();
@@ -175,6 +182,7 @@ public class Plant_Stem : Plant_Block
                 case PlantData.StemState.Green:
                     return parentStemBlock.StemState() == PlantData.StemState.Mid; 
                 case PlantData.StemState.BrownStem:
+                    Debug.Log("Quack: " + parentStemBlock.StemState());
                     return parentStemBlock.StemState() == PlantData.StemState.BrownLink; 
                 case PlantData.StemState.BrownLink:
                     return parentStemBlock.StemState() == PlantData.StemState.Thick_Brown;

@@ -129,4 +129,4 @@ MonoBehaviour:
   - {fileID: -742503204, guid: 1c76e07dc43452743ad4c8b252eafb8b, type: 3}
   current_stage: 1
   nitrate_per_bite: 2
-  hungerValue: 0.5
+  hungerValue: 2

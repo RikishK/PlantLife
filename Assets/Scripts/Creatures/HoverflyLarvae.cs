@@ -90,7 +90,7 @@ public class HoverflyLarvae : Creature
                         else{
                             Aphid aphidScript = targetObj.GetComponent<Aphid>();
                             aphidScript.Die();
-                            Debug.Log("Larvae ate ahpid creature");
+                            //Debug.Log("Larvae ate ahpid creature");
                             aphidsEaten++;
                             bonusTime += 30f;
                             if (aphidsEaten == 3) hoverflyLarvaeState = HoverflyLarvaeState.Evolving;
@@ -315,11 +315,11 @@ public class HoverflyLarvae : Creature
         GameObject closestEnemy = null;
 
         foreach(GameObject enemyObject in enemyObjects){
-            Debug.Log("Larvae looking at enemy: " + enemyObject);
+            //Debug.Log("Larvae looking at enemy: " + enemyObject);
             Enemy enemyScript = enemyObject.GetComponent<Enemy>();
-            if (enemyScript.EnemyType() == EnemyData.EnemyType.RedAphidEnemy){
+            if (isEnemy(enemyScript)){
                 float distance = Vector3.Distance(transform.position, enemyObject.transform.position);
-                if (distance < enemyDistance && distance < targetDetectionRange){
+                if (distance < enemyDistance && distance < attackRange){
                     enemyDistance = distance;
                     closestEnemy = enemyObject;
                 }
@@ -352,6 +352,11 @@ public class HoverflyLarvae : Creature
         return null;
     }
 
+    private bool isEnemy(Enemy enemyScript){
+        return enemyScript.EnemyType() == EnemyData.EnemyType.RedAphidEnemy || enemyScript.EnemyType() == EnemyData.EnemyType.OrangeAphidEnemy
+        || enemyScript.EnemyType() == EnemyData.EnemyType.PurpleAphidEnemy || enemyScript.EnemyType() == EnemyData.EnemyType.PinkAphidEnemy;
+    }
+
     private void Evolve(){
         if (hasHoverfly()){
             Destroy(gameObject);
@@ -366,6 +371,7 @@ public class HoverflyLarvae : Creature
     private bool hasHoverfly(){
         GameObject[] creature_objects = GameObject.FindGameObjectsWithTag("Creature");
         foreach(GameObject creature_object in creature_objects){
+            //Debug.Log("Checking potential hoverfly: " + creature_object);
             Creature creatureScript = creature_object.GetComponent<Creature>();
             if (creatureScript != null && creatureScript.creatureType == CreatureSpawnData.CreatureType.Hoverfly){
                 return true;

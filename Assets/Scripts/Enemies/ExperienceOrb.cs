@@ -76,7 +76,7 @@ public class ExperienceOrb : MonoBehaviour
     }
 
     public void Target(BlueFlower blue_flower){
-        Debug.Log("Targetting: " + blue_flower);
+        //Debug.Log("Targetting: " + blue_flower);
         target_blue_flower = blue_flower;
         experienceOrbState = ExperienceOrbState.MovingToTarget;
     }

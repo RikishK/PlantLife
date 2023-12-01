@@ -8,7 +8,10 @@ public class AphidEnemy : Enemy
 
     protected override void DieExtras()
     {
-        GameObject deadAphidObj = Instantiate(deadAphid);
-        deadAphidObj.transform.position = transform.position;
+        float chance = Random.Range(1f, 100f);
+        if(chance > 75){
+            GameObject deadAphidObj = Instantiate(deadAphid);
+            deadAphidObj.transform.position = transform.position;
+        }
     }
 }

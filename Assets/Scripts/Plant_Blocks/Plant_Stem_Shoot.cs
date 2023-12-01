@@ -45,7 +45,7 @@ public class Plant_Stem_Shoot : Plant_Block
 
     public override void Init()
     {
-        Debug.Log("Shoot Init");
+        //Debug.Log("Shoot Init");
         base.Init();
         // Lock rotation to mouse and allow player to place
         stemShootRenderer.color = Color.green;
@@ -118,7 +118,11 @@ public class Plant_Stem_Shoot : Plant_Block
                 break;
             case PlantData.StemShootState.Mid:
                 if (index == 0) growStem();
-                if (index == 1) growBlock();
+                if (index == 1){
+                    growBlock();
+                    Plant_Stem childStem = (Plant_Stem)children[0];
+                    childStem.SetStem(PlantData.StemState.BrownLink);
+                }
                 break;
             case PlantData.StemShootState.Full:
                 if (index == 0) growStem();
@@ -127,6 +131,19 @@ public class Plant_Stem_Shoot : Plant_Block
     }
 
     private void growStem(){
+        switch (stemShootState){
+            case PlantData.StemShootState.Baby:
+                break;
+            case PlantData.StemShootState.Mid:
+                Plant_Stem childStem = (Plant_Stem)children[0];
+                childStem.SetStem(PlantData.StemState.Green);
+                break;
+            case PlantData.StemShootState.Full:
+                Plant_Stem childStem2 = (Plant_Stem)children[0];
+                childStem2.SetStem(PlantData.StemState.BrownStem);
+                break;
+        }
+
         GameObject newStemObj = Instantiate(stem);
         newStemObj.transform.position = extensionPoint.position;
         newStemObj.transform.eulerAngles = transform.eulerAngles;
@@ -174,7 +191,7 @@ public class Plant_Stem_Shoot : Plant_Block
                 else if(index == 1){
                     if (children[0].BlockType() == PlantData.BlockType.Stem){
                         Plant_Stem child_stem = (Plant_Stem)children[0];
-                        Debug.Log(child_stem.children[0]);
+                        //Debug.Log(child_stem.children[0]);
                         return child_stem.StemState() == PlantData.StemState.Mid && child_stem.children[0].BlockType() == PlantData.BlockType.Stem;
                     }
                 }
