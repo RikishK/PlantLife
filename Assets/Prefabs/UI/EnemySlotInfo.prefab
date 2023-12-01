@@ -62,6 +62,14 @@ MonoBehaviour:
     icon: {fileID: -742503204, guid: 1c76e07dc43452743ad4c8b252eafb8b, type: 3}
     overColor: {r: 1, g: 0.5529412, b: 0, a: 1}
     doColor: 1
+  - EnemyType: 2
+    icon: {fileID: -742503204, guid: 1c76e07dc43452743ad4c8b252eafb8b, type: 3}
+    overColor: {r: 0.4392157, g: 0.2509804, b: 1, a: 1}
+    doColor: 1
+  - EnemyType: 3
+    icon: {fileID: -742503204, guid: 1c76e07dc43452743ad4c8b252eafb8b, type: 3}
+    overColor: {r: 0.93333334, g: 0.2509804, b: 1, a: 1}
+    doColor: 1
 --- !u!1 &3719117339814278177
 GameObject:
   m_ObjectHideFlags: 0

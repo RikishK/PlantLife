@@ -92,8 +92,8 @@ public class HoverflyLarvae : Creature
                             aphidScript.Die();
                             //Debug.Log("Larvae ate ahpid creature");
                             aphidsEaten++;
-                            bonusTime += 30f;
-                            if (aphidsEaten == 3) hoverflyLarvaeState = HoverflyLarvaeState.Evolving;
+                            bonusTime += 25f;
+                            if (aphidsEaten == 2) hoverflyLarvaeState = HoverflyLarvaeState.Evolving;
                             else hoverflyLarvaeState = HoverflyLarvaeState.Idle;
                         }
                     }

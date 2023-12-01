@@ -68,7 +68,7 @@ public class BlueFlower : Flower
         actives = new List<PlantData.ActiveData>(){
             new PlantData.ActiveData("Pollination Target", 20, PlantData.Resource.Glucose),
             new PlantData.ActiveData("Absorb Experience", 20, PlantData.Resource.Glucose),
-            new PlantData.ActiveData("Pollon Experience", 50, PlantData.Resource.Glucose),
+            new PlantData.ActiveData("Pollon Experience", 30, PlantData.Resource.Glucose),
         };
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private GameObject redAphidEnemyPrefab, orangeAphidEnemyPrefab, purpleAphidEnemyPrefab, pinkAphidEnemyPrefab;
     [SerializeField] private WaveSpawnerUI waveSpawnerUI;
     private int current_wave;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,12 @@ public class EnemySpawner : MonoBehaviour
     {
         
     }
+
+    public void LoseGame(){
+        PlayerPrefs.SetInt("WaveNumber", current_wave);
+        SceneManager.LoadScene("LoseScene", LoadSceneMode.Single);
+    }
+
 
     private IEnumerator SpawnWaves(){
         // Delay for player wave prep time
@@ -39,7 +47,19 @@ public class EnemySpawner : MonoBehaviour
         // Continue if more waves
         current_wave++;
         if (current_wave < waves.Length) StartCoroutine(SpawnWaves());
+        else StartCoroutine(CheckVictory());
 
+    }
+
+    private IEnumerator CheckVictory(){
+        while(true){
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            if(enemies == null || enemies.Length == 0){
+                //Victory
+                SceneManager.LoadScene("VictoryScene", LoadSceneMode.Single);
+            }
+            yield return new WaitForSeconds(3f);
+        }
     }
 
     private void SpawnEnemy(EnemyData.EnemySpawnData enemySpawnData){

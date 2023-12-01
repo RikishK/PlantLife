@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class Plant_Core : Plant_Block
 {
     [SerializeField] private GameObject overground_root, underground_root;
@@ -12,6 +13,7 @@ public class Plant_Core : Plant_Block
     [SerializeField] private GameObject stemPrefab;
     [SerializeField] private Transform overground_sp;
     [SerializeField] private Slider healthSlider;
+    [SerializeField] private EnemySpawner enemySpawner;
     
     private PlantData.CoreState coreState = PlantData.CoreState.Level1;
     // Start is called before the first frame update
@@ -32,8 +34,8 @@ public class Plant_Core : Plant_Block
     {
         upgrades = new List<PlantData.UpgradeData>{
             new PlantData.UpgradeData("Grow Stem", 100, PlantData.Resource.Nitrate),
-            new PlantData.UpgradeData("Thicken Base", 500, PlantData.Resource.Glucose),
-            new PlantData.UpgradeData("Thicken Base", 1000, PlantData.Resource.Glucose)
+            new PlantData.UpgradeData("Level 2", 500, PlantData.Resource.Glucose),
+            new PlantData.UpgradeData("Level 3", 1000, PlantData.Resource.Glucose)
         };
     }
 
@@ -61,6 +63,12 @@ public class Plant_Core : Plant_Block
 
     protected override void UnHighlight(){
         coreRenderer.color = Color.white;
+    }
+
+    protected override void DestroyBlock()
+    {
+        enemySpawner.LoseGame();
+        Destroy(gameObject);
     }
 
     public override List<PlantData.UpgradeData> getUpgrades(){
@@ -189,11 +197,13 @@ public class Plant_Core : Plant_Block
                 coreState = PlantData.CoreState.Level2;
                 health = 1000;
                 current_health = Mathf.Clamp(current_health + 200, 0, health);
+                UpdateHealthSlider();
                 break;
             case PlantData.CoreState.Level2:
                 coreState = PlantData.CoreState.Level3;
                 health = 2000;
                 current_health = Mathf.Clamp(current_health + 500, 0, health);
+                UpdateHealthSlider();
                 break;
         }
     }

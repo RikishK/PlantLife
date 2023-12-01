@@ -74,7 +74,7 @@ public class Projectile : MonoBehaviour
             Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, explosiveRange, enemyLayer);
             foreach(Collider2D enemy in enemies){
                 Enemy enemyScript = enemy.GetComponent<Enemy>();
-                enemyScript.TakeDamage(damage);
+                enemyScript.TakeDamage(damage / 4);
             }
         }
         

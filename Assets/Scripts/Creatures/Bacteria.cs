@@ -33,7 +33,8 @@ public class Bacteria : Creature
 
     private void Update() {
         float current_time = Time.time;
-        if(60 - (current_time - (startTime + bonusTime)) <= 0){
+        if(40 - (current_time - (startTime + bonusTime)) <= 0){
+            Debug.Log("Bacteria Starved");
             Die();
         }
     }

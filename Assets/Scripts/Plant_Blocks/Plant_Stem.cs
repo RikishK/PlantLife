@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 
@@ -168,7 +167,7 @@ public class Plant_Stem : Plant_Block
                 if (index == 1) return CheckParentCondition();
                 break;
             case PlantData.StemState.BrownLink:
-                return CheckParentCondition();
+                return false;
             case PlantData.StemState.Thick_Brown:
                 return shootCount < 2;
         }

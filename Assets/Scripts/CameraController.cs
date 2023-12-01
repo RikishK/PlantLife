@@ -15,23 +15,23 @@ public class CameraController : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
 
         // Check if the mouse is at the edge of the screen
-        if (mousePosition.x <= 0)
+        if (Input.GetKey(KeyCode.A))
         {
             // Move the camera left
             MoveCamera(Vector3.left);
         }
-        else if (mousePosition.x >= Screen.width - 1)
+        else if (Input.GetKey(KeyCode.D))
         {
             // Move the camera right
             MoveCamera(Vector3.right);
         }
 
-        if (mousePosition.y <= 0)
+        if (Input.GetKey(KeyCode.S))
         {
             // Move the camera down
             MoveCamera(Vector3.down);
         }
-        else if (mousePosition.y >= Screen.height - 1)
+        else if (Input.GetKey(KeyCode.W))
         {
             // Move the camera up
             MoveCamera(Vector3.up);

@@ -166,6 +166,6 @@ public class Aphid : Creature
             }
         }
         Debug.Log("Aphid population count: " + creature_count);
-        return creature_count > 4;
+        return creature_count > 3;
     }
 }
