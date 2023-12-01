@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8627090527816868879}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 5284621271067892705}
   - component: {fileID: 8707233329708996115}
   - component: {fileID: 7489135868840728076}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HoverFly
-  m_TagString: Untagged
+  m_TagString: Creature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,8 +106,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 908879453
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -200101424, guid: 2670230c56d03f3429f6de7e318f0a6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -178,7 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68562153d3175344bc7bb241b7c5eea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creatureType: 4
+  creatureType: 5
+  hoverFlyState: 0
   pollonLayer:
     serializedVersion: 2
     m_Bits: 2048
@@ -196,7 +197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4771172214187105811}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PollonGrabPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

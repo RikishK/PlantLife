@@ -8,13 +8,14 @@ public class Bacteria : Creature
     public PlantData.Resource targetResource;
     public float searchRange = 10f; // The range to search for the target
     public float moveSpeed = 5f; // The speed at which the GameObject moves
-    public float grabDistance = 1f; // The distance at which it grabs the target
+    public float grabDistance = 0.1f; // The distance at which it grabs the target
     public float timerDuration = 3.0f; // The duration of the timer
     public GameObject producedMolecule, bacteriaPrefab; // The prefab to instantiate
 
     private Transform target;
     private State currentState = State.Searching;
     private int eaten_count = 0;
+    private float startTime, bonusTime = 0f; 
 
     private enum State
     {
@@ -30,10 +31,23 @@ public class Bacteria : Creature
         Setup();
     }
 
+    private void Update() {
+        float current_time = Time.time;
+        if(40 - (current_time - (startTime + bonusTime)) <= 0){
+            Debug.Log("Bacteria Starved");
+            Die();
+        }
+    }
+
+    public void Die(){
+        Destroy(gameObject);
+    }
+
     public void Setup(){
+        startTime = Time.time;
         currentState = State.Searching;
         StartCoroutine(StateMachineRoutine());
-        StartCoroutine(DeathTimer());
+        //StartCoroutine(DeathTimer());
     }
 
     private IEnumerator DeathTimer(){
@@ -48,7 +62,13 @@ public class Bacteria : Creature
             switch (currentState)
             {
                 case State.Searching:
-                    FindTarget();
+                    target = FindClosestTarget();
+                    if (target != null)
+                    {
+                        float random_wait = Random.Range(0f, 2f);
+                        yield return new WaitForSeconds(random_wait);
+                        currentState = State.MovingToTarget;
+                    }
                     break;
 
                 case State.MovingToTarget:
@@ -58,7 +78,7 @@ public class Bacteria : Creature
                 case State.Grabbing:
                     GrabTarget();
                     eaten_count++;
-                    moveSpeed = 5f - 0.8f * eaten_count;
+                    moveSpeed = 3f - 0.3f * (eaten_count / 2f);
                     break;
 
                 case State.Timer:
@@ -68,7 +88,7 @@ public class Bacteria : Creature
 
                 case State.Instantiating:
                     InstantiateProducedMolecule();
-                    if(eaten_count >= 5){
+                    if(eaten_count >= 10){
                         InstantiateBaby();
                         eaten_count = 0;
                         moveSpeed = 5f;
@@ -78,15 +98,6 @@ public class Bacteria : Creature
             }
 
             yield return null; // Wait for the next frame
-        }
-    }
-
-    private void FindTarget()
-    {
-        target = FindClosestTarget();
-        if (target != null)
-        {
-            currentState = State.MovingToTarget;
         }
     }
 
@@ -132,8 +143,10 @@ public class Bacteria : Creature
             // Update the GameObject's rotation to directly face the target.
             transform.rotation = Quaternion.Euler(0, 0, rotationInDegrees);
 
+            float randomMoveSpeed = moveSpeed + Random.Range(-0.5f, 0.5f);
+
             // Move the GameObject in the forward direction (2D space).
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            transform.Translate(Vector3.right * randomMoveSpeed * Time.deltaTime);
 
             if (Vector2.Distance(transform.position, target.position) < grabDistance)
             {
@@ -152,6 +165,7 @@ public class Bacteria : Creature
         {
             Destroy(target.gameObject);
             currentState = State.Timer;
+            bonusTime += 10f;
         }
         else{
             currentState = State.Searching;

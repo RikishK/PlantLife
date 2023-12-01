@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class WaveSpawnerUI : MonoBehaviour
 {
     [SerializeField] private GameObject[] enemyInfoSlots;
     [SerializeField] private Slider prepTimer;
+    [SerializeField] private TextMeshProUGUI waveNumberText;
 
     private float prep_start_time, prep_time;
     // Start is called before the first frame update
@@ -21,9 +23,10 @@ public class WaveSpawnerUI : MonoBehaviour
         
     }
 
-    public void UpdateSpawnerUI(float prep_time, EnemyData.EnemySpawnData[] enemySpawnDatas){
+    public void UpdateSpawnerUI(float prep_time, EnemyData.EnemySpawnData[] enemySpawnDatas, int wave_number){
         prep_start_time = Time.time;
         this.prep_time = prep_time;
+        waveNumberText.text = "Wave: " + wave_number.ToString();
         StartCoroutine(PrepTimer());
         UpdateEnemyInfoSlots(enemySpawnDatas);
     }

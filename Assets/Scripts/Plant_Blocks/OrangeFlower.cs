@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,8 @@ public class OrangeFlower : Flower
 
     private GameObject enemyTargetObj;
     private FlowerState flowerState = FlowerState.Idle;
+
+    private int projectileSpeedUpgrades = 0, projectileDamageUpgrades = 0, projectilePiercingShotsUpgrades = 0, projectileExplosiveShotsUpgrade = 0;
     
 
     [System.Serializable]
@@ -36,6 +39,51 @@ public class OrangeFlower : Flower
         UpdateAmmunitionSlider();
         UpdateExperienceSlider();
         UpdateHealthSlider();
+    }
+
+    protected override void InitUpgrades()
+    {
+        upgrades = new List<PlantData.UpgradeData>(){
+            new PlantData.UpgradeData("Projectile Speed", 50, PlantData.Resource.Battle_Exp),
+            new PlantData.UpgradeData("Projectile Damage", 50, PlantData.Resource.Battle_Exp),
+            new PlantData.UpgradeData("Piercing Shots", 200, PlantData.Resource.Battle_Exp),
+            new PlantData.UpgradeData("Explosive Shots", 200, PlantData.Resource.Battle_Exp),
+        };
+    }
+
+    public override List<PlantData.UpgradeData> getUpgrades()
+    {
+        List<PlantData.UpgradeData> upgradeDatas = new List<PlantData.UpgradeData>();
+        if(projectileSpeedUpgrades < 3) upgradeDatas.Add(upgrades[0]);
+        if(projectileDamageUpgrades < 3) upgradeDatas.Add(upgrades[1]);
+        if(projectilePiercingShotsUpgrades < 3) upgradeDatas.Add(upgrades[2]);
+        if(projectileExplosiveShotsUpgrade < 3) upgradeDatas.Add(upgrades[3]);
+
+        return upgradeDatas;
+    }
+
+    protected override void performUpgrade(int index)
+    {
+        PlantData.UpgradeData upgrade = getUpgrades()[index];
+
+        switch(upgrade.name){
+            case "Projectile Speed":
+                projectileSpeedUpgrades++;
+                upgrades[0].cost += 50;
+                break;
+            case "Projectile Damage":
+                projectileDamageUpgrades++;
+                upgrades[1].cost += 50;
+                break;
+            case "Piercing Shots":
+                projectilePiercingShotsUpgrades++;
+                upgrades[2].cost += 100;
+                break;
+            case "Explosive Shots":
+                projectileExplosiveShotsUpgrade++;
+                upgrades[3].cost += 100;
+                break;
+        }
     }
     protected IEnumerator OrangeFlowerRoutine()
     {
@@ -85,7 +133,7 @@ public class OrangeFlower : Flower
             case FlowerTargetingOption.Closest_To_Flower:
                 target_distance = float.MaxValue;
                 foreach(Collider2D enemy in enemies){
-                    float distance = Vector3.Distance(transform.position, enemy.transform.position);
+                    float distance = Vector2.Distance(center.position, enemy.transform.position);
                     if (distance < target_distance && distance <= attackRange){
                         target_distance = distance;
                         target = enemy.gameObject;
@@ -95,7 +143,7 @@ public class OrangeFlower : Flower
             case FlowerTargetingOption.Furthest_From_Flower:
                 target_distance = float.MinValue;
                 foreach(Collider2D enemy in enemies){
-                    float distance = Vector3.Distance(transform.position, enemy.transform.position);
+                    float distance = Vector2.Distance(center.position, enemy.transform.position);
                     if (distance > target_distance && distance <= attackRange){
                         target_distance = distance;
                         target = enemy.gameObject;
@@ -156,12 +204,22 @@ public class OrangeFlower : Flower
     private IEnumerator SpawnProjectile(){
         flowerAnimator.SetTrigger("Attack");
         yield return new WaitForSeconds(0.9f);
+        if(enemyTargetObj == null){
+            enemyTargetObj = FindEnemyTarget();
+        }
         GameObject projectile = Instantiate(projectilePrefab);
         projectile.transform.position = shootPoint.position;
 
         // TODO: Shoot the projectile forward a little bit before starting it
 
-        projectile.GetComponent<Projectile>().Init(enemyTargetObj);
+        int damage = (projectileDamageUpgrades * 20) + 20;
+        float moveSpeed = (projectileSpeedUpgrades * 0.5f) + 1.0f;  
+        bool isExplosive = projectileExplosiveShotsUpgrade > 0;
+        float explosiveRange = (projectileExplosiveShotsUpgrade * 0.5f) + 0.5f;
+        int pierceCount = projectilePiercingShotsUpgrades;
+
+
+        projectile.GetComponent<Projectile>().Init(enemyTargetObj, damage, moveSpeed, isExplosive, explosiveRange, pierceCount);
     }
 
     protected override void HighlightExtras()

@@ -134,7 +134,7 @@ MonoBehaviour:
   blockType: 10
   flowerType: 0
   Max_Glucose_Count: 50
-  maxBattleExperience: 100
+  maxBattleExperience: 500
   flowerAnimator: {fileID: 5905802443254925139}
   attackRange: 6
   attackSpeed: 0.3

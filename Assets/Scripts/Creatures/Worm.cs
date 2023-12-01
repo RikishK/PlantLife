@@ -6,7 +6,7 @@ using UnityEngine;
 public class Worm : Creature
 {
     public float satedTimer = 40.0f;
-    public float hungryTimerOrganicMatter = 60.0f;
+    public float hungryTimerOrganicMatter = 10.0f;
     public float hungryTimerBacteria = 20.0f;
     public float moveSpeed = 0.5f;
     public float minPauseDuration = 3.0f;
@@ -70,13 +70,13 @@ public class Worm : Creature
             case State.HungryOrganicMatter:
                 if (target == null)
                 {
-                    starveTimer += Time.deltaTime;
-                    if (starveTimer >= 20){
-                        Destroy(gameObject);
-                    }
+                    // starveTimer += Time.deltaTime;
+                    // if (starveTimer >= 20){
+                    //     Destroy(gameObject);
+                    // }
                     target = FindClosestObjectWithTag("OrganicMatter");
                     if (target == null){
-                        currentState = State.HungryBacteria;
+                        //currentState = State.HungryBacteria;
                     }
                 }
                 else
@@ -84,10 +84,12 @@ public class Worm : Creature
                     //Debug.Log("organic matter at: " + target.transform.position);
                     MoveTowardsTarget(target.transform.position);
     
-                    if (Vector3.Distance(transform.position, target.transform.position) < 0.1f)
+                    if (Vector2.Distance(transform.position, target.transform.position) < 0.1f)
                     {
                         //EatOrganicMatter(target);
+                        Debug.Log("Harvesting: " + target.GetComponent<Organic_Matter>().Harvest());
                         StartCoroutine(SpawnNitrate(target.GetComponent<Organic_Matter>().Harvest()));
+                        hungryTimerOrganicMatter = target.GetComponent<Organic_Matter>().hungerValue;
                         target.GetComponent<Organic_Matter>().Consume();
     
                         currentState = State.Sated;
@@ -101,10 +103,10 @@ public class Worm : Creature
             case State.HungryBacteria:
                 if (target == null)
                 {
-                    starveTimer += Time.deltaTime;
-                    if (starveTimer >= 20){
-                        Destroy(gameObject);
-                    }
+                    // starveTimer += Time.deltaTime;
+                    // if (starveTimer >= 20){
+                    //     Destroy(gameObject);
+                    // }
                     target = FindClosestBacteria();
                     if (target == null){
                         currentState = State.HungryOrganicMatter;
@@ -138,7 +140,7 @@ public class Worm : Creature
         float closest_distance = float.MaxValue;
         GameObject closest_bacteria = null;
         foreach(GameObject bacteria in bacteriaList){
-            float distance = Vector3.Distance(transform.position, bacteria.transform.position);
+            float distance = Vector2.Distance(transform.position, bacteria.transform.position);
             if(distance <= closest_distance){
                 closest_distance = distance;
                 closest_bacteria = bacteria;

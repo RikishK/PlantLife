@@ -114,6 +114,11 @@ public class Enemy : MonoBehaviour
         experience_orb.transform.position = transform.position;
         ExperienceOrb experienceOrbScript = experience_orb.GetComponent<ExperienceOrb>();
         experienceOrbScript.Init(experienceYield);
+        DieExtras();
         Destroy(gameObject);
+    }
+
+    protected virtual void DieExtras(){
+        
     }
 }

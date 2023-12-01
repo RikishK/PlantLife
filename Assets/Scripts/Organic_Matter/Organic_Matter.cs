@@ -7,8 +7,9 @@ public class Organic_Matter : MonoBehaviour
     [SerializeField] private SpriteRenderer organicMatterRenderer;
     [SerializeField] private Sprite[] stageSprites;
     
-    [SerializeField] private int current_stage;
-    [SerializeField] private int nitrate_per_bite;
+    [SerializeField] private int current_stage, nitrate_per_bite;
+    public float hungerValue;
+
 
     private void Start() {
         current_stage = stageSprites.Length;
@@ -16,10 +17,13 @@ public class Organic_Matter : MonoBehaviour
     
     public void Consume(){
         current_stage--;
+        Debug.Log("organic stage: " + current_stage);
         if(current_stage == 0){
             Destroy(gameObject);
         }
-        organicMatterRenderer.sprite = stageSprites[stageSprites.Length - current_stage];
+        else{
+            organicMatterRenderer.sprite = stageSprites[stageSprites.Length - current_stage];
+        }
     }
 
     public int Harvest(){

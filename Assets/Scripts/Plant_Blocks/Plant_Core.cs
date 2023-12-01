@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Plant_Core : Plant_Block
 {
@@ -10,22 +12,49 @@ public class Plant_Core : Plant_Block
 
     [SerializeField] private GameObject stemPrefab;
     [SerializeField] private Transform overground_sp;
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private EnemySpawner enemySpawner;
     
     private PlantData.CoreState coreState = PlantData.CoreState.Level1;
     // Start is called before the first frame update
     void Start()
     {
+        InitUpgrades();
+        InitActives();
+        InitExtras();
+    }
+
+    protected override void InitExtras()
+    {
+        current_health = health;
+        UpdateHealthSlider();
+    }
+
+    protected override void InitUpgrades()
+    {
         upgrades = new List<PlantData.UpgradeData>{
             new PlantData.UpgradeData("Grow Stem", 100, PlantData.Resource.Nitrate),
-            new PlantData.UpgradeData("Thicken Base", 500, PlantData.Resource.Glucose),
-            new PlantData.UpgradeData("Thicken Base", 1000, PlantData.Resource.Glucose)
+            new PlantData.UpgradeData("Level 2", 500, PlantData.Resource.Glucose),
+            new PlantData.UpgradeData("Level 3", 1000, PlantData.Resource.Glucose)
         };
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void InitActives()
     {
-        
+        actives = new List<PlantData.ActiveData>(){
+            new PlantData.ActiveData("Heal", 100, PlantData.Resource.Glucose),
+        };
+    }
+
+    public override bool CanUseActive(int index)
+    {
+        return current_health < health;
+    }
+
+    public override void UseActive(int index)
+    {
+        current_health = Mathf.Clamp(current_health + 50, 0, health);
+        UpdateHealthSlider();
     }
 
     protected override void Highlight(){
@@ -34,6 +63,12 @@ public class Plant_Core : Plant_Block
 
     protected override void UnHighlight(){
         coreRenderer.color = Color.white;
+    }
+
+    protected override void DestroyBlock()
+    {
+        enemySpawner.LoseGame();
+        Destroy(gameObject);
     }
 
     public override List<PlantData.UpgradeData> getUpgrades(){
@@ -82,10 +117,10 @@ public class Plant_Core : Plant_Block
         Plant_Stem new_plant_stem_block = (Plant_Stem)new_stem_block;
         switch(coreState){
             case PlantData.CoreState.Level2:
-                new_plant_stem_block.SetStem(PlantData.StemState.BrownStem);
+                new_plant_stem_block.SetStem(getGrowStemState());
                 break;
             case PlantData.CoreState.Level3:
-                new_plant_stem_block.SetStem(PlantData.StemState.Thick_Brown);
+                new_plant_stem_block.SetStem(getGrowStemState());
                 break;
         }
 
@@ -97,20 +132,62 @@ public class Plant_Core : Plant_Block
 
     }
 
+    private PlantData.StemState getGrowStemState(){
+        switch(coreState){
+            case PlantData.CoreState.Level2:
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch) return PlantData.StemState.Green;
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Stem){
+                    switch (overground_root.GetComponent<Plant_Stem>().StemState()){
+                        case PlantData.StemState.Green:
+                            return PlantData.StemState.Mid;
+                        case PlantData.StemState.Mid:
+                            return PlantData.StemState.BrownStem;
+                        case PlantData.StemState.BrownStem:
+                            return PlantData.StemState.BrownStem;
+
+                    }
+                }
+                break;
+            case PlantData.CoreState.Level3:
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch) return PlantData.StemState.Green;
+                if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Stem){
+                    switch (overground_root.GetComponent<Plant_Stem>().StemState()){
+                        case PlantData.StemState.Green:
+                            return PlantData.StemState.Mid;
+                        case PlantData.StemState.Mid:
+                            return PlantData.StemState.BrownStem;
+                        case PlantData.StemState.BrownStem:
+                            return PlantData.StemState.BrownLink;
+                        case PlantData.StemState.BrownLink:
+                            return PlantData.StemState.Thick_Brown;
+                        case PlantData.StemState.Thick_Brown:
+                            return PlantData.StemState.Thick_Brown;
+
+                    }
+                }
+                break;
+        }
+        return PlantData.StemState.Green;
+    }
+
     protected override bool upgradeConditions(int index)
     {
-        if (index != 0) return true;
-        if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch) return true;
-        Plant_Stem base_stem = overground_root.GetComponent<Plant_Stem>();
-        switch (coreState){
-            case PlantData.CoreState.Level1:
-                return true;
-            case PlantData.CoreState.Level2:
-                return base_stem.StemState() == PlantData.StemState.Mid || base_stem.StemState() == PlantData.StemState.BrownStem;
-            case PlantData.CoreState.Level3:
-                return base_stem.StemState() == PlantData.StemState.BrownLink || base_stem.StemState() == PlantData.StemState.Thick_Brown;
-        }
-        return false;
+        // if (index != 0) return true;
+        // if(overground_root.GetComponent<Plant_Block>().BlockType() == PlantData.BlockType.Branch){
+            
+        //     return true;
+        // }
+        // Plant_Stem base_stem = overground_root.GetComponent<Plant_Stem>();
+        // switch (coreState){
+        //     case PlantData.CoreState.Level1:
+        //         return true;
+        //     case PlantData.CoreState.Level2:
+        //         return base_stem.StemState() == PlantData.StemState.Mid || base_stem.StemState() == PlantData.StemState.BrownStem;
+        //     case PlantData.CoreState.Level3:
+        //         return base_stem.StemState() == PlantData.StemState.BrownLink || base_stem.StemState() == PlantData.StemState.Thick_Brown;
+        // }
+        // return false;
+        return true;
     }
 
     private void LevelUp(){
@@ -118,9 +195,15 @@ public class Plant_Core : Plant_Block
         switch(coreState){
             case PlantData.CoreState.Level1:
                 coreState = PlantData.CoreState.Level2;
+                health = 1000;
+                current_health = Mathf.Clamp(current_health + 200, 0, health);
+                UpdateHealthSlider();
                 break;
             case PlantData.CoreState.Level2:
                 coreState = PlantData.CoreState.Level3;
+                health = 2000;
+                current_health = Mathf.Clamp(current_health + 500, 0, health);
+                UpdateHealthSlider();
                 break;
         }
     }
@@ -180,5 +263,15 @@ public class Plant_Core : Plant_Block
                 return underground_root.GetComponent<Plant_Block>();
         }
         return null;
+    }
+
+    private void UpdateHealthSlider(){
+        healthSlider.maxValue = health;
+        healthSlider.value = current_health;
+    }
+
+    protected override void TakeDamageExtras()
+    {
+        UpdateHealthSlider();
     }
 }

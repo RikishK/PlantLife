@@ -37,7 +37,7 @@ public class Plant_Leaf : Plant_Block
     }
 
     private void ProduceGlucose(){
-        int height_bonus = (int)transform.position.y / 3;
+        int height_bonus = (int)transform.position.y + 1;
         switch (leafState){
             case PlantData.LeafState.Small:
                 nitrate_value += 1;
@@ -130,17 +130,22 @@ public class Plant_Leaf : Plant_Block
 
     public int EatLeaf(int max_intake){
         int intake = Mathf.Min(max_intake, nitrate_value);
+        float chance = Random.Range(1f, 100f);
         switch(leafState){
             case PlantData.LeafState.Medium:
-                leafState = PlantData.LeafState.Small;
-                RenderLeaf();
-                UpdateLeafCollider();
+                if(chance < 50){
+                    leafState = PlantData.LeafState.Small;
+                    RenderLeaf();
+                    UpdateLeafCollider();
+                }
                 nitrate_value -= intake;
                 return intake;
             case PlantData.LeafState.Large:
-                leafState = PlantData.LeafState.Medium;
-                RenderLeaf();
-                UpdateLeafCollider();
+                if(chance < 25){
+                    leafState = PlantData.LeafState.Medium;
+                    RenderLeaf();
+                    UpdateLeafCollider();
+                }
                 nitrate_value -= intake;
                 return intake;
         }

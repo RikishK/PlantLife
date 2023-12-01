@@ -48,7 +48,7 @@ public class CreatureSpawner : MonoBehaviour
                         int chance = Random.Range(1, 101);
                         if (chance <= spawnData.spawnChance){
                             // Gather spawn behaviour data and determine how much to spawn
-                            Debug.Log("Spawning on condition:" + spawnCondition.spawnConditionName);
+                            //Debug.Log("Spawning on condition:" + spawnCondition.spawnConditionName);
                             Spawn(spawnCondition.spawnBehaviour, spawnData.creatureObject);
                         }
                     }

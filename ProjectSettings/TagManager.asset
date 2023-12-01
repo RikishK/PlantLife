@@ -12,6 +12,7 @@ TagManager:
   - PlantBlock
   - Floor
   - Enemy
+  - LostMenu
   layers:
   - Default
   - TransparentFX

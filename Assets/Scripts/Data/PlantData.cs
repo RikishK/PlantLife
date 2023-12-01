@@ -96,7 +96,7 @@ public class PlantData
     }
 
     public enum Resource{
-        Glucose, N2, Ammonium, Nitrite, Nitrate
+        Glucose, N2, Ammonium, Nitrite, Nitrate, Battle_Exp
     }
 
     public class UpgradeData {

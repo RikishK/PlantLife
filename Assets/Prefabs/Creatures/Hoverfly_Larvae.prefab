@@ -217,7 +217,7 @@ MonoBehaviour:
   moveSpeed: 2
   distance: 5
   attackRange: 2
-  attackSpeed: 1
+  attackSpeed: 0.3
   targetDetectionRange: 5
   attackDamage: 10
   plantBlockLayer:
@@ -230,6 +230,7 @@ MonoBehaviour:
   stickPoint: {fileID: 8511217924490460885}
   wallCornerPoint: {fileID: 3451912857149474435}
   HoverflyPrefab: {fileID: 5284621271067892734, guid: 8f17672e348170c42b3d910bde0a29aa, type: 3}
+  DamageIndicatorPrefab: {fileID: 5496796993041010739, guid: 38634af73fb6f2742be95554da53e270, type: 3}
 --- !u!1 &6583063966178288254
 GameObject:
   m_ObjectHideFlags: 0

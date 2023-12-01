@@ -33,7 +33,7 @@ public class FungiMan : Creature
 
             if (Vector2.Distance(transform.position, interruptPosition) < 0.1f)
             {
-                FindObjectOfType<GameManager>().GainResource(PlantData.Resource.Nitrate, nitrateEaten * 5);
+                FindObjectOfType<GameManager>().GainResource(PlantData.Resource.Nitrate, nitrateEaten * 15);
                 nitrateEaten = 0;
                 currentState = State.Searching;
             }
@@ -103,7 +103,7 @@ public class FungiMan : Creature
     // Function to interrupt the regular behavior
     public void Interrupt(Vector2 position)
     {
-        Debug.Log("interrupted");
+        //Debug.Log("interrupted");
         if(nitrateEaten > 0){
             interruptPosition = position;
             currentState = State.Interrupted;

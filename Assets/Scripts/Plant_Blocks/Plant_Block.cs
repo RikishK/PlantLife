@@ -33,10 +33,9 @@ public class Plant_Block : MonoBehaviour
     }
 
     public void TakeDamage(int damage){
-        Debug.Log("Plant Block: " + block_name + " is taking damage: " + damage);
-        health -= damage;
+        current_health -= damage;
         TakeDamageExtras();
-        if (health <= 0) DestroyBlock();
+        if (current_health <= 0) DestroyBlock();
     }
 
     protected virtual void TakeDamageExtras(){

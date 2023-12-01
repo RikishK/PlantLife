@@ -35,7 +35,7 @@ public class Aphid : Creature
     public void Die(){
         GameObject deadAphidObj = Instantiate(deadAphid);
         deadAphidObj.transform.position = transform.position; 
-        deadAphidObj.GetComponent<Organic_Matter>().Setup(nitrate_value/2);
+        deadAphidObj.GetComponent<Organic_Matter>().Setup(nitrate_value/10);
         Destroy(gameObject);
     }
 
@@ -132,19 +132,21 @@ public class Aphid : Creature
         Plant_Leaf plant_Leaf = target.GetComponent<Plant_Leaf>();
         if(plant_Leaf.LeafState() == PlantData.LeafState.Medium || plant_Leaf.LeafState() == PlantData.LeafState.Large){
             if (plant_Leaf.LeafState() == PlantData.LeafState.Medium){
-                bonusTime += 10f;
+                bonusTime += 25f;
                 leaves_eaten += 1;   
             }
             if (plant_Leaf.LeafState() == PlantData.LeafState.Large){
-                bonusTime += 25f;
+                bonusTime += 50f;
                 leaves_eaten += 2;
             };
             int nitrate_gained = plant_Leaf.EatLeaf(50);
             nitrate_value += nitrate_gained;
             if (leaves_eaten >= 3){
                 leaves_eaten -= 3;
-                GameObject offspring = Instantiate(AphidObj);
-                offspring.transform.position = new Vector3(transform.position.x + 1f, transform.position.y - 0.5f, 0);
+                if(!maxAphids()){
+                    GameObject offspring = Instantiate(AphidObj);
+                    offspring.transform.position = new Vector3(transform.position.x + 1f, transform.position.y - 0.5f, 0);
+                }
             }
             moveSpeed = 2.0f - 0.5f * leaves_eaten;
             aphidState = AphidState.Idle;
@@ -152,5 +154,18 @@ public class Aphid : Creature
         else{
             aphidState = AphidState.FindingTarget;
         }
+    }
+
+    private bool maxAphids(){
+        GameObject[] creature_objects = GameObject.FindGameObjectsWithTag("Creature");
+        int creature_count = 0;
+        foreach(GameObject creature_object in creature_objects){
+            Creature creatureScript = creature_object.GetComponent<Creature>();
+            if (creatureScript != null && creatureScript.creatureType == CreatureSpawnData.CreatureType.Aphid){
+                creature_count++;
+            }
+        }
+        Debug.Log("Aphid population count: " + creature_count);
+        return creature_count > 3;
     }
 }

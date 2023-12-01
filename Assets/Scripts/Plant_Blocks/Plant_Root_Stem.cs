@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Android.Types;
 using UnityEngine;
 
 public class Plant_Root_Stem : Plant_Block
@@ -95,7 +94,7 @@ public class Plant_Root_Stem : Plant_Block
             Plant_Nitrate_Intake bac_hub = (Plant_Nitrate_Intake)nitrate_intake_block;
             child.SetParent(bac_hub.extensionPoint);
         }
-
+        nitrate_intake_block.Init();
         Destroy(gameObject);
     }
 

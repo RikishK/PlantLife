@@ -338,6 +338,7 @@ MonoBehaviour:
   costResourceIcon: {fileID: 5312418414458200210}
   GlucoseIcon: {fileID: 472517324, guid: 103093c47a9901d45b959c2dac7d7b3b, type: 3}
   NitrateIcon: {fileID: 1350614808, guid: bb6088bfba7c358428176ad5d2c9e623, type: 3}
+  BattleExpIcon: {fileID: 21300000, guid: 0347d5b7247b5174299a9ed55ba8376a, type: 3}
 --- !u!1 &6727895470975163496
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class UpgradeMenu : MonoBehaviour
 
     public void ShowUpgrades(List<PlantData.UpgradeData> upgradeDatas, string block_name){
         nameText.text = block_name;
-        for(int i=0; i<3; i++){
+        for(int i=0; i<4; i++){
             if(i>=upgradeDatas.Count){
                 upgradeSlots[i].SetActive(false);
             }

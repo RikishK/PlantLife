@@ -165,7 +165,10 @@ MonoBehaviour:
   blockType: 0
   flowerType: 0
   Max_Glucose_Count: 0
+  maxBattleExperience: 0
   flowerAnimator: {fileID: 0}
+  Glucose_Count: 0
+  flower_battle_experience: 0
   collection_range: 4
   pollination_range: 6
   experienceLayer:
@@ -224,7 +227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8074490836538501536
 Transform:
   m_ObjectHideFlags: 0
@@ -801,6 +804,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8283881295075047915, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}
 --- !u!4 &625575507270011354 stripped
@@ -894,6 +901,10 @@ PrefabInstance:
     - target: {fileID: 8283881295075047915, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}
       propertyPath: m_Name
       value: RangeIndicator (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283881295075047915, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae0d4bf1ff592634ea4178def3d106aa, type: 3}

@@ -24,7 +24,19 @@ public class Plant_Bacteria_Hub : Plant_Block
         A, B, C
     }
 
-    private void OnMouseDown() {
+    protected override void InitActives()
+    {
+        actives = new List<PlantData.ActiveData>(){
+            new PlantData.ActiveData("Switch Bacteria", 20, PlantData.Resource.Glucose)
+        };
+    }
+
+    public override void UseActive(int index)
+    {
+        SwitchBacteria();
+    }
+
+    private void SwitchBacteria(){
         switch(state){
             case State.A:
                 state = State.B;

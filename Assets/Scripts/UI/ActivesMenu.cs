@@ -31,7 +31,10 @@ public class ActivesMenu : MonoBehaviour
     }
 
     public void UseActive(int index){
-        Debug.Log("Using Active");
-        if(gameManager.UseActive(currentActives[index], index)) Close();
+        //Debug.Log("Using Active");
+        if(gameManager.UseActive(currentActives[index], index)){
+            if(currentActives[index].name == "Pollination Target") gameObject.SetActive(false);
+            else Close();
+        }
     }
 }

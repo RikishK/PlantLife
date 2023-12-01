@@ -7,7 +7,7 @@ public class Flower : Plant_Block
     [SerializeField] protected PlantData.FlowerType flowerType;
     [SerializeField] protected int Max_Glucose_Count, maxBattleExperience;
     [SerializeField] protected Animator flowerAnimator;
-    protected int Glucose_Count, flower_battle_experience = 0;
+    [SerializeField] protected int Glucose_Count, flower_battle_experience = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +40,10 @@ public class Flower : Plant_Block
 
     protected virtual void GainExperienceExtras(){
 
+    }
+
+    public int BattleExp(){
+        return flower_battle_experience;
     }
 
     

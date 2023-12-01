@@ -9,7 +9,7 @@ public class UpgradeSlot : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI nameText, costText;
     [SerializeField] private Image costResourceIcon;
-    [SerializeField] private Sprite GlucoseIcon, NitrateIcon;
+    [SerializeField] private Sprite GlucoseIcon, NitrateIcon, BattleExpIcon;
     private PlantData.UpgradeData upgradeData;
 
     
@@ -27,6 +27,9 @@ public class UpgradeSlot : MonoBehaviour
                 break;
             case PlantData.Resource.Nitrate:
                 costResourceIcon.sprite = NitrateIcon;
+                break;
+            case PlantData.Resource.Battle_Exp:
+                costResourceIcon.sprite = BattleExpIcon;
                 break;
         }
     }
